@@ -55,6 +55,18 @@ class Array{
       count--;
 
     }
+    int indexOf(int item)
+    {
+      //If we find it, return index
+      //Otherwise, return -1
+
+      for(int i = 0; i < count; i++)
+      {
+        if(items[i] == item)
+           return i;
+      }
+       return -1;
+    }
     ~Array()
     {
       delete[] items;
@@ -67,13 +79,14 @@ class Array{
 
 int main()
 {
-
+    
     Array numbers(3);
     numbers.insert(20);
     numbers.insert(30);
     numbers.insert(40);
     numbers.insert(50);
-    numbers.removeAt(5);
+    numbers.removeAt(2);
+    std::cout<<numbers.indexOf(30)<<std::endl;
     numbers.print();
     std::cin.get();
     return 0;
