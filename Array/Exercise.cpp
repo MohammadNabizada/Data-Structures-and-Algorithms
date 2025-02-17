@@ -8,9 +8,8 @@ class Array{
 
   public:
 
-    Array(int length)
-    { 
-        this->length = length;
+   // Use an Initializer list to avoid shadowing
+    Array(int len) : length(len) {
         items = new int[length];
     }
 
@@ -35,14 +34,31 @@ class Array{
             newItems[i] = items[i];
           }
           //Set "items" to this new array
+          delete[] items;
           items = newItems;
+          length *= 2;
 
         }
         //Add the new item at the end
         items[count++] = item;
     }
+    void removeAt(int index)
+    {
+      //Validate the index
+       if (index < 0 || index >= count)
+          throw std::invalid_argument("Value cannot be negative");
 
+      //Shift the items to the left to fill the hole
+      for (int i = index; i < count;i++)
+         items[i] = items[i+1];
 
+      count--;
+
+    }
+    ~Array()
+    {
+      delete[] items;
+    }
 
 };
 
@@ -53,11 +69,12 @@ int main()
 {
 
     Array numbers(3);
-    numbers.insert(2);
-    numbers.insert(3);
-    numbers.insert(2);
-    numbers.insert(3);
+    numbers.insert(20);
+    numbers.insert(30);
+    numbers.insert(40);
+    numbers.insert(50);
+    numbers.removeAt(5);
     numbers.print();
-
+    std::cin.get();
     return 0;
 }
