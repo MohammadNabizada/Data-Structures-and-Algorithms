@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/ndz13/Desktop/DataStructure-Algorithms/Array",
-      "program": "c:/Users/ndz13/Desktop/DataStructure-Algorithms/Array/build/Debug/outDebug",
+      "cwd": "c:/Users/ndz13/Desktop/DataStructure-Algorithms",
+      "program": "c:/Users/ndz13/Desktop/DataStructure-Algorithms/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
