@@ -67,6 +67,16 @@ class Array{
       }
        return -1;
     }
+    int max()
+    {
+      int temp_max = INT_MIN;
+      for(int i = 0; i < count; i++)
+      {
+        if(items[i] > temp_max)
+           temp_max = items[i];
+      }
+      return temp_max;
+    }
     ~Array()
     {
       delete[] items;
@@ -88,6 +98,7 @@ int main()
     numbers.removeAt(2);
     std::cout<<numbers.indexOf(30)<<std::endl;
     numbers.print();
+    std::cout<<numbers.max()<<std::endl;
     std::cin.get();
     return 0;
 }
