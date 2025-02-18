@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 class Array{
 
   private:
@@ -95,6 +96,17 @@ class Array{
       }
       return intersection;
     }
+    void reverse()
+    {
+      int temp;
+      int end = count - 1;
+      for(int i = 0 ; i < ceil(Array::count / 2);i++){
+         temp = items[end];
+         items[end] = items[i];
+         items[i] = temp;
+         end--;
+      }
+    }
     ~Array()
     {
       delete[] items;
@@ -126,6 +138,15 @@ int main()
 
     Array result = numbers.intersect(numbers2);
     result.print();
+    std::cout<<std::endl;
+    Array numbers3(3);
+    numbers3.insert(1);
+    numbers3.insert(2);
+    numbers3.insert(3);
+    numbers3.insert(4);
+    numbers3.print();
+    numbers3.reverse();
+    numbers3.print();
     std::cin.get();
     return 0;
 }
