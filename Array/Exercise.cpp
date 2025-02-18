@@ -2,12 +2,12 @@
 class Array{
 
   private:
-    int count = 0;
+   
     int length;
     int *items;
 
   public:
-
+   int count = 0;
    // Use an Initializer list to avoid shadowing
     Array(int len) : length(len) {
         items = new int[length];
@@ -77,6 +77,24 @@ class Array{
       }
       return temp_max;
     }
+
+    //intersect method 
+    Array intersect(const Array& array2)
+    {
+      Array intersection(1);
+      for(int i = 0; i < count; i++)
+      {
+        for (int j = 0; j < array2.count; j++)
+        {
+          if(items[i] == array2.items[j])
+          {
+            intersection.insert(items[i]);
+            break;
+          }
+        }
+      }
+      return intersection;
+    }
     ~Array()
     {
       delete[] items;
@@ -99,6 +117,15 @@ int main()
     std::cout<<numbers.indexOf(30)<<std::endl;
     numbers.print();
     std::cout<<numbers.max()<<std::endl;
+    
+
+    Array numbers2(3);
+    numbers2.insert(30);
+    numbers2.insert(40);
+    numbers2.insert(60);
+
+    Array result = numbers.intersect(numbers2);
+    result.print();
     std::cin.get();
     return 0;
 }
