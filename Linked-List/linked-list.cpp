@@ -13,7 +13,7 @@ int main()
    mylist.push_back(6);
    mylist.push_back(7);
    mylist.push_back(8);
-   mylist.push_front(9);
+   mylist.push_back(9);
    for(int num: mylist)
    {
     std::cout<<num<<" ";
