@@ -15,22 +15,91 @@ class LinkedList
       };
       Node *first;
       Node *last;
-   
+      bool isEmpty()
+      {
+         return first == nullptr; 
+      }
+      Node *getPrevious(Node* node)
+      {
+        Node* current = first;
+        while(current != nullptr){
+            if(current->next == node) return current;
+            current = current->next;
+        }
+        return nullptr;
+      }
     public:
       void addLast(int item)
       {
         Node *node = new Node(item);
         
-        if (first == nullptr)
+        if (isEmpty())
             first = last = node;
         else{
             last->next = node;
             last = node;
+            last->next = nullptr;
         }
 
 
       }
 
+      void addFirst(int item)
+      {
+        Node *node = new Node(item);
+
+        if (isEmpty())
+           first = last = node;
+        else{
+            node->next = first;
+            first = node;
+        }
+      }
+    int indexOf(int item)
+    {
+         int index = 0;
+         Node* current = first;
+         while(current->next != nullptr)
+         {
+            if(current->value == item){ 
+              return index;
+            }
+            index++;
+            current = current->next;
+         }
+         return -1;
+    }
+    bool contains(int item)
+    {
+        return indexOf(item) != -1;
+    }
+    void removeFirst()
+    {
+        if(isEmpty())
+          throw std::invalid_argument("The list is empty.");
+        
+        if(first == last)
+        {
+            first = last = nullptr;
+            return;
+        }
+        Node* second = first->next;
+        first->next = nullptr;
+        first = second;
+    }
+    void removeLast()
+    {
+     if(isEmpty())
+     throw std::invalid_argument("list is empty.");
+     if(first == last)
+     {
+        first = last = nullptr;
+        return;
+     }
+     Node* previous =  getPrevious(last);
+     last = previous;
+     last->next = nullptr;
+    }
 };
 
 
@@ -40,5 +109,14 @@ int main()
     list->addLast(10);
     list->addLast(20);
     list->addLast(30);
+    list->addLast(40);
+    list->addLast(50);
+    std::cout<<list->indexOf(20);
+    std::cout<<std::endl;
+    std::cout<<list->contains(10);
+    list->removeFirst();
+    list->removeLast();
+    delete list;
+
     return 0;
 }
