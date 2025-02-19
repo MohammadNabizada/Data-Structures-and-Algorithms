@@ -89,6 +89,13 @@ class LinkedList
     }
     void removeLast()
     {
+     if(isEmpty())
+     throw std::invalid_argument("list is empty.");
+     if(first == last)
+     {
+        first = last = nullptr;
+        return;
+     }
      Node* previous =  getPrevious(last);
      last = previous;
      last->next = nullptr;
