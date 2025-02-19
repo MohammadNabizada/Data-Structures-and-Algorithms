@@ -28,6 +28,7 @@ class LinkedList
         }
         return nullptr;
       }
+      int size;
     public:
       void addLast(int item)
       {
@@ -41,7 +42,7 @@ class LinkedList
             last->next = nullptr;
         }
 
-
+       size++;
       }
 
       void addFirst(int item)
@@ -54,6 +55,7 @@ class LinkedList
             node->next = first;
             first = node;
         }
+        size++;
       }
     int indexOf(int item)
     {
@@ -79,27 +81,33 @@ class LinkedList
           throw std::invalid_argument("The list is empty.");
         
         if(first == last)
-        {
             first = last = nullptr;
-            return;
-        }
+        else{
         Node* second = first->next;
         first->next = nullptr;
         first = second;
+        }
+        size--;
     }
     void removeLast()
     {
      if(isEmpty())
      throw std::invalid_argument("list is empty.");
      if(first == last)
-     {
         first = last = nullptr;
-        return;
-     }
+    else{
      Node* previous =  getPrevious(last);
      last = previous;
      last->next = nullptr;
+    }    
+     size--;
     }
+
+    int getSize()
+    {
+        return size;
+    }
+
 };
 
 
@@ -111,11 +119,14 @@ int main()
     list->addLast(30);
     list->addLast(40);
     list->addLast(50);
+    list->addFirst(50);
     std::cout<<list->indexOf(20);
     std::cout<<std::endl;
     std::cout<<list->contains(10);
     list->removeFirst();
     list->removeLast();
+    std::cout<<std::endl;
+    std::cout<<list->getSize();
     delete list;
 
     return 0;
