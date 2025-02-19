@@ -15,6 +15,7 @@ class LinkedList
       };
       Node *first;
       Node *last;
+      int size;
       bool isEmpty()
       {
          return first == nullptr; 
@@ -28,7 +29,7 @@ class LinkedList
         }
         return nullptr;
       }
-      int size;
+
     public:
       void addLast(int item)
       {
@@ -102,6 +103,17 @@ class LinkedList
     }    
      size--;
     }
+    int *toArray(){
+      int *array = new int[size];
+      Node* current = first;
+      int index = 0;
+      while(current != nullptr)
+      {
+        array[index++] = current->value;
+        current = current->next;
+      }
+      return array;
+    }
 
     int getSize()
     {
@@ -127,6 +139,15 @@ int main()
     list->removeLast();
     std::cout<<std::endl;
     std::cout<<list->getSize();
+    int *array = list->toArray();
+
+    std::cout<<std::endl; 
+    
+    for (int i = 0; i < list->getSize(); ++i) {
+        std::cout << array[i] << " ";
+    }
+
+    delete[] array;
     delete list;
 
     return 0;
