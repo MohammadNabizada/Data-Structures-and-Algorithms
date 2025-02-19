@@ -60,6 +60,24 @@ class LinkedList
          }
          return -1;
     }
+    bool contains(int item)
+    {
+        return indexOf(item) != -1;
+    }
+    void removeFirst()
+    {
+        if(isEmpty())
+          throw std::invalid_argument("The list is empty.");
+        
+        if(first == last)
+        {
+            first = last = nullptr;
+            return;
+        }
+        Node* second = first->next;
+        first->next = nullptr;
+        first = second;
+    }
 };
 
 
@@ -69,7 +87,12 @@ int main()
     list->addLast(10);
     list->addLast(20);
     list->addLast(30);
+    list->addLast(40);
+    list->addLast(50);
     std::cout<<list->indexOf(20);
+    std::cout<<std::endl;
+    std::cout<<list->contains(10);
+    list->removeFirst();
     delete list;
 
     return 0;
