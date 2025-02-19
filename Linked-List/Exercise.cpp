@@ -19,6 +19,15 @@ class LinkedList
       {
          return first == nullptr; 
       }
+      Node *getPrevious(Node* node)
+      {
+        Node* current = first;
+        while(current != nullptr){
+            if(current->next == node) return current;
+            current = current->next;
+        }
+        return nullptr;
+      }
     public:
       void addLast(int item)
       {
@@ -78,6 +87,12 @@ class LinkedList
         first->next = nullptr;
         first = second;
     }
+    void removeLast()
+    {
+     Node* previous =  getPrevious(last);
+     last = previous;
+     last->next = nullptr;
+    }
 };
 
 
@@ -93,6 +108,7 @@ int main()
     std::cout<<std::endl;
     std::cout<<list->contains(10);
     list->removeFirst();
+    list->removeLast();
     delete list;
 
     return 0;
