@@ -30,6 +30,18 @@ class LinkedList
 
 
       }
+      
+      void addFirst(int item)
+      {
+        Node *node = new Node(item);
+
+        if (first == nullptr)
+           first = last = node;
+        else{
+            node->next = first;
+            first = node;
+        }
+      }
 
 };
 
