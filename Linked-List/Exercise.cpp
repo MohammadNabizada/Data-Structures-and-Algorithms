@@ -15,6 +15,7 @@ class LinkedList
       };
       Node *first;
       Node *last;
+      int size;
       bool isEmpty()
       {
          return first == nullptr; 
@@ -28,6 +29,7 @@ class LinkedList
         }
         return nullptr;
       }
+
     public:
       void addLast(int item)
       {
@@ -41,7 +43,7 @@ class LinkedList
             last->next = nullptr;
         }
 
-
+       size++;
       }
 
       void addFirst(int item)
@@ -54,6 +56,7 @@ class LinkedList
             node->next = first;
             first = node;
         }
+        size++;
       }
     int indexOf(int item)
     {
@@ -79,27 +82,44 @@ class LinkedList
           throw std::invalid_argument("The list is empty.");
         
         if(first == last)
-        {
             first = last = nullptr;
-            return;
-        }
+        else{
         Node* second = first->next;
         first->next = nullptr;
         first = second;
+        }
+        size--;
     }
     void removeLast()
     {
      if(isEmpty())
      throw std::invalid_argument("list is empty.");
      if(first == last)
-     {
         first = last = nullptr;
-        return;
-     }
+    else{
      Node* previous =  getPrevious(last);
      last = previous;
      last->next = nullptr;
+    }    
+     size--;
     }
+    int *toArray(){
+      int *array = new int[size];
+      Node* current = first;
+      int index = 0;
+      while(current != nullptr)
+      {
+        array[index++] = current->value;
+        current = current->next;
+      }
+      return array;
+    }
+
+    int getSize()
+    {
+        return size;
+    }
+
 };
 
 
@@ -111,11 +131,23 @@ int main()
     list->addLast(30);
     list->addLast(40);
     list->addLast(50);
+    list->addFirst(50);
     std::cout<<list->indexOf(20);
     std::cout<<std::endl;
     std::cout<<list->contains(10);
     list->removeFirst();
     list->removeLast();
+    std::cout<<std::endl;
+    std::cout<<list->getSize();
+    int *array = list->toArray();
+
+    std::cout<<std::endl; 
+    
+    for (int i = 0; i < list->getSize(); ++i) {
+        std::cout << array[i] << " ";
+    }
+
+    delete[] array;
     delete list;
 
     return 0;
