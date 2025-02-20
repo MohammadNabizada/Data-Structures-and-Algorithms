@@ -138,6 +138,28 @@ class LinkedList
       first = previous;
 
     }
+   // 1 -> 2 -> 3 -> 4 -> 5
+      
+    int getKthFromTheEnd(int k)
+    {
+      if (isEmpty())
+        throw std::invalid_argument("list is empty");
+      Node*a = first;
+      Node*b = first;
+      
+      for(int i = 0; i < k -1 ;i++){
+        b = b->next;
+        if ( b == nullptr)
+          throw std::invalid_argument("this is more than the size of linked list");
+      }
+      while(b != last)
+      {
+        a = a->next;
+        b = b->next;
+      }
+       return a->value;
+    }
+
 
 };
 
@@ -150,13 +172,20 @@ int main()
     list->addLast(30);
     list->addLast(40);
     list->addLast(50);
-    list->addFirst(50);
+    //10 -> 20 -> 30 -> 40
+    std::cout<<"kth from end"<<std::endl;
+    std::cout<<list->getKthFromTheEnd(2)<<std::endl;
+
+    std::cout<<"k'th element"<<std::endl;
+    std::cout<<list->getKthFromTheEnd(1);
     std::cout<<list->indexOf(20);
     std::cout<<std::endl;
     std::cout<<list->contains(10);
     list->removeFirst();
     list->removeLast();
     list->reverseList();
+    std::cout<<"kth element from the end";
+    std::cout<<list->getKthFromTheEnd(2);
     std::cout<<std::endl;
     std::cout<<list->getSize();
     int *array = list->toArray();
