@@ -120,6 +120,25 @@ class LinkedList
         return size;
     }
 
+        void reverseList()
+    {
+      if(isEmpty()) return;
+      
+      Node*previous = first;
+      Node*current = first->next;
+      while(current != nullptr)
+      {
+        Node*next = current->next;
+        current->next = previous;
+        previous = current;
+        current = next;
+      }
+      last = first;
+      last->next = nullptr;
+      first = previous;
+
+    }
+
 };
 
 
@@ -137,6 +156,7 @@ int main()
     std::cout<<list->contains(10);
     list->removeFirst();
     list->removeLast();
+    list->reverseList();
     std::cout<<std::endl;
     std::cout<<list->getSize();
     int *array = list->toArray();
