@@ -1,5 +1,4 @@
 #include <iostream>
-
 class LinkedList
 {
 
@@ -29,7 +28,7 @@ class LinkedList
         }
         return nullptr;
       }
-
+    
     public:
       void addLast(int item)
       {
@@ -49,7 +48,7 @@ class LinkedList
       void addFirst(int item)
       {
         Node *node = new Node(item);
-
+        Node *midd;
         if (isEmpty())
            first = last = node;
         else{
@@ -89,7 +88,8 @@ class LinkedList
         first = second;
         }
         size--;
-    }
+            
+     }
     void removeLast()
     {
      if(isEmpty())
@@ -120,7 +120,7 @@ class LinkedList
         return size;
     }
 
-        void reverseList()
+    void reverseList()
     {
       if(isEmpty()) return;
       
@@ -138,7 +138,6 @@ class LinkedList
       first = previous;
 
     }
-   // 1 -> 2 -> 3 -> 4 -> 5
       
     int getKthFromTheEnd(int k)
     {
@@ -159,7 +158,24 @@ class LinkedList
       }
        return a->value;
     }
+    int middlePrint()
+    {
+      Node *n = first;
+      Node *mid = first;
 
+      while(n != last || n->next != last)
+      {
+        n = n->next->next;
+        mid = mid->next;
+      }
+
+     if (n == last)
+         return mid->value;
+     else{
+        return n->value,n->next->value;
+     }
+      
+    }
 
 };
 
@@ -172,6 +188,7 @@ int main()
     list->addLast(30);
     list->addLast(40);
     list->addLast(50);
+    std::cout<<list->middlePrint();
     //10 -> 20 -> 30 -> 40
     std::cout<<"kth from end"<<std::endl;
     std::cout<<list->getKthFromTheEnd(2)<<std::endl;
