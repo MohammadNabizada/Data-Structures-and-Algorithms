@@ -189,7 +189,6 @@ int main()
     list->addLast(40);
     list->addLast(50);
     std::cout<<list->middlePrint();
-    //10 -> 20 -> 30 -> 40
     std::cout<<"kth from end"<<std::endl;
     std::cout<<list->getKthFromTheEnd(2)<<std::endl;
 
