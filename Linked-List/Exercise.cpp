@@ -175,6 +175,25 @@ int middlePrint()
         return mid->next->value; // for even list, return two mid values 
       }
     }
+
+   int hasLoop()
+    {
+      Node* slow = first;
+      Node* fast = first;
+
+      while (slow && fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        // If fast and slow pointer points to the same node,
+        // then the cycle is detected
+        if (slow == fast) {
+            return 1;
+        }
+    }
+    return -1;
+      
+    }
 };
 
 
@@ -185,6 +204,7 @@ int main()
     list->addLast(20);
     list->addLast(30);
     list->addLast(40);
+    list->hasLoop();
     std::cout<<"middle"<<std::endl;
     std::cout<<list->middlePrint();
     std::cout<<std::endl;
@@ -203,9 +223,11 @@ int main()
     std::cout<<list->getKthFromTheEnd(2);
     std::cout<<std::endl;
     std::cout<<list->getSize();
+    std::cout<<std::endl;
+    std::cout<<"has loop: "<<std::endl;
+    std::cout<<list->hasLoop();
+    std::cout<<std::endl;
     int *array = list->toArray();
-
-    std::cout<<std::endl; 
     
     for (int i = 0; i < list->getSize(); ++i) {
         std::cout << array[i] << " ";
