@@ -158,25 +158,23 @@ class LinkedList
       }
        return a->value;
     }
-    int middlePrint()
+int middlePrint()
     {
       Node *n = first;
       Node *mid = first;
 
-      while(n != last || n->next != last)
-      {
+
+    while (n != nullptr && n->next != nullptr && n->next->next != nullptr) {
         n = n->next->next;
         mid = mid->next;
-      }
+    }
 
      if (n == last)
          return mid->value;
-     else{
-        return n->value,n->next->value;
-     }
-      
+     else {
+        return mid->next->value; // for even list, return two mid values 
+      }
     }
-
 };
 
 
@@ -187,9 +185,9 @@ int main()
     list->addLast(20);
     list->addLast(30);
     list->addLast(40);
-    list->addLast(50);
+    std::cout<<"middle"<<std::endl;
     std::cout<<list->middlePrint();
-    //10 -> 20 -> 30 -> 40
+    std::cout<<std::endl;
     std::cout<<"kth from end"<<std::endl;
     std::cout<<list->getKthFromTheEnd(2)<<std::endl;
 
