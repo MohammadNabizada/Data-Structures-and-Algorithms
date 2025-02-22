@@ -28,24 +28,38 @@ class StringReverser{
 };
 
 class Expression{
+  private:
+   bool isLefBracket(char ch)
+   {
+    return ch == '(' || ch == '[' || ch == '<' || ch == '{';
+   }
+   bool isRightBracket(char ch)
+   {
+    return ch == ')'  || ch == ']' || ch == '>' || ch =='}'; 
+   }
+
+   bool bracketsMatch(char left, char right)
+   {
+    return (right == ')' && left != '(') ||
+           (right == '>' && left != '<') ||
+           (right == ']' && left != '[') ||
+           (right == '}' && left != '{');
+   }
   public:
    bool isBalanced(std::string input){
     std::stack<char> stack;
 
     for(char ch : input)
     {
-      if(ch == '(' || ch == '[' || ch == '<' || ch == '{')
+      if(isLefBracket(ch))
         stack.push(ch);
       
-      if(ch == ')'  || ch == ']' || ch == '>' || ch =='}'){
+      if(isRightBracket(ch)){
+
         if (stack.empty()) return false;
         char top = stack.top();
-        if(
-          (ch == ')' && top != '(') ||
-           (ch == '>' && top != '<') ||
-           (ch == ']' && top != '[') ||
-           (ch == '}' && top != '{')
-        ) return false;
+
+        if(bracketsMatch(top,ch)) return false;
         stack.pop();
       }
     }
