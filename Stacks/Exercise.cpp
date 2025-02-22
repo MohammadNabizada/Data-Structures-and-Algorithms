@@ -29,13 +29,17 @@ class StringReverser{
 
 class Expression{
   private:
+   std::string leftBrackets = "({<";
+   std::string rightBrackets = ")}>";
+
    bool isLefBracket(char ch)
    {
-    return ch == '(' || ch == '[' || ch == '<' || ch == '{';
+    return leftBrackets.find(ch) != std::string::npos;
    }
+
    bool isRightBracket(char ch)
    {
-    return ch == ')'  || ch == ']' || ch == '>' || ch =='}'; 
+    return rightBrackets.find(ch) != std::string::npos; 
    }
 
    bool bracketsMatch(char left, char right)
@@ -74,7 +78,7 @@ int main()
 
     std::cout<<std::endl;
     Expression *exp = new Expression();
-    std::string str2 = "(1+2)";
+    std::string str2 = "(1+2)[[]]]]]]]";
     std::cout<<exp->isBalanced(str2);
     return 0;
 }
