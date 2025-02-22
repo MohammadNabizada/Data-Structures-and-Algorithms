@@ -6,6 +6,11 @@ class StringReverser{
   public:
 
   std::string reverse(std::string input){
+
+    if(input == std::string("null"))
+     throw std::invalid_argument("you give me a bad argument");
+
+
      std::stack<char> stack;
 
      for(char ch : input)
@@ -23,12 +28,6 @@ class StringReverser{
   }
 
 };
-
-
-
-
-
-
 
 
 int main()
