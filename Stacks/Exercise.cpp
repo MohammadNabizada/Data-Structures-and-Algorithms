@@ -1,6 +1,52 @@
 #include <iostream>
 #include <stack>
 #include <string.h>
+
+class Stack{
+
+  private:
+  int *st_array = new int[1];
+  int size = 1;
+  public:
+  int count = 0;
+  void push(int ch)
+  {
+  if(count == size){
+    int *new_array = new int[count * 2];
+
+    for(int i = 0; i < count; i++){
+      new_array[i] = st_array[i];
+    }
+
+    delete[] st_array;
+    st_array = new_array;
+    size *= 2;
+  }
+      st_array[count++] = ch;
+  }
+  int top(){
+    if(count > 0){
+      return  st_array[count - 1];
+    }
+    return 0;
+  }
+  void pop()
+  {
+    count--;
+  }
+  bool isEmpty()
+  {
+    if(count < 0)
+      return true;
+    
+    return false;
+  }
+ //peek
+ //isEmpty
+
+};
+
+
 class StringReverser{
 
   public:
@@ -80,5 +126,14 @@ int main()
     Expression *exp = new Expression();
     std::string str2 = "(1+2)[]";
     std::cout<<exp->isBalanced(str2);
+    std::cout<<std::endl<<"top"<<std::endl;
+    Stack *stack = new Stack();
+    stack->push(2);
+    stack->pop();
+    std::cout<<stack->top();
+    std::cout<<std::endl;
+    std::cout<<stack->isEmpty();
+
+
     return 0;
 }
