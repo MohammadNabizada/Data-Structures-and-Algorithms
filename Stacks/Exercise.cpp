@@ -78,7 +78,7 @@ int main()
 
     std::cout<<std::endl;
     Expression *exp = new Expression();
-    std::string str2 = "(1+2)[[]]]]]]]";
+    std::string str2 = "(1+2)[]";
     std::cout<<exp->isBalanced(str2);
     return 0;
 }
