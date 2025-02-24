@@ -1,6 +1,63 @@
 #include <iostream>
 #include <stack>
 #include <string.h>
+using namespace std;
+
+class TwoStacks {
+private:
+    int* arr;
+    int size;
+    int top1, top2;
+
+public:
+    TwoStacks(int n) {
+        size = n;
+        arr = new int[n];
+        top1 = -1;
+        top2 = size;
+    }
+
+    void push1(int value) {
+        if (top1 < top2 - 1) {
+            top1++;
+            arr[top1] = value;
+        } else {
+            cout << "Stack Overflow: No space to push in Stack 1" << endl;
+        }
+    }
+
+    void push2(int value) {
+        if (top1 < top2 - 1) {
+            top2--;
+            arr[top2] = value;
+        } else {
+            cout << "Stack Overflow: No space to push in Stack 2" << endl;
+        }
+    }
+
+    int pop1() {
+        if (top1 >= 0) {
+            int value = arr[top1];
+            top1--;
+            return value;
+        } else {
+            cout << "Stack Underflow: No elements to pop in Stack 1" << endl;
+            return -1;
+        }
+    }
+
+    int pop2() {
+        if (top2 < size) {
+            int value = arr[top2];
+            top2++;
+            return value;
+        } else {
+            cout << "Stack Underflow: No elements to pop in Stack 2" << endl;
+            return -1;
+        }
+    }
+};
+
 
 class Stack{
   private:
@@ -123,5 +180,17 @@ int main()
     stack.push(30);
     stack.push(21);
     stack.peek();
+
+
+    TwoStacks ts(5);
+    ts.push1(5);
+    ts.push2(10);
+    ts.push2(15);
+    ts.push1(11);
+    ts.push2(7);
+
+    cout << "Popped element from stack1 is " << ts.pop1() << endl;
+    ts.push2(40);
+    cout << "Popped element from stack2 is " << ts.pop2() << endl;
     return 0;
 }
