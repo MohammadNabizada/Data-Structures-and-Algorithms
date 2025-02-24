@@ -1,46 +1,96 @@
 #include <iostream>
 #include <stack>
 #include <string.h>
+using namespace std;
+
+class TwoStacks {
+private:
+    int* arr;
+    int size;
+    int top1, top2;
+
+public:
+    TwoStacks(int n) {
+        size = n;
+        arr = new int[n];
+        top1 = -1;
+        top2 = size;
+    }
+
+    void push1(int value) {
+        if (top1 < top2 - 1) {
+            top1++;
+            arr[top1] = value;
+        } else {
+            cout << "Stack Overflow: No space to push in Stack 1" << endl;
+        }
+    }
+
+    void push2(int value) {
+        if (top1 < top2 - 1) {
+            top2--;
+            arr[top2] = value;
+        } else {
+            cout << "Stack Overflow: No space to push in Stack 2" << endl;
+        }
+    }
+
+    int pop1() {
+        if (top1 >= 0) {
+            int value = arr[top1];
+            top1--;
+            return value;
+        } else {
+            cout << "Stack Underflow: No elements to pop in Stack 1" << endl;
+            return -1;
+        }
+    }
+
+    int pop2() {
+        if (top2 < size) {
+            int value = arr[top2];
+            top2++;
+            return value;
+        } else {
+            cout << "Stack Underflow: No elements to pop in Stack 2" << endl;
+            return -1;
+        }
+    }
+};
+
 
 class Stack{
-
   private:
-  int *st_array = new int[1];
-  int size = 1;
+     int *items = new int[5];
+     int length = 5;
+     int count;
   public:
-  int count = 0;
-  void push(int ch)
-  {
-  if(count == size){
-    int *new_array = new int[count * 2];
+     void push(int item)
+     {
+      if(count == length)
+         throw std::invalid_argument("Stack overflow");
+      
+      items[count++] = item;
+     }
 
-    for(int i = 0; i < count; i++){
-      new_array[i] = st_array[i];
-    }
+     int pop()
+     {
+      if(count == 0)
+        throw std::invalid_argument("stack is empty");
+      return items[--count];
+     }
 
-    delete[] st_array;
-    st_array = new_array;
-    size *= 2;
-  }
-      st_array[count++] = ch;
-  }
-  int top(){
-    if(count > 0){
-      return  st_array[count - 1];
-    }
-    return 0;
-  }
-  void pop()
-  {
-    count--;
-  }
-  bool isEmpty()
-  {
-    if(count < 0)
-      return true;
-    
-    return false;
-  }
+     int peek()
+     {
+      if(count == 0)
+        throw std::invalid_argument("stack is empty");
+      return items[count - 1];
+     }
+     bool isEmpty()
+     {
+      return count == 0;
+     }
+
 };
 
 
@@ -127,8 +177,18 @@ int main()
     Stack *stack = new Stack();
     stack->push(2);
     stack->pop();
-    std::cout<<stack->top();
     std::cout<<std::endl;
     std::cout<<stack->isEmpty();
+
+    TwoStacks ts(5);
+    ts.push1(5);
+    ts.push2(10);
+    ts.push2(15);
+    ts.push1(11);
+    ts.push2(7);
+
+    cout << "Popped element from stack1 is " << ts.pop1() << endl;
+    ts.push2(40);
+    cout << "Popped element from stack2 is " << ts.pop2() << endl;
     return 0;
 }
