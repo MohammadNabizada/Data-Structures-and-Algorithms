@@ -23,6 +23,16 @@ class Stack{
       return items[--count];
      }
 
+     int peek()
+     {
+      if(count == 0)
+        throw std::invalid_argument("stack is empty");
+      return items[count - 1];
+     }
+     bool isEmpty()
+     {
+      return count == 0;
+     }
 
 };
 
@@ -107,6 +117,11 @@ int main()
     std::string str2 = "(1+2)[]";
     std::cout<<exp->isBalanced(str2);
     std::cout<<std::endl<<"top"<<std::endl;
-  
+
+    Stack stack;
+    stack.push(23);
+    stack.push(30);
+    stack.push(21);
+    stack.peek();
     return 0;
 }
