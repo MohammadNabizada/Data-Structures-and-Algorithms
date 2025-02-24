@@ -41,9 +41,6 @@ class Stack{
     
     return false;
   }
- //peek
- //isEmpty
-
 };
 
 
@@ -133,7 +130,5 @@ int main()
     std::cout<<stack->top();
     std::cout<<std::endl;
     std::cout<<stack->isEmpty();
-
-
     return 0;
 }
