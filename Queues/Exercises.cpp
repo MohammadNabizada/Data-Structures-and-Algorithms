@@ -61,8 +61,11 @@ class ArrayQueue
    count--; 
    return item;
  }
-
-
+ int peek()
+ {
+    int item = items[front];
+    return item;
+ }
 
 
 };
