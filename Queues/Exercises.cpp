@@ -30,8 +30,28 @@ class CustomQueue : public std::queue<T>
         std::cout << std::endl;
     }
 };
+class ArrayQueue
+{
+ private:
+  int *items;
+  int rear = 0;
+  int count = 0;
+  int length;
+ public:
+   ArrayQueue(int capacity)
+   {
+    items = new int[capacity];
+    length = capacity;
+   }
+ void enqueue(int item)
+ {
+  if(count == length)
+      throw std::invalid_argument("queue is full");
+  items[rear++] = item;
+  count++;
+ }
 
-
+};
 int main()
 {
     CustomQueue<int> queue;
@@ -46,5 +66,8 @@ int main()
     queue.reverse(); 
     std::cout << "Queue elements: ";
     queue.printQueue();
+
+
+
     return 0;
 }
