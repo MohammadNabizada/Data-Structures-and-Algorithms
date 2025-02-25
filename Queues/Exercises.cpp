@@ -37,6 +37,7 @@ class ArrayQueue
   int rear = 0;
   int count = 0;
   int length;
+  int front = 0;
  public:
    ArrayQueue(int capacity)
    {
@@ -47,9 +48,22 @@ class ArrayQueue
  {
   if(count == length)
       throw std::invalid_argument("queue is full");
-  items[rear++] = item;
+  items[rear] = item;
+  rear = (rear + 1) % length;
   count++;
  }
+
+ int dequeue()
+ {
+   int item = items[front];
+   items[front] = 0;
+   front = (front + 1) % length;
+   count--; 
+   return item;
+ }
+
+
+
 
 };
 int main()
@@ -67,7 +81,12 @@ int main()
     std::cout << "Queue elements: ";
     queue.printQueue();
 
-
+   ArrayQueue *my_queue = new ArrayQueue(5);
+   my_queue->enqueue(10);
+   my_queue->enqueue(20);
+   my_queue->enqueue(30);
+   my_queue->dequeue();
+   
 
     return 0;
 }
