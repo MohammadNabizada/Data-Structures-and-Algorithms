@@ -84,7 +84,7 @@ class QueueStack
     }
     int dequeue()
     {
-        if(stack1.empty() && stack2.empty())
+        if(isEmpty())
           throw std::invalid_argument("queue is empty");
         if(stack2.empty())
         {
@@ -96,6 +96,25 @@ class QueueStack
         int pop = stack2.top();
         stack2.pop();
         return pop;    
+    }
+
+    bool isEmpty()
+    {
+       return stack1.empty() && stack2.empty();
+    }
+
+    int peek()
+    {
+        if(isEmpty())
+        throw std::invalid_argument("queue is empty");
+      if(stack2.empty())
+      {
+        while(!stack1.empty()){
+          stack2.push(stack1.top());
+        }
+      }
+      int pop = stack2.top();
+      return pop;
     }
 };
 
