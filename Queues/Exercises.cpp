@@ -107,14 +107,19 @@ class QueueStack
     {
         if(isEmpty())
         throw std::invalid_argument("queue is empty");
-      if(stack2.empty())
-      {
-        while(!stack1.empty()){
-          stack2.push(stack1.top());
+        moveStack1toStack2();
+        int pop = stack2.top();
+        return pop;
+    }
+    void moveStack1toStack2()
+    {
+        if (stack2.empty())
+        {
+            while (!stack1.empty())
+            {
+                stack2.push(stack1.top());
+            }
         }
-      }
-      int pop = stack2.top();
-      return pop;
     }
 };
 
