@@ -84,6 +84,8 @@ class QueueStack
     }
     int dequeue()
     {
+        if(stack1.empty() && stack2.empty())
+          throw std::invalid_argument("queue is empty");
         if(stack2.empty())
         {
           while(!stack1.empty()){
