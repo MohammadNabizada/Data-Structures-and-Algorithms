@@ -69,6 +69,25 @@ class ArrayQueue
 
 
 };
+//implementation a queue with a stack
+class QueueStack
+{
+    private:
+
+    std::stack<int> stack1;
+    std::stack<int> stack2;
+
+    public:
+    void enqueue(int item)
+    {
+        stack1.push(item);
+    }
+
+};
+
+
+
+
 int main()
 {
     CustomQueue<int> queue;
@@ -90,6 +109,15 @@ int main()
    my_queue->enqueue(30);
    my_queue->dequeue();
    
+
+   QueueStack *queueS = new QueueStack;
+   queueS->enqueue(1);
+   queueS->enqueue(2);
+   queueS->enqueue(3);
+
+  //std::cout<<queueS->dequeue();
+
+
 
     return 0;
 }
