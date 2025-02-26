@@ -69,6 +69,63 @@ class ArrayQueue
 
 
 };
+//implementation a queue with a stack
+class QueueStack
+{
+    private:
+
+    std::stack<int> stack1;
+    std::stack<int> stack2;
+
+    public:
+    void enqueue(int item)
+    {
+        stack1.push(item);
+    }
+    int dequeue()
+    {
+        if(isEmpty())
+          throw std::invalid_argument("queue is empty");
+        if(stack2.empty())
+        {
+          while(!stack1.empty()){
+            stack2.push(stack1.top());
+            stack1.pop();
+          }
+        }
+        int pop = stack2.top();
+        stack2.pop();
+        return pop;    
+    }
+
+    bool isEmpty()
+    {
+       return stack1.empty() && stack2.empty();
+    }
+
+    int peek()
+    {
+        if(isEmpty())
+        throw std::invalid_argument("queue is empty");
+        moveStack1toStack2();
+        int pop = stack2.top();
+        return pop;
+    }
+    void moveStack1toStack2()
+    {
+        if (stack2.empty())
+        {
+            while (!stack1.empty())
+            {
+                stack2.push(stack1.top());
+            }
+        }
+    }
+};
+
+
+
+
 int main()
 {
     CustomQueue<int> queue;
@@ -90,6 +147,15 @@ int main()
    my_queue->enqueue(30);
    my_queue->dequeue();
    
+
+   QueueStack *queueS = new QueueStack;
+   queueS->enqueue(1);
+   queueS->enqueue(2);
+   queueS->enqueue(3);
+
+  std::cout<<queueS->dequeue();
+
+
 
     return 0;
 }
