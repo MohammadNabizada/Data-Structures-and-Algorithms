@@ -82,7 +82,19 @@ class QueueStack
     {
         stack1.push(item);
     }
-
+    int dequeue()
+    {
+        if(stack2.empty())
+        {
+          while(!stack1.empty()){
+            stack2.push(stack1.top());
+            stack1.pop();
+          }
+        }
+        int pop = stack2.top();
+        stack2.pop();
+        return pop;    
+    }
 };
 
 
@@ -115,7 +127,7 @@ int main()
    queueS->enqueue(2);
    queueS->enqueue(3);
 
-  //std::cout<<queueS->dequeue();
+  std::cout<<queueS->dequeue();
 
 
 
