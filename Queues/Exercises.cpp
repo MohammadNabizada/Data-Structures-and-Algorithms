@@ -135,13 +135,13 @@ class priorityQ{
     void add(int item)
     {
 
-        if(count == length)
+        if(isFull())
           throw std::invalid_argument("queue is full");
-      int i = shiftItems(item);
+      int i = shiftItemsToInsert(item);
       items[i] = item;
       count++;
     }
-    int shiftItems(int item)
+    int shiftItemsToInsert(int item)
     {
         int i;
         for (i = count - 1; i >= 0; i--)
@@ -152,6 +152,10 @@ class priorityQ{
                 break;
         }
         return i + 1;
+    }
+    bool isFull()
+    {
+        return count == length;
     }
     int remove()
     {
