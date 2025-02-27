@@ -203,7 +203,7 @@ int main()
   queuep->add(6);
   queuep->add(4);
 
- while (queuep->isEmpty())
+ while (!queuep->isEmpty())
  {
     std::cout<<queuep->remove()<<std::endl;
  }
