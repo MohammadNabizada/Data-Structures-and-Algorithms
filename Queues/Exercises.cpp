@@ -149,6 +149,18 @@ class priorityQ{
       count++;
     }
 
+    int remove()
+    {
+        if(isEmpty())
+         throw std::invalid_argument("queue is empty");
+        return items[--count];
+    }
+
+    bool isEmpty()
+    {
+        return count == 0;
+    }
+
 
 };
 
@@ -187,7 +199,14 @@ int main()
   priorityQ *queuep = new priorityQ;
   queuep->add(1);
   queuep->add(3);
+  queuep->add(2);
+  queuep->add(6);
+  queuep->add(4);
 
+ while (queuep->isEmpty())
+ {
+    std::cout<<queuep->remove()<<std::endl;
+ }
  
 
   return 0;
