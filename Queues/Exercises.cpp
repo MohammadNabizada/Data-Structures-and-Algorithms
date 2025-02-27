@@ -136,19 +136,23 @@ class priorityQ{
     {
 
         if(count == length)
-          throw std::invalid_argument("queue is full"); 
-        int i;
-       for (i = count - 1; i >= 0;i--)
-       {
-        if(items[i] > item)
-          items[i + 1] = items[i];
-        else
-         break;
-       }
-      items[i+1] = item;
+          throw std::invalid_argument("queue is full");
+      int i = shiftItems(item);
+      items[i] = item;
       count++;
     }
-
+    int shiftItems(int item)
+    {
+        int i;
+        for (i = count - 1; i >= 0; i--)
+        {
+            if (items[i] > item)
+                items[i + 1] = items[i];
+            else
+                break;
+        }
+        return i + 1;
+    }
     int remove()
     {
         if(isEmpty())
@@ -207,7 +211,7 @@ int main()
  {
     std::cout<<queuep->remove()<<std::endl;
  }
- 
+ delete queuep;
 
   return 0;
 }
