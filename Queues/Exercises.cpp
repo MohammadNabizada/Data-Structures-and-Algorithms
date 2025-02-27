@@ -66,6 +66,17 @@ class ArrayQueue
     int item = items[front];
     return item;
  }
+ void reverser(int kth)
+ {
+    int fr = front;
+    int swap;
+    for(int i = kth - 1; i >= 0; i--)
+    {
+        swap = items[fr];
+        items[fr++] = items[i];
+        items[i] = swap;
+    }
+ }
 
 
 };
@@ -194,7 +205,15 @@ int main()
    my_queue->enqueue(20);
    my_queue->enqueue(30);
    my_queue->dequeue();
-   
+
+
+   my_queue->enqueue(10);
+   my_queue->enqueue(20);
+   my_queue->enqueue(30);
+   my_queue->enqueue(40);
+   my_queue->enqueue(50);
+   my_queue->enqueue(60);
+   my_queue->reverser(1);
 
    QueueStack *queueS = new QueueStack;
    queueS->enqueue(1);
