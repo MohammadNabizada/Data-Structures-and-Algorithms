@@ -124,6 +124,34 @@ class QueueStack
 };
 
 
+class priorityQ{
+
+    private:
+    int *items = new int[5];
+    int count = 0;
+    int length = 5;
+    public:
+
+    void add(int item)
+    {
+
+        if(count == length)
+          throw std::invalid_argument("queue is full"); 
+        int i;
+       for (i = count - 1; i >= 0;i--)
+       {
+        if(items[i] > item)
+          items[i + 1] = items[i];
+        else
+         break;
+       }
+      items[i+1] = item;
+      count++;
+    }
+
+
+};
+
 
 
 int main()
@@ -155,7 +183,12 @@ int main()
 
   std::cout<<queueS->dequeue();
 
+  std::cout<<std::endl;
+  priorityQ *queuep = new priorityQ;
+  queuep->add(1);
+  queuep->add(3);
 
+ 
 
-    return 0;
+  return 0;
 }
