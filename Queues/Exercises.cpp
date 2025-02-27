@@ -66,7 +66,72 @@ class ArrayQueue
     int item = items[front];
     return item;
  }
+ void reverser(int kth)
+ {
+    int fr = front;
+    int swap;
+    for(int i = kth - 1; i >= 0; i--)
+    {
+        swap = items[fr];
+        items[fr++] = items[i];
+        items[i] = swap;
+    }
+ }
+};
 
+class QueueWithLinkedlist
+{
+  private:
+  class Node{
+    public:
+    Node *next;
+    int value;
+    Node(int value)
+    {
+      this->value = value;
+    }
+  };
+  Node *front = nullptr;
+  int sizel = 0;
+  public:
+  void enqueue(int item)
+  {
+    Node *node = new Node(item);
+    Node *current;
+    if(isEmpty())
+    {
+      front = current = node;
+      node->next = nullptr;
+    }
+    current->next = node;
+    sizel++;
+  }
+  int dequeue()
+  {
+    if(isEmpty())
+      throw std::invalid_argument("queue is empty");
+    int pop = front->value;
+    front = front->next;
+    sizel--;
+    return pop;
+  }
+  bool isEmpty()
+  {
+    return front == nullptr;
+  }
+  int peek()
+  {
+    if(isEmpty())
+      throw std::invalid_argument("queue is empty");
+    int pop = front->value;
+    return pop;
+  }
+  int size()
+  {
+    int len = sizel;
+    return len;
+  }
+ 
 
 };
 //implementation a queue with a stack
@@ -194,7 +259,10 @@ int main()
    my_queue->enqueue(20);
    my_queue->enqueue(30);
    my_queue->dequeue();
-   
+
+
+   my_queue->enqueue(10);
+   my_queue->reverser(1);
 
    QueueStack *queueS = new QueueStack;
    queueS->enqueue(1);
@@ -216,6 +284,16 @@ int main()
     std::cout<<queuep->remove()<<std::endl;
  }
  delete queuep;
+
+ std::cout<<"this is a queue with linked list"<<std::endl;
+
+ QueueWithLinkedlist *lqueue = new QueueWithLinkedlist;
+
+ lqueue->enqueue(1);
+ lqueue->enqueue(2);
+ lqueue->enqueue(3);
+ lqueue->enqueue(4);
+ std::cout<<lqueue->peek();
 
   return 0;
 }
