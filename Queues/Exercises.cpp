@@ -238,6 +238,59 @@ class priorityQ{
 };
 
 
+class StackWith2Queues
+{
+  private:
+   std::queue<int> queue1;
+   std::queue<int> queue2;
+
+  public:
+
+   void push(int item)
+   {
+
+    queue2.push(item);
+
+    while(!queue1.empty())
+    {
+      queue2.push(queue1.front());
+      queue1.pop();
+    }
+
+
+    std::swap(queue1,queue2);
+   }
+   int pop()
+   {
+    if(!isEmpty())
+    {
+      std::cerr << "Stack is empty"<<std::endl;
+      return -1;
+    }
+    int topElement = queue1.front();
+    queue1.pop();
+    return topElement;
+   }
+
+   bool isEmpty()
+   {
+     return queue1.empty();
+   }
+   int peek() {
+    if (isEmpty()) {
+        std::cerr << "Stack is empty!" << std::endl;
+        return -1; 
+    }
+    return queue1.front();
+}
+
+int size() {
+  return queue1.size();
+}
+
+
+};
+
 
 int main()
 {
@@ -295,5 +348,18 @@ int main()
  lqueue->enqueue(4);
  std::cout<<lqueue->peek();
 
+
+ StackWith2Queues stackQueue;
+ stackQueue.push(1);
+ stackQueue.push(2);
+ stackQueue.push(3);
+
+ std::cout << "Top element: " << stackQueue.peek() << std::endl;
+ std::cout << "Stack size: " << stackQueue.size() << std::endl; 
+
+ std::cout << "Popped element: " << stackQueue.pop() << std::endl; 
+ std::cout << "Stack size after pop: " << stackQueue.size() << std::endl; 
+
+ std::cout << "Is stack empty? " << (stackQueue.isEmpty() ? "Yes" : "No") << std::endl;
   return 0;
 }
