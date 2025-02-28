@@ -238,6 +238,31 @@ class priorityQ{
 };
 
 
+class StackWith2Queues
+{
+  private:
+   std::queue<int> queue1;
+   std::queue<int> queue2;
+
+  public:
+
+   void push(int item)
+   {
+
+    queue2.push(item);
+
+    while(!queue1.empty())
+    {
+      queue2.push(queue1.front());
+      queue1.pop();
+    }
+
+
+    std::swap(queue1,queue2);
+   }
+
+};
+
 
 int main()
 {
@@ -294,6 +319,9 @@ int main()
  lqueue->enqueue(3);
  lqueue->enqueue(4);
  std::cout<<lqueue->peek();
+
+
+ StackWith2Queues stackQueue;
 
   return 0;
 }
