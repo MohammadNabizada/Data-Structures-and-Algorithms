@@ -260,6 +260,23 @@ class StackWith2Queues
 
     std::swap(queue1,queue2);
    }
+   int pop()
+   {
+    if(!isEmpty())
+    {
+      std::cerr << "Stack is empty"<<std::endl;
+      return -1;
+    }
+    int topElement = queue1.front();
+    queue1.pop();
+    return topElement;
+   }
+
+   bool isEmpty()
+   {
+     return queue1.empty();
+   }
+
 
 };
 
