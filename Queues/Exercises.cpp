@@ -350,6 +350,16 @@ int main()
 
 
  StackWith2Queues stackQueue;
+ stackQueue.push(1);
+ stackQueue.push(2);
+ stackQueue.push(3);
 
+ std::cout << "Top element: " << stackQueue.peek() << std::endl;
+ std::cout << "Stack size: " << stackQueue.size() << std::endl; 
+
+ std::cout << "Popped element: " << stackQueue.pop() << std::endl; 
+ std::cout << "Stack size after pop: " << stackQueue.size() << std::endl; 
+
+ std::cout << "Is stack empty? " << (stackQueue.isEmpty() ? "Yes" : "No") << std::endl;
   return 0;
 }
