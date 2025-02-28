@@ -276,6 +276,17 @@ class StackWith2Queues
    {
      return queue1.empty();
    }
+   int peek() {
+    if (isEmpty()) {
+        std::cerr << "Stack is empty!" << std::endl;
+        return -1; 
+    }
+    return queue1.front();
+}
+
+int size() {
+  return queue1.size();
+}
 
 
 };
