@@ -24,16 +24,14 @@ class firstNonerepeat
         return '\0';
     }
 
-
-
-
 };
 
 int main()
 {
 
 
-
+    firstNonerepeat noneRepeated("a green apple.");
+    std::cout<<noneRepeated.noneRepeated();
 
 
     return 0;
