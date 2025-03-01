@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <set>
+#include <functional>
 int main()
 {
     std::unordered_map<int, std::string> map;
@@ -36,5 +37,12 @@ int main()
       {
         std::cout<<item<<" ";
       }
+
+      std::string str = "hello";
+      std::hash<std::string> stringHasher;
+      size_t strHash = stringHasher(str);
+      std::cout << "Hash code of '" << str << "': " << strHash << std::endl;
+
+
     return 0;
 }
