@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unordered_map>
-
+#include <set>
 int main()
 {
     std::unordered_map<int, std::string> map;
@@ -20,5 +20,21 @@ int main()
     for(const auto& pair : map)
       std::cout<<"Key:" << pair.first<<" Value:"<< pair.second<<std::endl;
 
+
+
+
+
+      std::set<int> mySet;
+      mySet.insert(1);
+      mySet.insert(2);
+      mySet.insert(3);
+      mySet.insert(2);
+      mySet.insert(1);
+
+      std::cout<<"element of set:"<<std::endl;
+      for(int item : mySet)
+      {
+        std::cout<<item<<" ";
+      }
     return 0;
 }
