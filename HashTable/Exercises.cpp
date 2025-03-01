@@ -28,15 +28,12 @@ class firstNonerepeat
         std::unordered_map<char,int> map;
         for(const auto& ch : str)
         {
-          map[ch]++;
-        }
-
-        for(const auto& ch : str)
-        {
-            if(map[ch] > 1)
+          auto it = map.find(ch);
+          if(it != map.end())
+             map[ch]++;
+          else 
              return ch;
         }
-
         return '\0';
     }
 
