@@ -99,6 +99,35 @@ public:
 };
 
 
+
+class findThemostReapeted
+{
+  private:
+   std::unordered_map<int,int> map;
+  public:
+  int mostrepeated(int array[],int size)
+  {
+   for(int i = 0; i < size;i++){
+    map[array[i]]++;
+   }
+   
+   int mostRepeatednumber = 0;
+   int maxFreq = 0;
+
+   for(const auto& pair: map)
+   {
+    if(pair.second > maxFreq)
+    {
+        maxFreq = pair.second;
+        mostRepeatednumber = pair.first;
+    }
+   }
+
+   return mostRepeatednumber;
+  }
+
+};
+
 int main()
 {
 
@@ -113,5 +142,12 @@ int main()
     table.put(2,"Jack");
     table.put(11,"john");
     table.remove(2);
+    findThemostReapeted mre;
+    int array[] = {1,2,2,3,3,3,4};
+    int size = sizeof(array) / sizeof(array[0]);
+    std::cout<<"most repeated:"<<mre.mostrepeated(array,size);
+    
+
+
     return 0;
 }
