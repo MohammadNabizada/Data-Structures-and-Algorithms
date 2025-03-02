@@ -40,6 +40,44 @@ class firstNonerepeat
 
 };
 
+class HashTable
+{
+  //put(k,v)
+  //get(k) : v
+  //remove(k)
+  //k :int
+  //value : string
+  //colisions : chaining
+  //linkedList[]
+  //Entry class
+
+  private:
+  class Entry{
+   public:
+   Entry *next;
+   int value;
+
+   Entry(int vl)
+   {
+    this->value = vl;
+   }
+  };
+
+  Entry *list = new Entry[5]; 
+  public:
+
+
+
+
+
+
+
+
+
+
+};
+
+
 int main()
 {
 
