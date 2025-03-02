@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <list>
+#include <string>
 class firstNonerepeat
 {
    private:
@@ -43,68 +44,54 @@ class firstNonerepeat
 
 class HashTable
 {
-  //put(k,v)
-  //get(k) : v
-  //remove(k)
-  //k :int
-  //value : string
-  //colisions : chaining
-  //linkedList[]
-  //Entry class
-   private:
+    private:
+   
+    class Entry {
+    public:
+        int key;
+        std::string value;
 
-   class Entry{
-      private:
-       int key;
-       std::string value;
-      public:
-      Entry(int key, std::string value)
-      {
-         this->key = key;
-         this->value = value;
-      }
+        Entry(int key, std::string value) : key(key), value(value) {}
+    };
 
-      private:
-       std::list<Entry> entries[5];
-       int hash(int key)
-       {
-          return key % entries->size();
-       }
-      public:
-       void put(int key, std::string value)
-       {
+    static const int TABLE_SIZE = 5; 
+    std::list<Entry> entries[TABLE_SIZE];
+
+  
+    int hash(int key) {
+        return key % TABLE_SIZE;
+    }
+
+public:
+    
+    void put(int key, std::string value) {
         int index = hash(key);
-        for(auto &entry: entries[index])
-        {
-            if(entry.key == key)
-            {
+
+       
+        for (auto& entry : entries[index]) {
+            if (entry.key == key) {
                 entry.value = value;
                 return;
             }
-
-            entries[index].push_back({key, value});
         }
-       }
 
-       std::string get(int key)
-       {
+    
+        entries[index].emplace_back(key, value);
+    }
+
+   
+    std::string get(int key) {
         int index = hash(key);
-        std::list<Entry> bucket = entries[index];
 
-        for(auto &entry: bucket)
-        {
-            if(entry.key == key)
-             return entry.value;
+        
+        for (const auto& entry : entries[index]) {
+            if (entry.key == key) {
+                return entry.value;
+            }
         }
+
         return "";
-       }
-
-   };
-
-
-
-
-
+    }
 
 
 
@@ -120,6 +107,9 @@ int main()
     std::cout<<std::endl;
     std::cout<<noneRepeated.firstRepeatedchar();
 
-
+    HashTable table;
+    table.put(1,"ALI");
+    table.put(2,"Jack");
+    table.put(11,"john");
     return 0;
 }
