@@ -92,7 +92,15 @@ public:
 
         return "";
     }
+    void remove(int key)
+    {
+        int index = hash(key);
 
+        entries[index].remove_if([key](const Entry& entry){
+            return entry.key == key;
+        });
+        
+    }
 
 
 };
@@ -111,5 +119,6 @@ int main()
     table.put(1,"ALI");
     table.put(2,"Jack");
     table.put(11,"john");
+    table.remove(2);
     return 0;
 }
