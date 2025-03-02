@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unordered_map>
+#include <list>
 class firstNonerepeat
 {
    private:
@@ -50,23 +51,42 @@ class HashTable
   //colisions : chaining
   //linkedList[]
   //Entry class
+   private:
 
-  private:
-  class Entry{
-   public:
-   Entry *next;
-   int value;
+   class Entry{
+      private:
+       int key;
+       std::string value;
+      public:
+      Entry(int key, std::string value)
+      {
+         this->key = key;
+         this->value = value;
+      }
 
-   Entry(int vl)
-   {
-    this->value = vl;
-   }
-  };
+      private:
+       std::list<Entry> entries[5];
+       int hash(int key)
+       {
+          return key % entries->size();
+       }
+      public:
+       void put(int key, std::string value)
+       {
+        int index = hash(key);
+        for(auto &entry: entries[index])
+        {
+            if(entry.key == key)
+            {
+                entry.value = value;
+                return;
+            }
 
-  Entry *list = new Entry[5]; 
-  public:
+            entries[index].push_back({key, value});
+        }
+       }
 
-
+   };
 
 
 
