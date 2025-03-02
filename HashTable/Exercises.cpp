@@ -61,35 +61,28 @@ class HashTable
     int hash(int key) {
         return key % TABLE_SIZE;
     }
-
+    
 public:
     
     void put(int key, std::string value) {
         int index = hash(key);
-
-       
         for (auto& entry : entries[index]) {
             if (entry.key == key) {
                 entry.value = value;
                 return;
             }
         }
-
-    
         entries[index].emplace_back(key, value);
     }
 
    
     std::string get(int key) {
         int index = hash(key);
-
-        
         for (const auto& entry : entries[index]) {
             if (entry.key == key) {
                 return entry.value;
             }
         }
-
         return "";
     }
     void remove(int key)
