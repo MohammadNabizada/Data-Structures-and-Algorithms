@@ -86,6 +86,19 @@ class HashTable
         }
        }
 
+       std::string get(int key)
+       {
+        int index = hash(key);
+        std::list<Entry> bucket = entries[index];
+
+        for(auto &entry: bucket)
+        {
+            if(entry.key == key)
+             return entry.value;
+        }
+        return "";
+       }
+
    };
 
 
