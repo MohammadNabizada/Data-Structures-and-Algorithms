@@ -183,6 +183,62 @@ class findingTwosum
 
 };
 
+class Hashtable{
+   private:
+   static const int INITIAL_SIZE = 16;
+   class Entry
+   {
+    public:
+    int key;
+    std::string value;
+    bool isDeleted;
+    Entry(int key,std::string value)
+    {
+        this->key = key;
+        this->value = value;
+        isDeleted = false;
+    }
+   };
+   std::vector<Entry*> table;
+   int size;
+
+   int hash(int key)
+   {
+    return key % INITIAL_SIZE;
+   }
+   public:
+   Hashtable() : table(INITIAL_SIZE,nullptr),size(0){}
+   ~Hashtable()
+   {
+    for(Entry* entry:table)
+    {
+        delete entry;
+    }
+   }
+
+   void put(int key, std::string value)
+   {
+      
+      int index = hash(key);
+      while(table[index] != nullptr && table[index]->key != key && !table[index]->isDeleted)
+      {
+        index = (index + 1) % INITIAL_SIZE;
+      }
+      if(table[index] == nullptr || table[index]->isDeleted){
+        delete table[index];
+        table[index] = new Entry(key,value);
+        size++;
+      }else{
+        table[index]->value = value;
+      }
+
+   }
+
+   
+
+
+
+};
 
 int main()
 {
