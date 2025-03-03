@@ -128,6 +128,39 @@ class findThemostReapeted
 
 };
 
+class findingPairs{
+  private:
+  std::unordered_map<int,int> map;
+  public:
+  
+  void addNumbers(const int arr[], int size)
+  {
+    for(int i = 0; i < size;i++)
+    {
+        map[arr[i]]++;
+    }
+  }
+
+
+  int countPair(int k)
+  {
+    int count = 0;
+
+    for(const auto& pair : map)
+    {
+        int num = pair.first;
+        if(map.find(num+k) != map.end())
+          count++;
+        if(map.find(num - k) != map.end())
+          count++;
+
+    }
+    return count / 2;
+  }
+};
+
+
+
 int main()
 {
 
@@ -148,6 +181,13 @@ int main()
     std::cout<<"most repeated:"<<mre.mostrepeated(array,size);
     
 
+    int arr[] = {1,7,5,9,2,12,3};
+    int length = sizeof(arr) / sizeof(arr[0]);
 
+    int k = 2;
+
+    findingPairs fpairs;
+    fpairs.addNumbers(arr,length);
+    std::cout<<"pairs:"<<fpairs.countPair(k);
     return 0;
 }
