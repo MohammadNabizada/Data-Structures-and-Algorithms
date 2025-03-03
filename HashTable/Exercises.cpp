@@ -183,62 +183,98 @@ class findingTwosum
 
 };
 
-class Hashtable{
-   private:
-   static const int INITIAL_SIZE = 16;
-   class Entry
-   {
+class Hashtable {
+    private:
+        int INITIAL_SIZE = 16;
+    
+        class Entry {
+        public:
+            int key;
+            std::string value;
+            bool isDeleted;
+            Entry(int key, std::string value) {
+                this->key = key;
+                this->value = value;
+                this->isDeleted = false;
+            }
+        };
+    
+        std::vector<Entry*> table;
+        int size = 0;
+    
+        int hash(int key) {
+            return key % INITIAL_SIZE;
+        }
+    
     public:
-    int key;
-    std::string value;
-    bool isDeleted;
-    Entry(int key,std::string value)
-    {
-        this->key = key;
-        this->value = value;
-        isDeleted = false;
-    }
-   };
-   std::vector<Entry*> table;
-   int size;
-
-   int hash(int key)
-   {
-    return key % INITIAL_SIZE;
-   }
-   public:
-   Hashtable() : table(INITIAL_SIZE,nullptr),size(0){}
-   ~Hashtable()
-   {
-    for(Entry* entry:table)
-    {
-        delete entry;
-    }
-   }
-
-   void put(int key, std::string value)
-   {
-      
-      int index = hash(key);
-      while(table[index] != nullptr && table[index]->key != key && !table[index]->isDeleted)
-      {
-        index = (index + 1) % INITIAL_SIZE;
-      }
-      if(table[index] == nullptr || table[index]->isDeleted){
-        delete table[index];
-        table[index] = new Entry(key,value);
-        size++;
-      }else{
-        table[index]->value = value;
-      }
-
-   }
-
-   
-
-
-
-};
+        Hashtable() {
+            table.resize(INITIAL_SIZE, nullptr);
+        }
+    
+        ~Hashtable() {
+            for (auto entry : table) {
+                if (entry) delete entry;
+            }
+        }
+    
+        void put(int key, std::string value) {
+            int index = hash(key);
+            int startIndex = index;
+    
+            while (table[index] != nullptr && !table[index]->isDeleted && table[index]->key != key) {
+                index = (index + 1) % INITIAL_SIZE;
+                if (index == startIndex) {
+                    // Table is full, handle resizing or throw an error
+                    return;
+                }
+            }
+    
+            if (table[index] == nullptr || table[index]->isDeleted) {
+                if (table[index]) delete table[index];
+                table[index] = new Entry(key, value);
+                size++;
+            } else {
+                table[index]->value = value;
+            }
+        }
+    
+        std::string get(int key) {
+            int index = hash(key);
+            int startIndex = index;
+    
+            while (table[index] != nullptr) {
+                if (table[index]->key == key && !table[index]->isDeleted) {
+                    return table[index]->value;
+                }
+                index = (index + 1) % INITIAL_SIZE;
+                if (index == startIndex) {
+                    break;
+                }
+            }
+            return "";
+        }
+    
+        void remove(int key) {
+            int index = hash(key);
+            int startIndex = index;
+    
+            while (table[index] != nullptr) {
+                if (table[index]->key == key && !table[index]->isDeleted) {
+                    table[index]->isDeleted = true;
+                    size--;
+                    return;
+                }
+                index = (index + 1) % INITIAL_SIZE;
+                if (index == startIndex) {
+                    break;
+                }
+            }
+        }
+    
+        int length() {
+            return size;
+        }
+    };
 
 int main()
 {
@@ -276,5 +312,17 @@ int main()
     findingTwosum twoSum;
     std::vector<int> result = twoSum.twoSum(arr2,len,target);
     std::cout<<"twoSum:["<<result[0]<<","<<result[1]<<"]";
+
+    Hashtable hashMap2;
+    hashMap2.put(1, "Value1");
+    hashMap2.put(2, "Value2");
+    hashMap2.put(3, "Value3");
+
+    std::cout << "Size: " << hashMap2.length() << std::endl;
+    std::cout << "Key 2: " << hashMap2.get(2) << std::endl;
+
+    hashMap2.remove(2);
+    std::cout << "Key 2 after removal: " << hashMap2.get(2) << std::endl;
+    std::cout << "Size after removal: " << hashMap2.length() << std::endl;
     return 0;
 }
