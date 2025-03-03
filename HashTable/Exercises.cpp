@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <list>
 #include <string>
+#include <stdexcept>
+#include <vector>
 class firstNonerepeat
 {
    private:
@@ -159,6 +161,27 @@ class findingPairs{
   }
 };
 
+class findingTwosum
+{
+ private:
+  std::unordered_map<int,int> map;
+
+ public:
+ std::vector<int> twoSum(const int nums[], int size,int target)
+ {
+   for(int i = 0; i < size; i++)
+   {
+    int complement = target - nums[i];
+
+    if(map.find(complement) != map.end())
+      return {map[complement],i};
+    map[nums[i]] = i;
+   }
+
+   return {};
+ }
+
+};
 
 
 int main()
@@ -189,5 +212,13 @@ int main()
     findingPairs fpairs;
     fpairs.addNumbers(arr,length);
     std::cout<<"pairs:"<<fpairs.countPair(k);
+    
+    std::cout<<std::endl;
+    int arr2 [] = {2,7,11,15};
+    int len = 4;
+    int target = 9;
+    findingTwosum twoSum;
+    std::vector<int> result = twoSum.twoSum(arr2,len,target);
+    std::cout<<"twoSum:["<<result[0]<<","<<result[1]<<"]";
     return 0;
 }
