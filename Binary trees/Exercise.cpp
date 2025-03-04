@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <math.h>
 
 class Tree
 {
@@ -44,6 +44,12 @@ class Tree
         traversalPostorder(root->leftchild);
         traversalPostorder(root->rightchild);
         std::cout<<root->value<<",";
+    }
+    int hight(Node *root)
+    {
+        if(root->leftchild == nullptr && root->rightchild == nullptr)
+        return 0;
+        return 1 + std::max(hight(root->leftchild),hight(root->rightchild));
     }
     public:
     void insert(int value)
@@ -104,6 +110,10 @@ class Tree
     void traversalPostorder(){
         traversalPostorder(root);
     }
+    int hight()
+    {
+        hight(root);
+    }
 
 
 };
@@ -129,7 +139,8 @@ int main()
     std::cout<<std::endl;
     std::cout<<"Postorder Traversal:";
     tree->traversalPostorder();
-
+    std::cout<<std::endl;
+    std::cout<<"hight of tree:"<<tree->hight();
 
     return 0;
 }
