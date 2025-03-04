@@ -18,7 +18,14 @@ class Tree
       }
     };
     Node* root;
-
+    void traversalPreOrder(Node *root)
+    {
+         if(root == nullptr)
+          return;
+         std::cout<<root->value<<",";
+         traversalPreOrder(root->leftchild);
+         traversalPreOrder(root->rightchild);
+    }
     public:
     void insert(int value)
     {
@@ -67,6 +74,12 @@ class Tree
 
           return false;
         }
+   
+    void traversalPreOrder(){
+        traversalPreOrder(root);
+    }
+
+
 };
 
 int main()
@@ -78,11 +91,12 @@ int main()
     tree->insert(4);
     tree->insert(9);
     tree->insert(1);
-    tree->insert(8);
     tree->insert(6);
-    tree->insert(3);
-    std::cout<<"find 3:"<<tree->find(17);
-
+    tree->insert(8);
+    tree->insert(10);
+    std::cout<<"find 3:"<<tree->find(17)<<std::endl;
+    
+    tree->traversalPreOrder();
 
 
     return 0;
