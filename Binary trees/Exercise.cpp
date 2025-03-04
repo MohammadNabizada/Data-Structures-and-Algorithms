@@ -28,12 +28,22 @@ class Tree
     }
     void traversalInorder(Node *root)
     {
-     //base condition
      if(root == nullptr)
       return;
      traversalInorder(root->leftchild);
      std::cout<<root->value<<",";
      traversalInorder(root->rightchild);
+    }
+
+    void traversalPostorder(Node *root)
+    {
+
+        if(root == nullptr)
+          return;
+
+        traversalPostorder(root->leftchild);
+        traversalPostorder(root->rightchild);
+        std::cout<<root->value<<",";
     }
     public:
     void insert(int value)
@@ -91,6 +101,11 @@ class Tree
         traversalInorder(root);
     }
 
+    void traversalPostorder(){
+        traversalPostorder(root);
+    }
+
+
 };
 
 int main()
@@ -108,8 +123,12 @@ int main()
     std::cout<<"find 3:"<<tree->find(17)<<std::endl;
     std::cout<<"PreOrder Traversal:";
     tree->traversalPreOrder();
+    std::cout<<std::endl;
     std::cout<<"Inorder Traversal:";
     tree->traversalInorder();
+    std::cout<<std::endl;
+    std::cout<<"Postorder Traversal:";
+    tree->traversalPostorder();
 
 
     return 0;
