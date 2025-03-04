@@ -47,8 +47,10 @@ class Tree
     }
     int hight(Node *root)
     {
+        if(root == nullptr)
+           return -1;
         if(root->leftchild == nullptr && root->rightchild == nullptr)
-        return 0;
+           return 0;
         return 1 + std::max(hight(root->leftchild),hight(root->rightchild));
     }
     public:
