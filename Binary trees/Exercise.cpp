@@ -114,7 +114,7 @@ class Tree
     }
     int hight()
     {
-        hight(root);
+       return hight(root);
     }
 
 
