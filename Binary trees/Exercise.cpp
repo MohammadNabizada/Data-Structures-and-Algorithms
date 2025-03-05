@@ -205,5 +205,8 @@ int main()
     std::cout<<std::endl;
     std::cout<<"is equal tree1 and tree2:";
     std::cout << (tree->equal(*tree2) ? "Yes" : "No") << std::endl;
+    std::cout<<std::endl;
+    std::cout<<"is tree Binary search:";
+    std::cout << (tree->isBinarySearchTree() ? "Yes" : "No") << std::endl;
     return 0;
 }
