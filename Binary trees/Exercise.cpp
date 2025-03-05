@@ -76,6 +76,16 @@ class Tree
          return first->value==seccond->value && equal(first->leftchild,seccond->leftchild) && equal(first->rightchild,seccond->rightchild);
       return false;
     }
+
+    bool isBinarySearchTree(Node *root,int min,int max)
+    {
+        if(root == nullptr)
+          return true;
+        if(root->value < min || root->value > max)
+          return false;
+        return isBinarySearchTree(root->leftchild,min,root->value - 1) 
+        &&isBinarySearchTree(root->rightchild,root->value+1,max);
+    }
     public:
     void insert(int value)
     {
@@ -149,6 +159,12 @@ class Tree
         throw std::invalid_argument("tree can not be null");
       return equal(root,other.root);
     }
+
+    bool isBinarySearchTree(){
+      return isBinarySearchTree(root,INT_MIN,INT_MAX);
+    }
+
+
   
 };
 
