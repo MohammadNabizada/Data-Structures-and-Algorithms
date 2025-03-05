@@ -86,17 +86,17 @@ class Tree
         return isBinarySearchTree(root->leftchild,min,root->value - 1) 
         &&isBinarySearchTree(root->rightchild,root->value+1,max);
     }
-    void kDistance(int distance,Node* root)
+    void kDistance(Node* root,int distance)
     {
       if(root == nullptr)
          return;
       if(distance == 0)
       {
-        std::cout<<root->value;
+        std::cout<<root->value<<",";
         return;
       }
-     kDistance(distance - 1,root->leftchild);
-     kDistance(distance - 1,root->rightchild);
+     kDistance(root->leftchild,distance - 1);
+     kDistance(root->rightchild,distance - 1);
     }
     public:
     void insert(int value)
@@ -184,9 +184,20 @@ class Tree
     }
     void kDistance(int distance)
     {
-      kDistance(distance,root);
+      kDistance(root,distance);
     }
+    void traverseLevelOrder() {
+      if (root == nullptr) {
+          std::cout << "Tree is empty." << std::endl;
+          return;
+      }
 
+      int h = hight(root); // Get the height of the tree
+      for (int level = 0; level <= h; level++) {
+        kDistance(root, level); // Process each level
+      }
+      std::cout << std::endl;
+  }
   
 };
 
@@ -223,7 +234,7 @@ int main()
     tree2->insert(1);
     tree2->insert(6);
     tree2->insert(8);
-    // tree2->insert(10);
+    tree2->insert(10);
     std::cout<<std::endl;
     std::cout<<"is equal tree1 and tree2:";
     std::cout << (tree->equal(*tree2) ? "Yes" : "No") << std::endl;
@@ -235,8 +246,10 @@ int main()
     std::cout << (tree->isBinarySearchTree() ? "Yes" : "No") << std::endl;
     std::cout<<std::endl;
     std::cout<<"node in k distance:";
-    tree->kDistance(3);
-
+    tree2->kDistance(3);
+    std::cout<<std::endl;
+    std::cout<<"Level order traversal:";
+    tree2->traverseLevelOrder();
 
     return 0;
 }
