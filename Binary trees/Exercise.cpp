@@ -163,6 +163,12 @@ class Tree
     bool isBinarySearchTree(){
       return isBinarySearchTree(root,INT_MIN,INT_MAX);
     }
+    void swap()
+    {
+      Node* temp = root->leftchild;
+      root->leftchild = root->rightchild;
+      root->rightchild = temp;
+    }
 
 
   
