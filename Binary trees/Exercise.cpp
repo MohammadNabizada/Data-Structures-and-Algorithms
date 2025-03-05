@@ -1,6 +1,6 @@
 #include <iostream>
 #include <math.h>
-
+#include <algorithm>
 class Tree
 {
    private:
@@ -47,11 +47,25 @@ class Tree
     }
     int hight(Node *root)
     {
-        if(root == nullptr)
+        if(isLeaf(root))
            return -1;
         if(root->leftchild == nullptr && root->rightchild == nullptr)
            return 0;
         return 1 + std::max(hight(root->leftchild),hight(root->rightchild));
+    }
+
+    int min(Node *root)
+    {
+     if(isLeaf(root))
+        return root->value;
+     int left = min(root->leftchild);
+     int right = min(root->rightchild);
+     
+     return std::min({left,right,root->value});
+    }
+    bool isLeaf(Node *node)
+    {
+       return node->leftchild == nullptr && node->rightchild == nullptr;
     }
     public:
     void insert(int value)
@@ -116,6 +130,10 @@ class Tree
     {
        return hight(root);
     }
+    int min()
+    {
+      return min(root);
+    }
 
 
 };
@@ -143,6 +161,8 @@ int main()
     tree->traversalPostorder();
     std::cout<<std::endl;
     std::cout<<"hight of tree:"<<tree->hight();
+    std::cout<<std::endl;
+    std::cout<<"min:"<<tree->min();
 
     return 0;
 }
