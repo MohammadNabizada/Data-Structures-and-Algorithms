@@ -67,6 +67,15 @@ class Tree
     {
        return node->leftchild == nullptr && node->rightchild == nullptr;
     }
+
+    bool equal(Node *first, Node *seccond)
+    {
+      if(first == nullptr && seccond == nullptr)
+        return true;
+      if(first != nullptr && seccond != nullptr)
+         return first->value==seccond->value && equal(first->leftchild,seccond->leftchild) && equal(first->rightchild,seccond->rightchild);
+      return false;
+    }
     public:
     void insert(int value)
     {
@@ -134,8 +143,13 @@ class Tree
     {
       return min(root);
     }
-
-
+    bool equal(Tree other)
+    {
+      if(other.root == nullptr)
+        throw std::invalid_argument("tree can not be null");
+      return equal(root,other.root);
+    }
+  
 };
 
 int main()
@@ -164,5 +178,16 @@ int main()
     std::cout<<std::endl;
     std::cout<<"min:"<<tree->min();
 
+    Tree *tree2 = new Tree();
+    tree2->insert(7);
+    tree2->insert(4);
+    tree2->insert(9);
+    tree2->insert(1);
+    tree2->insert(6);
+    tree2->insert(8);
+    // tree2->insert(10);
+    std::cout<<std::endl;
+    std::cout<<"is equal tree1 and tree2:";
+    std::cout << (tree->equal(*tree2) ? "Yes" : "No") << std::endl;
     return 0;
 }
