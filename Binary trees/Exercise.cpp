@@ -214,5 +214,8 @@ int main()
     std::cout<<std::endl;
     std::cout<<"is tree Binary search:";
     std::cout << (tree->isBinarySearchTree() ? "Yes" : "No") << std::endl;
+    tree->swap();
+    std::cout<<"is tree Binary search after swaping:";
+    std::cout << (tree->isBinarySearchTree() ? "Yes" : "No") << std::endl;
     return 0;
 }
