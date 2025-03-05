@@ -86,6 +86,18 @@ class Tree
         return isBinarySearchTree(root->leftchild,min,root->value - 1) 
         &&isBinarySearchTree(root->rightchild,root->value+1,max);
     }
+    void kDistance(int distance,Node* root)
+    {
+      if(root == nullptr)
+         return;
+      if(distance == 0)
+      {
+        std::cout<<root->value;
+        return;
+      }
+     kDistance(distance - 1,root->leftchild);
+     kDistance(distance - 1,root->rightchild);
+    }
     public:
     void insert(int value)
     {
@@ -163,13 +175,17 @@ class Tree
     bool isBinarySearchTree(){
       return isBinarySearchTree(root,INT_MIN,INT_MAX);
     }
+
     void swap()
     {
       Node* temp = root->leftchild;
       root->leftchild = root->rightchild;
       root->rightchild = temp;
     }
-
+    void kDistance(int distance)
+    {
+      kDistance(distance,root);
+    }
 
   
 };
@@ -217,5 +233,10 @@ int main()
     tree->swap();
     std::cout<<"is tree Binary search after swaping:";
     std::cout << (tree->isBinarySearchTree() ? "Yes" : "No") << std::endl;
+    std::cout<<std::endl;
+    std::cout<<"node in k distance:";
+    tree->kDistance(3);
+
+
     return 0;
 }
