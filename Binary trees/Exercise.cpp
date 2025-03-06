@@ -101,7 +101,18 @@ class Tree
      kDistance(root->leftchild,distance - 1);
      kDistance(root->rightchild,distance - 1);
     }
-    int len = 0;
+
+    int countLeaves(Node* root)
+    {
+      if(root == nullptr)
+        return 0;
+      //base condition
+      if(root->leftchild == nullptr && root->rightchild == nullptr)
+        return 1;
+      
+      return countLeaves(root->leftchild) + countLeaves(root->rightchild);
+
+    }
     int size(Node *root)
     {
        if(root == nullptr)
@@ -216,6 +227,10 @@ class Tree
   {
     return size(root);
   }
+  int countLeaves()
+  {
+    return countLeaves(root);
+  }
   
 };
 
@@ -226,11 +241,11 @@ int main()
     Tree *tree = new Tree();
     tree->insert(7);
     tree->insert(4);
-    // tree->insert(9);
-    // tree->insert(1);
-    // tree->insert(6);
-    // tree->insert(8);
-    // tree->insert(10);
+    tree->insert(9);
+    tree->insert(1);
+    tree->insert(6);
+    tree->insert(8);
+    tree->insert(10);
     std::cout<<"find 3:"<<tree->find(17)<<std::endl;
     std::cout<<"PreOrder Traversal:";
     tree->traversalPreOrder();
@@ -271,6 +286,10 @@ int main()
     std::cout<<std::endl;
     std::cout<<"Size of tree:";
     std::cout<<tree->size();
+
+    std::cout<<std::endl;
+    std::cout<<"number of leaves:";
+    std::cout<<tree->countLeaves();
 
     return 0;
 }
