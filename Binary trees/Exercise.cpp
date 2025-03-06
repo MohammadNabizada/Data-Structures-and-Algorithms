@@ -142,6 +142,19 @@ private:
       return true;
     return contains(root->leftchild,item) || contains(root->rightchild,item);
   }
+  bool areSiblingRecursive(Node* root,int value1,int value2){
+    if(root == nullptr)
+       return false;
+    
+    if(root->leftchild != nullptr && root->rightchild != nullptr){
+      if((root->leftchild->value == value1 && root->rightchild->value == value2)|| (root->leftchild->value == value2 && root->rightchild->value == value1)){
+        return false;
+      }
+    }
+
+    return areSiblingRecursive(root->leftchild,value1,value2) || areSiblingRecursive(root->rightchild,value1,value2);
+  }
+
  
 public:
 
@@ -172,6 +185,7 @@ bool areSibling(int value1, int value2)
 
   return (parent1 != nullptr && parent2 != nullptr && parent1 == parent2);
 }
+
 
 
 
@@ -305,6 +319,15 @@ bool areSibling(int value1, int value2)
     return contains(root,item);
   }
 
+
+  ///areSibling function recursively
+bool areSiblingRecursive(int value1,int value2){
+  if(root == nullptr || value1 == value2)
+     return false;
+  
+  return areSiblingRecursive(root,value1,value2);
+}
+
 };
 
 int main()
@@ -371,7 +394,10 @@ int main()
   std::cout << "finding an item using contains method:";
   std::cout << (tree->contains(10) ? "YES" : "No")<<std::endl;
 
-
+  
   std::cout << "Are 7 and 4 siblings? " << (tree->areSibling(7, 4) ? "Yes" : "No") << std::endl;
+
+
+  std::cout << "Are 7 and 4 siblings? " << (tree->areSiblingRecursive(7, 4) ? "Yes" : "No") << std::endl;
   return 0;
 }
