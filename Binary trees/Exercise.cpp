@@ -55,12 +55,16 @@ class Tree
 
     int min(Node *root)
     {
-     if(isLeaf(root))
-        return root->value;
-     int left = min(root->leftchild);
-     int right = min(root->rightchild);
-     
-     return std::min({left,right,root->value});
+      if (root == nullptr) // Base case: empty tree
+      throw std::invalid_argument("Tree is empty."); // Handle empty tree case
+      if (isLeaf(root)) // Base case: leaf node
+          return root->value;
+
+  // Recursive case: find the minimum value in the left and right subtrees
+      int left = (root->leftchild != nullptr) ? min(root->leftchild) : root->value;
+      int right = (root->rightchild != nullptr) ? min(root->rightchild) : root->value;
+
+      return std::min({left, right, root->value});
     }
     bool isLeaf(Node *node) {
       if (node == nullptr) // Add null check
