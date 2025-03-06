@@ -134,11 +134,47 @@ private:
     return std::max({root->value,max(root->leftchild),max(root->rightchild)});
   }
 
-
-
-
-
+  bool contains(Node *root,int item)
+  {
+    if(root == nullptr)
+      return false;
+    if(root->value == item)
+      return true;
+    return contains(root->leftchild,item) || contains(root->rightchild,item);
+  }
+ 
 public:
+
+
+Node* findParent(Node* root,int value)
+{
+  if(root == nullptr || root->value == value)
+     return nullptr;
+  if((root->leftchild != nullptr && root->leftchild->value ==value) || (root->rightchild != nullptr && root->rightchild->value == value)){
+    return root;
+  }
+
+
+  Node* leftParent = findParent(root->leftchild,value);
+  if(leftParent != nullptr)
+    return leftParent;
+  return findParent(root->rightchild,value);
+}
+
+
+bool areSibling(int value1, int value2)
+{
+  if(root == nullptr || value1 == value2)
+     return false;
+  
+  Node* parent1 = findParent(root,value1);
+  Node* parent2 = findParent(root,value2);
+
+  return (parent1 != nullptr && parent2 != nullptr && parent1 == parent2);
+}
+
+
+
   void insert(int value)
   {
     Node *node = new Node(value);
@@ -263,6 +299,12 @@ public:
   {
     return max(root);
   }
+
+  bool contains(int item)
+  {
+    return contains(root,item);
+  }
+
 };
 
 int main()
@@ -325,5 +367,11 @@ int main()
   std::cout << "maximum value in tree:";
   std::cout << tree->max();
 
+  std::cout << std::endl;
+  std::cout << "finding an item using contains method:";
+  std::cout << (tree->contains(10) ? "YES" : "No")<<std::endl;
+
+
+  std::cout << "Are 7 and 4 siblings? " << (tree->areSibling(7, 4) ? "Yes" : "No") << std::endl;
   return 0;
 }
