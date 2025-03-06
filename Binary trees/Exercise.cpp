@@ -45,14 +45,13 @@ class Tree
         traversalPostorder(root->rightchild);
         std::cout<<root->value<<",";
     }
-    int hight(Node *root)
-    {
-        if(isLeaf(root))
-           return -1;
-        if(root->leftchild == nullptr && root->rightchild == nullptr)
-           return 0;
-        return 1 + std::max(hight(root->leftchild),hight(root->rightchild));
-    }
+    int height(Node *root) {
+      if (root == nullptr) // Base case: empty tree
+          return -1;
+      if (isLeaf(root)) // Base case: leaf node
+          return 0;
+      return 1 + std::max(height(root->leftchild), height(root->rightchild)); // Recursive case
+  }
 
     int min(Node *root)
     {
@@ -63,11 +62,11 @@ class Tree
      
      return std::min({left,right,root->value});
     }
-    bool isLeaf(Node *node)
-    {
-       return node->leftchild == nullptr && node->rightchild == nullptr;
-    }
-
+    bool isLeaf(Node *node) {
+      if (node == nullptr) // Add null check
+          return false; // A null node is not a leaf
+      return node->leftchild == nullptr && node->rightchild == nullptr;
+  }
     bool equal(Node *first, Node *seccond)
     {
       if(first == nullptr && seccond == nullptr)
@@ -97,6 +96,16 @@ class Tree
       }
      kDistance(root->leftchild,distance - 1);
      kDistance(root->rightchild,distance - 1);
+    }
+    int len = 0;
+    int size(Node *root)
+    {
+       if(root == nullptr)
+          return 0;
+       if(root->leftchild == nullptr && root->rightchild == nullptr)
+         return 1;
+       return size(root->leftchild) + size(root->rightchild) + 1;
+       
     }
     public:
     void insert(int value)
@@ -157,9 +166,9 @@ class Tree
     void traversalPostorder(){
         traversalPostorder(root);
     }
-    int hight()
+    int height()
     {
-       return hight(root);
+       return height(root);
     }
     int min()
     {
@@ -192,11 +201,16 @@ class Tree
           return;
       }
 
-      int h = hight(root); // Get the height of the tree
+      int h = height(root); // Get the height of the tree
       for (int level = 0; level <= h; level++) {
         kDistance(root, level); // Process each level
       }
       std::cout << std::endl;
+  }
+
+  int size()
+  {
+    return size(root);
   }
   
 };
@@ -208,11 +222,11 @@ int main()
     Tree *tree = new Tree();
     tree->insert(7);
     tree->insert(4);
-    tree->insert(9);
-    tree->insert(1);
-    tree->insert(6);
-    tree->insert(8);
-    tree->insert(10);
+    // tree->insert(9);
+    // tree->insert(1);
+    // tree->insert(6);
+    // tree->insert(8);
+    // tree->insert(10);
     std::cout<<"find 3:"<<tree->find(17)<<std::endl;
     std::cout<<"PreOrder Traversal:";
     tree->traversalPreOrder();
@@ -223,7 +237,7 @@ int main()
     std::cout<<"Postorder Traversal:";
     tree->traversalPostorder();
     std::cout<<std::endl;
-    std::cout<<"hight of tree:"<<tree->hight();
+    std::cout<<"hight of tree:"<<tree->height();
     std::cout<<std::endl;
     std::cout<<"min:"<<tree->min();
 
@@ -250,6 +264,9 @@ int main()
     std::cout<<std::endl;
     std::cout<<"Level order traversal:";
     tree2->traverseLevelOrder();
+    std::cout<<std::endl;
+    std::cout<<"Size of tree:";
+    std::cout<<tree->size();
 
     return 0;
 }
