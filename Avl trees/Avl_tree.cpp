@@ -17,7 +17,6 @@ class Avltree
             this->value = value;
             leftchild = nullptr;
             rightchild = nullptr;
-            this->height = height(root);
          }
     };
 
@@ -38,19 +37,25 @@ class Avltree
   {
      return node->leftchild == nullptr && node->rightchild == nullptr;
   }
-  int height(root)
+  int height(Node *root)
   {
     if(root == nullptr)
       return -1;
     if(isleaf(root))
       return 0;
-    return std::max({height(root->leftchild),height(root->rightchild)}) + 1;
+    return std::max(height(root->leftchild),height(root->rightchild)) + 1;
+  }
+
+  void height()
+  {
+   height = height(root);
   }
   public:
   void insert(int value)
   {
     root = insert(value,root);
   }
+
 
 
 
