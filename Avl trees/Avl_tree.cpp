@@ -10,7 +10,7 @@ class Avltree
          int value;
          Node* leftchild;
          Node* rightchild;
-         int height;
+         int height = 0;
 
          Node(int value)
          {
@@ -28,28 +28,23 @@ class Avltree
     if(value < root->value)
     {
       root->leftchild = insert(value,root->leftchild);
+
     }else{
       root->rightchild = insert(value,root->rightchild);
     }
+    root->height = max(height(root->leftchild),height(root->rightchild)) + 1;
     return root;
   }
   bool isleaf(Node *node)
   {
      return node->leftchild == nullptr && node->rightchild == nullptr;
   }
-  int height(Node *root)
+  int height(Node *node)
   {
-    if(root == nullptr)
-      return -1;
-    if(isleaf(root))
-      return 0;
-    return std::max(height(root->leftchild),height(root->rightchild)) + 1;
+   return (node == nullptr) ? -1 : node->height;
   }
 
-  void height()
-  {
-   height = height(root);
-  }
+
   public:
   void insert(int value)
   {
