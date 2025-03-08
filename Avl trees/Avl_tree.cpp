@@ -10,12 +10,14 @@ class Avltree
          int value;
          Node* leftchild;
          Node* rightchild;
+         int height;
 
          Node(int value)
          {
             this->value = value;
             leftchild = nullptr;
             rightchild = nullptr;
+            this->height = height(root);
          }
     };
 
@@ -32,11 +34,24 @@ class Avltree
     }
     return root;
   }
+  bool isleaf(Node *node)
+  {
+     return node->leftchild == nullptr && node->rightchild == nullptr;
+  }
+  int height(root)
+  {
+    if(root == nullptr)
+      return -1;
+    if(isleaf(root))
+      return 0;
+    return std::max({height(root->leftchild),height(root->rightchild)}) + 1;
+  }
   public:
   void insert(int value)
   {
     root = insert(value,root);
   }
+
 
 
 
@@ -51,7 +66,10 @@ int main()
     tree->insert(7);
     tree->insert(4);
     tree->insert(9);
-    cout<<"finish";
+    tree->insert(1);
+    tree->insert(6);
+    tree->insert(8);
+    tree->insert(10);
 
 
     return 0;
