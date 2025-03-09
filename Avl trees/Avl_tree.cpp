@@ -13,13 +13,14 @@ private:
     Node *rightchild;
     int height = 0;
     string isBalancedfactor;
-
+    string rotation;
     Node(int value)
     {
       this->value = value;
       leftchild = nullptr;
       rightchild = nullptr;
       isBalancedfactor = "Balanced";
+      rotation = "";
     }
   };
 
@@ -37,10 +38,28 @@ private:
       root->rightchild = insert(value, root->rightchild);
     }
     root->height = max(height(root->leftchild), height(root->rightchild)) + 1;
-    if (isLeftHeavy(root))
+    if (isLeftHeavy(root)){
       root->isBalancedfactor = "leftHeavy";
-    else if (isRighttHeavy(root))
+      if(Balancefactor(root->leftchild) > 0)
+      {
+        root->rotation = "rightRotation";
+      }else if(Balancefactor(root->leftchild) < 0)
+      {
+        root->rotation = "LeftRotation";
+        root->leftchild = "rightRotation";
+      }
+    }
+    else if (isRighttHeavy(root)){
       root->isBalancedfactor = "rightHeavy";
+      if(Balancefactor(root->rightchild) < 0)
+      {
+        root->rotation = "leftRotation";
+      }else if(Balancefactor(root->rightchild) > 0)
+      {
+        root->rightchild->rotation = "rightRotation";
+        root->rotation = "leftRotation";
+      }
+    }
     
     
     return root;
