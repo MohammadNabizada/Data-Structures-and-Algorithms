@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string.h>
 using namespace std;
 
 class Avltree
@@ -12,15 +11,11 @@ private:
     Node *leftchild;
     Node *rightchild;
     int height = 0;
-    string isBalancedfactor;
-    string rotation;
     Node(int value)
     {
       this->value = value;
       leftchild = nullptr;
       rightchild = nullptr;
-      isBalancedfactor = "Balanced";
-      rotation = "";
     }
   };
 
@@ -37,12 +32,63 @@ private:
     {
       root->rightchild = insert(value, root->rightchild);
     }
-    root->height = max(height(root->leftchild), height(root->rightchild)) + 1;
-    
-    root = Balance(root);
-    
+    setHieght(root);
+    return Balance(root);
+  }
+
+  Node *Balance(Node *root)
+  {
+    if (isLeftHeavy(root))
+    {
+      if (Balancefactor(root->leftchild) < 0)
+      {
+        root->leftchild = (root->leftchild);
+      }
+      return rotateRight(root);
+    }
+    else if (isRighttHeavy(root))
+    {
+      Node *newRoot = root->rightchild;
+      if (Balancefactor(root->rightchild) > 0)
+      {
+        root->rightchild = rotateRight(root->rightchild);
+      }
+      return rotateLeft(root);
+    }
     return root;
   }
+
+  Node *rotateLeft(Node *root)
+  {
+    Node *newRoot = root->rightchild;
+    root->rightchild = newRoot->leftchild;
+    newRoot->leftchild = root;
+    setHieght(root);
+    setHieght(newRoot);
+
+    return newRoot;
+  }
+  Node *rotateRight(Node *root)
+  {
+    Node *newRoot = root->leftchild;
+    root->leftchild = newRoot->rightchild;
+    newRoot->rightchild = root;
+    setHieght(root);
+    setHieght(newRoot);
+
+    return newRoot;
+  }
+
+  void setHieght(Node *node)
+  {
+    node->height = max(height(node->leftchild), height(node->rightchild)) + 1;
+  }
+
+  int Balancefactor(Node *node)
+  {
+    return (node == nullptr) ? 0 : height(node->leftchild) - height(node->rightchild);
+  }
+
   bool isleaf(Node *node)
   {
     return node->leftchild == nullptr && node->rightchild == nullptr;
@@ -60,55 +106,11 @@ private:
     return Balancefactor(node) < -1;
   }
 
-  int Balancefactor(Node *node)
-  {
-    return (node == nullptr) ? 0 : height(node->leftchild) - height(node->rightchild);
-  }
-
-  Node* Balance(Node *root)
-  {
-    if (isLeftHeavy(root)){
-      root->isBalancedfactor = "leftHeavy";
-      if(Balancefactor(root->leftchild) < 0)
-        root->leftchild->rotation = "rightRotation";
-      root->rotation = "LeftRotation";
-    }
-    else if (isRighttHeavy(root)){
-      root->isBalancedfactor = "rightHeavy";
-
-      Node* newRoot = root->rightchild;
-      if(Balancefactor(root->rightchild) > 0){
-        root->rightchild->rotation = "rightRotation";
-
-        root->rightchild = newRoot->leftchild;
-        root->rightchild->rightchild = newRoot;
-        root->rightchild = height(root->rightchild);
-        newRoot->height = height(newRoot);
-      }
-      root->rotation = "leftRotation";
-      
-      if(newRoot->leftchild == nullptr)
-      {
-        newRoot->leftchild = root;
-      }else{
-        root->rightchild = newRoot->leftchild;
-      }
-      root = newRoot;
-      root->height = height(root);
-      root->leftchild->height=height(root);
-    }
-    return root;
-  }
-
-
 public:
   void insert(int value)
   {
     root = insert(value, root);
   }
-
-
-
 };
 
 int main()
