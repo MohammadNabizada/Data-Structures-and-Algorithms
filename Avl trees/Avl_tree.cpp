@@ -19,7 +19,7 @@ class Avltree
             this->value = value;
             leftchild = nullptr;
             rightchild = nullptr;
-            isBalancedfactor = "";
+            isBalancedfactor = "Balanced";
          }
     };
 
@@ -36,9 +36,9 @@ class Avltree
       root->rightchild = insert(value,root->rightchild);
     }
     root->height = max(height(root->leftchild),height(root->rightchild)) + 1;
-    if(height(root->rightchild)-height(root->leftchild) > 1)
+    if(isLeftHeavy(root))
       root->isBalancedfactor = "leftHeavy";
-    else if(height(root->rightchild)-height(root->leftchild) < -1)
+    else if(isRighttHeavy(root))
       root->isBalancedfactor= "rightHeavy";
        
     return root;
@@ -51,7 +51,20 @@ class Avltree
   {
    return (node == nullptr) ? -1 : node->height;
   }
+   bool isLeftHeavy(Node* node)
+   {
+    return Balancefactor(node) > 1;
+   }
+   bool isRighttHeavy(Node* node)
+   {
+    return Balancefactor(node) < -1;
+   }
 
+   int Balancefactor(Node *node)
+   {
+    return (node == nullptr) ? 0 : height(node->leftchild) - height(node->rightchild);
+   }
+   
 
 
   public:
