@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 using namespace std;
 
 
@@ -11,12 +12,14 @@ class Avltree
          Node* leftchild;
          Node* rightchild;
          int height = 0;
+         string isBalancedfactor;
 
          Node(int value)
          {
             this->value = value;
             leftchild = nullptr;
             rightchild = nullptr;
+            isBalancedfactor = "";
          }
     };
 
@@ -33,6 +36,11 @@ class Avltree
       root->rightchild = insert(value,root->rightchild);
     }
     root->height = max(height(root->leftchild),height(root->rightchild)) + 1;
+    if(height(root->rightchild)-height(root->leftchild) > 1)
+      root->isBalancedfactor = "leftHeavy";
+    else if(height(root->rightchild)-height(root->leftchild) < -1)
+      root->isBalancedfactor= "rightHeavy";
+       
     return root;
   }
   bool isleaf(Node *node)
@@ -43,6 +51,7 @@ class Avltree
   {
    return (node == nullptr) ? -1 : node->height;
   }
+
 
 
   public:
@@ -69,7 +78,10 @@ int main()
     tree->insert(1);
     tree->insert(6);
     tree->insert(8);
-    tree->insert(10);
+    tree->insert(15);
+    tree->insert(14);
+    tree->insert(13);
+    tree->insert(2);
 
 
     return 0;
