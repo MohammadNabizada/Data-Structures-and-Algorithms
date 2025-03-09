@@ -38,29 +38,8 @@ private:
       root->rightchild = insert(value, root->rightchild);
     }
     root->height = max(height(root->leftchild), height(root->rightchild)) + 1;
-    if (isLeftHeavy(root)){
-      root->isBalancedfactor = "leftHeavy";
-      if(Balancefactor(root->leftchild) > 0)
-      {
-        root->rotation = "rightRotation";
-      }else if(Balancefactor(root->leftchild) < 0)
-      {
-        root->rotation = "LeftRotation";
-        root->leftchild = "rightRotation";
-      }
-    }
-    else if (isRighttHeavy(root)){
-      root->isBalancedfactor = "rightHeavy";
-      if(Balancefactor(root->rightchild) < 0)
-      {
-        root->rotation = "leftRotation";
-      }else if(Balancefactor(root->rightchild) > 0)
-      {
-        root->rightchild->rotation = "rightRotation";
-        root->rotation = "leftRotation";
-      }
-    }
     
+    root = Balance(root);
     
     return root;
   }
@@ -86,7 +65,40 @@ private:
     return (node == nullptr) ? 0 : height(node->leftchild) - height(node->rightchild);
   }
 
+  Node* Balance(Node *root)
+  {
+    if (isLeftHeavy(root)){
+      root->isBalancedfactor = "leftHeavy";
+      if(Balancefactor(root->leftchild) < 0)
+        root->leftchild->rotation = "rightRotation";
+      root->rotation = "LeftRotation";
+    }
+    else if (isRighttHeavy(root)){
+      root->isBalancedfactor = "rightHeavy";
 
+      Node* newRoot = root->rightchild;
+      if(Balancefactor(root->rightchild) > 0){
+        root->rightchild->rotation = "rightRotation";
+
+        root->rightchild = newRoot->leftchild;
+        root->rightchild->rightchild = newRoot;
+        root->rightchild = height(root->rightchild);
+        newRoot->height = height(newRoot);
+      }
+      root->rotation = "leftRotation";
+      
+      if(newRoot->leftchild == nullptr)
+      {
+        newRoot->leftchild = root;
+      }else{
+        root->rightchild = newRoot->leftchild;
+      }
+      root = newRoot;
+      root->height = height(root);
+      root->leftchild->height=height(root);
+    }
+    return root;
+  }
 
 
 public:
@@ -103,16 +115,9 @@ int main()
 {
 
   Avltree *tree = new Avltree();
-  tree->insert(7);
-  tree->insert(4);
-  tree->insert(9);
-  tree->insert(1);
-  tree->insert(6);
-  tree->insert(8);
-  tree->insert(15);
-  tree->insert(14);
-  tree->insert(13);
-  tree->insert(2);
+  tree->insert(10);
+  tree->insert(20);
+  tree->insert(30);
 
   return 0;
 }
