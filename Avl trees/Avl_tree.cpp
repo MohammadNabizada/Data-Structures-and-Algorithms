@@ -105,8 +105,29 @@ private:
   {
     return Balancefactor(node) < -1;
   }
-
+  bool isPerfect(Node* root)
+  {
+    if(root == nullptr)
+      return false;
+    return (height(root->leftchild)-height(root->rightchild)==0);
+    
+  }
+  bool isBalanced(Node *root)
+  {
+    if(root == nullptr)
+      return false;
+    return (height(root->leftchild)-height(root->rightchild) > 1 || height(root->rightchild)-height(root->leftchild) < -1) ? 0 : 1;
+  }
 public:
+
+  bool isPerfect()
+  {
+    return isPerfect(root);
+  }
+  bool isBalanced()
+  {
+    return isBalanced(root);
+  }
   void insert(int value)
   {
     root = insert(value, root);
@@ -120,6 +141,21 @@ int main()
   tree->insert(10);
   tree->insert(20);
   tree->insert(30);
-
+  tree->insert(45);
+  tree->insert(10);
+  tree->insert(20);
+  tree->insert(30);
+  tree->insert(45);
+  tree->insert(10);
+  tree->insert(20);
+  tree->insert(30);
+  tree->insert(45);
+  tree->insert(10);
+  tree->insert(20);
+  tree->insert(30);
+  tree->insert(45);
+  cout<<tree->isPerfect()<<endl;
+  cout<<"is Tree balanced"<<endl;
+  cout<<tree->isBalanced();
   return 0;
 }
