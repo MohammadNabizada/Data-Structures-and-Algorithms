@@ -56,15 +56,33 @@ class Heap
     }
     bool ifValidParent(int index)
     {
-      return items[index] >= leftChild(index) && items[index] >= rightChild(index);
+      if(!hasLeftChild(index))
+        return true;
+      bool isValid = items[index] >= leftChild(index);
+      if(hasLeftChild(index))
+         isValid &= items[index] >= rightChild(index);
+      return isValid;
     }
-    int largerChildIndex(int index)
+    int largerChildIndexf(int index)
     {
-      return (leftchild(index) > rightChild(index)) ? leftChildIndex(index) :  rightChildIndex(index);
+      if(!hasLeftChild(index))
+        return index;
+      if(!hasRightChild(index))
+        return leftChildIndex(index);
+      return (leftChild(index) > rightChild(index)) ? leftChildIndex(index) :  rightChildIndex(index);
     }
     bool isEmpty()
     {
       return size == 0;
+    }
+
+    bool hasLeftChild(int index)
+    {
+      return leftChildIndex(index) <= size;
+    }
+    bool hasRightChild(int index)
+    {
+      return rightChildIndex(index) <= size;
     }
    public:
    bool isFull()
@@ -94,9 +112,9 @@ class Heap
     items[0] = items[--size];
 
     int index = 0;
-    while(index <=size && !ifValidParent())
+    while(index <=size && !ifValidParent(index))
     {
-     int largerChildIndex = largerChildIndex(index);
+     int largerChildIndex = largerChildIndexf(index);
      swap(index, largerChildIndex);
      index = largerChildIndex;
     }
@@ -115,6 +133,7 @@ int main()
    heap->insert(17);
    heap->insert(4);
    heap->insert(22);
+   heap->remove();
    delete heap; 
  cout<<"done";
 
