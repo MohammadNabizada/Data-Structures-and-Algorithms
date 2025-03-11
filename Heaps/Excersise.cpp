@@ -1,6 +1,4 @@
-//heap
-//int[]
-//insert(int)
+
 //remove(int)
 #include <iostream>
 #include <math.h>
@@ -32,7 +30,44 @@ class Heap
            index = getParentIndex(index);
       } 
      }
-
+    bool isLeaf(int value)
+    {
+      for(int i = 0;i < size;i++)
+      {
+        if(value == items[i]){
+           return items[(i*2)+1]&&items[(i*2)+2];
+        }
+      }
+      return false;
+    }
+    int leftChildIndex(int index)
+    {
+      return index * 2 + 1;
+    }
+    int rightChildIndex(int index)
+    {
+      return index * 2 + 2;
+    }
+    int leftChild(int index)
+    {
+      return items[leftChildIndex(index)];
+    }
+    int rightChild(int index)
+    {
+      return items[rightChildIndex(index)];
+    }
+    bool ifValidParent(int index)
+    {
+      return items[index] >= leftChild(index) && items[index] >= rightChild(index);
+    }
+    int largerChildIndex(int index)
+    {
+      return (leftchild(index) > rightChild(index)) ? leftChildIndex(index) :  rightChildIndex(index);
+    }
+    bool isEmpty()
+    {
+      return size == 0;
+    }
    public:
    bool isFull()
    {
@@ -45,7 +80,7 @@ class Heap
    ~Heap() {
     delete[] items;
    }
-
+ 
    void insert(int value)
    {
     if(isFull())
@@ -54,6 +89,21 @@ class Heap
     bubbleUp(size-1);
    }
 
+   void remove()
+   {
+    if(isEmpty())
+      throw invalid_argument("The heap is empty");
+    items[0] = items[--size];
+
+    int index = 0;
+    while(index <=size && !ifValidParent())
+    {
+     int largerChildIndex = largerChildIndex(index);
+     swap(index, largerChildIndex);
+     index = largerChildIndex;
+    }
+   }
+   
    
 
 
