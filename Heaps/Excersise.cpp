@@ -84,6 +84,18 @@ class Heap
     {
       return rightChildIndex(index) <= size;
     }
+
+
+    void bubbleDown()
+    {
+      int index = 0;
+      while(index <=size && !ifValidParent(index))
+      {
+       int largerChildIndex = largerChildIndexf(index);
+       swap(index, largerChildIndex);
+       index = largerChildIndex;
+      }
+    }
    public:
    bool isFull()
    {
@@ -110,14 +122,7 @@ class Heap
     if(isEmpty())
       throw invalid_argument("The heap is empty");
     items[0] = items[--size];
-
-    int index = 0;
-    while(index <=size && !ifValidParent(index))
-    {
-     int largerChildIndex = largerChildIndexf(index);
-     swap(index, largerChildIndex);
-     index = largerChildIndex;
-    }
+    bubbleDown();
    }
    
    
