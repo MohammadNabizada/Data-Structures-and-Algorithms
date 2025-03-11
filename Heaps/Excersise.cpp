@@ -8,8 +8,11 @@ using namespace std;
 class Heap
 {
    private:
-     int *items = new int[10];
+     int *items;
      int size = 0;
+     int capacity;
+
+
 
      void swap(int first,int seccond)
      {
@@ -19,20 +22,36 @@ class Heap
      }
      int getParentIndex(int index)
      {
-      return ceil((index-1)/2);
+      return (index-1)/2;
      }
+     void bubbleUp(int index)
+     {
+      while(index > 0 && items[index] > items[getParentIndex(index)])
+      {
+           swap(index, getParentIndex(index));
+           index = getParentIndex(index);
+      } 
+     }
+
    public:
-     int count = 0;
+   bool isFull()
+   {
+    return size == capacity;
+   }
+   Heap(int capacity = 10) : size(0), capacity(capacity) {
+    items = new int[capacity];
+   }
+
+   ~Heap() {
+    delete[] items;
+   }
 
    void insert(int value)
    {
+    if(isFull())
+      throw invalid_argument("Heap is full!");
     items[size++] = value;
-    int index = size -1;
-    while(items[index] > items[getParentIndex(index)])
-    {
-         swap(index, parentIndex);
-         index = getParentIndex(index);
-    } 
+    bubbleUp(size-1);
    }
 
    
