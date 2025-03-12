@@ -117,7 +117,6 @@ class Heap
     items[size++] = value;
     bubbleUp(size-1);
    }
-
    int remove()
    {
     if(isEmpty())
@@ -151,6 +150,42 @@ class PriorityQueuewithHeap{
   }
 };
 
+class maxHeap{
+    private:
+    static void heapify(int array[],int size,int index)
+    {
+      int largerIndex = index;
+      int leftIndex = index * 2 + 1;
+      int rightIndex = index * 2 + 2;
+      if(leftIndex < size && array[leftIndex] > array[largerIndex])
+          largerIndex = leftIndex;
+      if(rightIndex < size && array[rightIndex] > array[largerIndex])
+          largerIndex = rightIndex;
+      if(index == largerIndex)
+          return;
+      swap(array,index,largerIndex);
+      heapify(array,6,largerIndex);
+    }
+
+    static void swap(int array[],int first,int seccond){
+      int temp = array[first];
+      array[first] = array[seccond];
+      array[seccond] = temp;
+    }
+    public:
+    static void heapify(int array[],int size)
+    {
+      for(int i = 0;i < size;i++)
+      {
+        heapify(array,6,i);
+      }
+    }
+
+
+};
+
+
+
 int main()
 {
    Heap *heap = new Heap();
@@ -178,8 +213,11 @@ int main()
     queue->enqueue(10);
     queue->enqueue(1);
     queue->isEmpty();
+    cout<<endl;
+    int numbers[6] =  {5,3,8,4,1,2};
 
-
-
+    maxHeap::heapify(numbers,6);
+    for(int num: numbers)
+     cout<<num<<endl;
     return 0;
 }
