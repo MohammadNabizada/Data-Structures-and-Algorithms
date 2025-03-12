@@ -71,10 +71,7 @@ class Heap
         return leftChildIndex(index);
       return (leftChild(index) > rightChild(index)) ? leftChildIndex(index) :  rightChildIndex(index);
     }
-    bool isEmpty()
-    {
-      return size == 0;
-    }
+   
 
     bool hasLeftChild(int index)
     {
@@ -97,6 +94,10 @@ class Heap
       }
     }
    public:
+   bool isEmpty()
+   {
+     return size == 0;
+   }
    bool isFull()
    {
     return size == capacity;
@@ -117,12 +118,14 @@ class Heap
     bubbleUp(size-1);
    }
 
-   void remove()
+   int remove()
    {
     if(isEmpty())
       throw invalid_argument("The heap is empty");
+    int root = items[0];
     items[0] = items[--size];
     bubbleDown();
+    return root;
    }
    
    
@@ -140,7 +143,19 @@ int main()
    heap->insert(22);
    heap->remove();
    delete heap; 
- cout<<"done";
+   int array[6] = {5,3,10,1,4,2};
+   Heap *heap2 = new Heap();
+
+   for(const auto& num: array)
+    heap2->insert(num);
+  
+    for(int i = 0;i<6;i++)
+    {
+      array[i] = heap2->remove();
+      cout<<array[i];
+    }
+
+
 
 
     return 0;
