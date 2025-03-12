@@ -127,10 +127,28 @@ class Heap
     bubbleDown();
     return root;
    }
-   
-   
+};
 
 
+class PriorityQueuewithHeap{
+
+ private:
+   Heap *heap = new Heap();
+ public:
+
+  void enqueue(int item)
+  {
+     heap->insert(item);
+  }
+
+  int dequeue()
+  {
+   return heap->remove();
+  }
+  bool isEmpty()
+  {
+    return heap->isEmpty();
+  }
 };
 
 int main()
@@ -154,7 +172,12 @@ int main()
       array[i] = heap2->remove();
       cout<<array[i];
     }
-
+    PriorityQueuewithHeap *queue = new PriorityQueuewithHeap();
+    queue->enqueue(5);
+    queue->enqueue(3);
+    queue->enqueue(10);
+    queue->enqueue(1);
+    queue->isEmpty();
 
 
 
