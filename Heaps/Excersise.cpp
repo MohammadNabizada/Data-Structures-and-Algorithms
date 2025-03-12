@@ -175,10 +175,23 @@ class maxHeap{
     public:
     static void heapify(int array[],int size)
     {
-      for(int i = 0;i < size;i++)
+      int lastParentIndex = size/2 -1;
+      for(int i = lastParentIndex ;i >= 0;i--)
       {
-        heapify(array,6,i);
+        heapify(array,size,i);
       }
+    }
+
+    static int KthLargestvalue(int array[],int kth,int size)
+    {
+      Heap heap;
+      for(int i = 0;i < size;i++)
+        heap.insert(array[i]);
+      for(int i=0;i < kth-1;i++)
+      {
+        heap.remove();
+      }
+      return heap.remove();
     }
 
 
@@ -219,5 +232,7 @@ int main()
     maxHeap::heapify(numbers,6);
     for(int num: numbers)
      cout<<num<<endl;
+     cout<<"kth largest number"<<endl;
+     cout<<maxHeap::KthLargestvalue(numbers,1,6);
     return 0;
 }
