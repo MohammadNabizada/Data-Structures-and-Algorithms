@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include <vector>
 using namespace std;
 class Heap
 {
@@ -215,6 +216,90 @@ class maxHeap{
 };
 
 
+class minHeap{
+ private:
+  class Node{
+    public:
+    int key;
+    string value;
+
+    public:
+
+    Node(int k, string v) : key(k), value(v) {};
+    
+    void setKey(int k){this->key = k;}
+    void setValue(string v){this->value = v;}
+ 
+    int getKey() const {return this->key;}
+    string getValue() const{return this->value;}
+  };
+
+
+  std::vector<minHeap::Node> heap;
+
+  int parent(int i){return (i - 1)/2;}
+  int leftChild(int i){return 2 * i + 1;}
+  int rightChild(int i){return 2 * i + 2;}
+
+  void bubbleUp(int i)
+  {
+    while(i > 0 && heap[parent(i)].getKey() > heap[i].getKey())
+    {
+      swap(heap[parent(i)],heap[i]);
+      i = parent(i);
+    }
+  }
+
+  void bubbleDown(int i)
+  {
+    int smallest = i;
+    int left = leftChild(i);
+    int right = rightChild(i);
+
+    if(left < heap.size() && heap[left].getKey() < heap[smallest].getKey())
+       smallest = left;
+    if(right < heap.size() && heap[right].getKey() < heap[smallest].getKey())
+       smallest = right;
+    
+    if(smallest != i)
+    {
+      swap(heap[i],heap[smallest]);
+      bubbleDown(smallest);
+    }
+  }
+
+
+  public:
+
+  void insert(int key, string value)
+  {
+    Node newNode(key,value);
+    heap.push_back(newNode);
+    bubbleUp(heap.size() - 1);
+  }
+
+  Node extractMin()
+  {
+    if(heap.empty())
+      throw runtime_error("Heap is empty!");
+    
+    Node minNode = heap[0];
+    heap[0] = heap.back();
+    heap.pop_back();
+    bubbleDown(0);
+    return minNode;
+  }
+ void printHeap()
+ {
+  for (const auto& node: heap)
+  {
+    cout<< "("<< node.getKey() << ", " << node.getValue() << ") ";
+  }
+  cout<<endl;
+ }
+
+};
+
 
 int main()
 {
@@ -258,5 +343,22 @@ int main()
   } else {
       std::cout << "The array is NOT a max-heap." << std::endl;
   }
+
+
+
+  minHeap minHeap;
+
+  // Insert nodes into the heap
+  minHeap.insert(10, "Apple");
+  minHeap.insert(5, "Banana");
+  minHeap.insert(15, "Cherry");
+  minHeap.insert(3, "Date");
+  minHeap.insert(7, "Elderberry");
+
+  // Print the heap
+  std::cout << "Heap after insertions: ";
+  minHeap.printHeap();
+
+  std::cout << "Extracted min: (" << minHeap.extractMin().getKey() << ", " << minHeap.extractMin().getValue() << ")\n";
     return 0;
 }
