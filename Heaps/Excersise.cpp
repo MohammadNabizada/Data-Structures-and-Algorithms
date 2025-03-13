@@ -195,6 +195,23 @@ class maxHeap{
     }
 
 
+    static bool isMaxHeap(int array[],int size)
+    {
+
+      for(int i = 0; i < (size / 2) - 1;i++)
+      {
+        int leftchild = i * 2 + 1;
+        int rightchild = i * 2 + 2;
+        if(leftchild < size && array[i] < array[leftchild])
+           return false;
+        if(rightchild < size && array[i] < array[rightchild])
+           return false;
+      }
+
+      return true;
+    }
+
+
 };
 
 
@@ -234,5 +251,12 @@ int main()
      cout<<num<<endl;
      cout<<"kth largest number"<<endl;
      cout<<maxHeap::KthLargestvalue(numbers,1,6);
+     cout << endl;
+
+     if (maxHeap::isMaxHeap(numbers, 6)) {
+      std::cout << "The array is a max-heap." << std::endl;
+  } else {
+      std::cout << "The array is NOT a max-heap." << std::endl;
+  }
     return 0;
 }
