@@ -14,9 +14,25 @@ class TrieArray
       char charecter;
       Node *children[26];
       bool isEndOfWord;
-
-
       Node(char ch) : children{nullptr},charecter(ch),isEndOfWord(false){}
+
+      bool hasChild(char ch)
+      {
+        int index = int(ch) - 97;
+        return children[index] != nullptr;
+      }
+      void addChild(char ch)
+      {
+        int index = int(ch) - 97;
+        Node* newNode = new Node(ch);
+        children[index] = newNode;
+      }
+
+      Node* getChild(char ch)
+      {
+        int index = int(ch) - 97;
+        return children[index];
+      }
     };
 
     Node *root;
@@ -36,12 +52,11 @@ class TrieArray
         for(const auto& ch : value)
         {
             if(ch != ' '){
-            int index = int(ch) - 97;
-            if(!isInTrie(index,current)){
-              Node* newNode = new Node(ch);
-              current->children[index] = newNode;
+           
+            if(!current->hasChild(ch)){
+                current->addChild(ch);
             }
-              current = current->children[index];
+              current = current->getChild(ch);
         } 
         }  
         current->isEndOfWord = true;
@@ -83,8 +98,6 @@ class TrieHashmap {
    
         TrieHashmap() : root(nullptr) {}
     
-
-
         void insert(const string& value) {
             if (root == nullptr) {
                 root = new Node(' ');
@@ -101,17 +114,7 @@ class TrieHashmap {
             }
             current->isEndOfWord = true; 
         }
-    
-
-       
     };
-
-
-
-
-
-
-
 
 int main()
 {
