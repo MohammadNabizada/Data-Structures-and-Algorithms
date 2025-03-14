@@ -59,8 +59,8 @@ class TrieArray
 
     bool contains(string value)
     {
-        if(value == " ")
-          throw invalid_argument("there is not empty word in trie");
+        if(value == "")
+          return false;
         Node* current = root;
         for(const auto& ch : value)
         {
