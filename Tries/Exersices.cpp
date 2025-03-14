@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 using namespace std;
 
 class TrieArray
@@ -50,6 +51,60 @@ class TrieArray
 };
 
 
+class TrieHashmap {
+    private:
+        class Node {
+        public:
+            char character; 
+            unordered_map<char, Node*> children; 
+            bool isEndOfWord;
+    
+         
+            Node(char ch) : character(ch), isEndOfWord(false) {}
+    
+            bool hasChild(char ch) const {
+                return children.find(ch) != children.end();
+            }
+    
+          
+            void addChild(char ch) {
+                children[ch] = new Node(ch);
+            }
+    
+            
+            Node* getChild(char ch) {
+                return children[ch];
+            }
+        };
+    
+        Node* root;
+    
+    public:
+   
+        TrieHashmap() : root(nullptr) {}
+    
+
+
+        void insert(const string& value) {
+            if (root == nullptr) {
+                root = new Node(' ');
+            }
+            Node* current = root;
+    
+            for (const auto& ch : value) {
+                if (ch != ' ') {
+                    if (!current->hasChild(ch)) {
+                        current->addChild(ch); 
+                    }
+                    current = current->getChild(ch); 
+                }
+            }
+            current->isEndOfWord = true; 
+        }
+    
+
+       
+    };
 
 
 
@@ -63,6 +118,7 @@ int main()
 
     TrieArray *trie = new TrieArray();
     trie->insert("ali");
+    trie->insert("alii");
     cout<<"done";
 
 
