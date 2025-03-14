@@ -36,11 +36,6 @@ class TrieArray
     };
 
     Node *root;
-
-    bool isInTrie(int index,Node* current)
-    {
-       return current->children[index] != nullptr;
-    }
     public:
 
     void insert(string value)
@@ -62,6 +57,19 @@ class TrieArray
         current->isEndOfWord = true;
     }
 
+    bool contains(string value)
+    {
+        if(value == " ")
+          throw invalid_argument("there is not empty word in trie");
+        Node* current = root;
+        for(const auto& ch : value)
+        {
+           if(!current->hasChild(ch))
+              return false;
+            current = current->getChild(ch); 
+        }
+        return current->isEndOfWord == true;
+    }
 
 };
 
@@ -122,7 +130,9 @@ int main()
     TrieArray *trie = new TrieArray();
     trie->insert("ali");
     trie->insert("alii");
-    cout<<"done";
+    cout<<endl;
+    cout<<"find ali : "<<(trie->contains("al") ? "YES" : "NO");
+   
 
 
     return 0;
