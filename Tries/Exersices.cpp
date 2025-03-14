@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-class Trie
+class TrieArray
 {
   private:
     class Node
@@ -30,23 +30,20 @@ class Trie
     {    
         if(root == nullptr)
            root = new Node(' ');
-        Node* current = root;    
-        for(auto it = value.begin(); it != value.end(); ++it)
+        Node* current = root;
+
+        for(const auto& ch : value)
         {
-            bool isLastIteration = (it + 1 == value.end());
-            int index = int(*it) - 97;
-
-
+            if(ch != ' '){
+            int index = int(ch) - 97;
             if(!isInTrie(index,current)){
-              Node* newNode = new Node(*it);
+              Node* newNode = new Node(ch);
               current->children[index] = newNode;
-              current = current->children[index];
-              if(isLastIteration)
-               current->isEndOfWord = true;
-            }else{
-              current = current->children[index];
             }
-        }   
+              current = current->children[index];
+        } 
+        }  
+        current->isEndOfWord = true;
     }
 
 
@@ -64,7 +61,7 @@ class Trie
 int main()
 {
 
-    Trie *trie = new Trie();
+    TrieArray *trie = new TrieArray();
     trie->insert("ali");
     cout<<"done";
 
