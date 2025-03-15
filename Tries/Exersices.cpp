@@ -43,17 +43,23 @@ class TrieArray
          }
          return childNodes;
       }
-
-
-      bool threisChild()
-      {
-          for(int i = 0; i < 26;i++)
-          {
-            if(children[i] != nullptr)
-              return true;
-          }
-          return false;
-      }
+      bool isEmpty() {
+        for (int i = 0; i < 26; i++) {
+            if (children[i] != nullptr) {
+                return false;
+            }
+        }
+        return true;
+    }
+ 
+      void removeChild(Node* node, char ch) {
+        int index = ch - 'a'; // Map character to index
+        if (node->children[index] != nullptr) {
+            delete node->children[index]; // Free memory
+            node->children[index] = nullptr; // Set pointer to null
+        }
+    }
+      
     };
 
  
@@ -72,19 +78,36 @@ class TrieArray
          }
     }
 
-    void remove(Node* root, string word,int index)
-    {
-        if(index == word.length()){
-          cout<<root->charecter;
-          return;
+    void remove(Node* root, string word, int index) {
+        // Base case: If we've processed the entire word
+        if (index == word.length()) {
+            // Unmark the end-of-word flag
+            root->isEndOfWord = false;
+            return;
         }
-
-         char ch = word.at(index);
-         Node* child = root->getChild(ch);
-         if(child == nullptr)
-           return;
-         remove(child,word,index + 1);
-         cout<<root->charecter;
+    
+        // Ensure index is within bounds
+        if (index < 0 || index >= word.length()) {
+            return; // Invalid index, do nothing
+        }
+    
+        // Get the current character
+        char ch = word[index]; // Use [] instead of at() for efficiency
+        int childIndex = ch - 'a'; // Map character to index
+    
+        // Check if the child node exists
+        Node* child = root->children[childIndex];
+        if (child == nullptr) {
+            return; // Word doesn't exist in the Trie
+        }
+    
+        // Recursively process the next character
+        remove(child, word, index + 1);
+    
+        // If the child node is no longer part of any word, delete it
+        if (!child->isEndOfWord && child->isEmpty()) {
+            root->removeChild(root, ch); // Remove the child node
+        }
     }
     public:
 
@@ -197,7 +220,7 @@ int main()
     trie->traversal();
     cout<<endl;
     trie->remove("mohammad");
-    cout<<"find ali : "<<(trie->contains("mohammad") ? "YES" : "NO");
+    cout<<"find mohammad : "<<(trie->contains("mohammad") ? "YES" : "NO");
 
 
    
