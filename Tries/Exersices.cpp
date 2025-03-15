@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <vector>
 using namespace std;
 
 class TrieArray
@@ -33,9 +34,52 @@ class TrieArray
         int index = int(ch) - 97;
         return children[index];
       }
+      vector<Node*> getChildren()
+      {
+         vector<Node*> childNodes;
+         for(int i=0;i < 26;i++)
+         {
+            childNodes.push_back(children[i]);
+         }
+         return childNodes;
+      }
+
+
+      bool threisChild()
+      {
+          for(int i = 0; i < 26;i++)
+          {
+            if(children[i] != nullptr)
+              return true;
+          }
+          return false;
+      }
     };
 
+ 
+
     Node *root;
+
+    void traversal(Node* node)
+    {
+         if(node == nullptr)
+           return;
+
+         cout<<node->charecter;
+         for(const auto& child: node->getChildren())
+         {
+                traversal(child);
+         }
+    }
+
+    void remove(Node* root, string word,int index)
+    {
+         char ch = word.at(index);
+         Node* child = root->getChild(ch);
+         if(child == nullptr)
+           return;
+         remove(child,word,index + 1);
+    }
     public:
 
     void insert(string value)
@@ -70,6 +114,20 @@ class TrieArray
         }
         return current->isEndOfWord == true;
     }
+
+    void traversal()
+    {
+        traversal(root);
+    }
+
+
+    void remove(string word)
+    {
+        
+        remove(root,word,0);
+    }
+
+
 
 };
 
@@ -128,10 +186,13 @@ int main()
 {
 
     TrieArray *trie = new TrieArray();
-    trie->insert("ali");
-    trie->insert("alii");
+    trie->insert("alimohammad");
+    trie->traversal();
     cout<<endl;
+
     cout<<"find ali : "<<(trie->contains("al") ? "YES" : "NO");
+
+
    
 
 
