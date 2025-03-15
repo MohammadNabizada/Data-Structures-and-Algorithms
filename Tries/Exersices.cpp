@@ -74,11 +74,17 @@ class TrieArray
 
     void remove(Node* root, string word,int index)
     {
+        if(index == word.length()){
+          cout<<root->charecter;
+          return;
+        }
+
          char ch = word.at(index);
          Node* child = root->getChild(ch);
          if(child == nullptr)
            return;
          remove(child,word,index + 1);
+         cout<<root->charecter;
     }
     public:
 
@@ -187,10 +193,11 @@ int main()
 
     TrieArray *trie = new TrieArray();
     trie->insert("alimohammad");
+    trie->insert("mohammad");
     trie->traversal();
     cout<<endl;
-
-    cout<<"find ali : "<<(trie->contains("al") ? "YES" : "NO");
+    trie->remove("mohammad");
+    cout<<"find ali : "<<(trie->contains("mohammad") ? "YES" : "NO");
 
 
    
