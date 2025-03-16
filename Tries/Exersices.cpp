@@ -122,20 +122,22 @@ class TrieArray
         }
         return current;
     }
-    void findWords(Node* root,string prefix,vector<string>[] words)
+    void findWords(Node* root,const string &prefix,vector<string> &words)
     {
-       if(root->isEndOfWord)
-         words.push_back(prefix);
+        if(root == nullptr)
+          return;
+        if(root->isEndOfWord)
+          words.push_back(predix);
         
-       for(const auto& child : root->getChildren())
-       {
-        findWords(child,prefix + child->charecter,words);
-       }
+        for(const auto& child : root->getChildren())
+        {
+            findWords(child,prefix + child->charecter, words);
+        }
     }
     public:
-    vector<string> [] findWords(string prefix)
+    vector<string> findWords(string prefix)
     {
-          string words[];
+          vector<string> words;
           Node* lastNode = findLastNodeOf(prefix);
           findWords(lastNode,prefix,words);
           return words;
@@ -186,16 +188,7 @@ class TrieArray
     }
 
 
-    c
-    a
-    r
-   e   m
-       n
-     void autoCompelition()
-     {
-        autoCompelition(root,"");
-     }
-
+ 
 
 };
 
@@ -256,13 +249,23 @@ int main()
     TrieArray *trie = new TrieArray();
     trie->insert("alimohammad");
     trie->insert("mohammad");
+    trie->insert("car");
+    trie->insert("care");
+    trie->insert("carefull");
+    trie->insert("carlos");
     trie->traversal();
     cout<<endl;
     trie->remove("mohammad");
     cout<<"find mohammad : "<<(trie->contains("mohammad") ? "YES" : "NO");
+    string prefix = "car";
+    vector<string> words = trie->findWords(prefix);
+    
+    cout << "Words with prefix '" << prefix << "':" << std::endl;
 
-
-   
+    for(const auto& word: words)
+    {
+        cout<<word<<endl;
+    }
 
 
     return 0;
