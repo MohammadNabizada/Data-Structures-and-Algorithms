@@ -127,11 +127,12 @@ class TrieArray
         if(root == nullptr)
           return;
         if(root->isEndOfWord)
-          words.push_back(predix);
+          words.push_back(prefix);
         
         for(const auto& child : root->getChildren())
         {
-            findWords(child,prefix + child->charecter, words);
+            if(child != nullptr)
+              findWords(child,prefix + child->charecter, words);
         }
     }
     public:
