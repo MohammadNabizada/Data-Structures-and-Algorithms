@@ -124,7 +124,7 @@ class TrieArray
     }
     void findWords(Node* root,const string &prefix,vector<string> &words)
     {
-        if(root == nullptr)
+        if(root == nullptr || prefix == "")
           return;
         if(root->isEndOfWord)
           words.push_back(prefix);
@@ -137,7 +137,7 @@ class TrieArray
     }
     public:
     vector<string> findWords(string prefix)
-    {
+    {   
           vector<string> words;
           Node* lastNode = findLastNodeOf(prefix);
           findWords(lastNode,prefix,words);
