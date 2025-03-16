@@ -109,8 +109,37 @@ class TrieArray
             root->removeChild(root, ch); // Remove the child node
         }
     }
+    
+    Node* findLastNodeOf(string prefix)
+    {
+        Node* current = root;
+        for(const auto& ch : prefix)
+        {
+          Node* child = current->getChild(ch);
+          if(child == nullptr)
+             return nullptr;
+          current = child;
+        }
+        return current;
+    }
+    void findWords(Node* root,string prefix,vector<string>[] words)
+    {
+       if(root->isEndOfWord)
+         words.push_back(prefix);
+        
+       for(const auto& child : root->getChildren())
+       {
+        findWords(child,prefix + child->charecter,words);
+       }
+    }
     public:
-
+    vector<string> [] findWords(string prefix)
+    {
+          string words[];
+          Node* lastNode = findLastNodeOf(prefix);
+          findWords(lastNode,prefix,words);
+          return words;
+    }
     void insert(string value)
     {    
         if(root == nullptr)
@@ -156,6 +185,16 @@ class TrieArray
         remove(root,word,0);
     }
 
+
+    c
+    a
+    r
+   e   m
+       n
+     void autoCompelition()
+     {
+        autoCompelition(root,"");
+     }
 
 
 };
