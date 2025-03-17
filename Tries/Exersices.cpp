@@ -79,34 +79,32 @@ class TrieArray
     }
 
     void remove(Node* root, string word, int index) {
-        // Base case: If we've processed the entire word
+       
         if (index == word.length()) {
-            // Unmark the end-of-word flag
             root->isEndOfWord = false;
             return;
         }
     
-        // Ensure index is within bounds
+       
         if (index < 0 || index >= word.length()) {
-            return; // Invalid index, do nothing
+            return;
         }
     
-        // Get the current character
-        char ch = word[index]; // Use [] instead of at() for efficiency
-        int childIndex = ch - 'a'; // Map character to index
+        char ch = word[index]; 
+        int childIndex = ch - 'a';
     
-        // Check if the child node exists
+       
         Node* child = root->children[childIndex];
         if (child == nullptr) {
-            return; // Word doesn't exist in the Trie
+            return; 
         }
     
-        // Recursively process the next character
+       
         remove(child, word, index + 1);
     
-        // If the child node is no longer part of any word, delete it
+        
         if (!child->isEndOfWord && child->isEmpty()) {
-            root->removeChild(root, ch); // Remove the child node
+            root->removeChild(root, ch); 
         }
     }
     
@@ -198,6 +196,41 @@ class TrieArray
     
         return count;
     }
+
+
+    string longestCommonPrefixHelper()
+    {
+        string prefix = "";
+        Node* current = root;
+
+        while(current != nullptr)
+        {
+            int childCount = 0;
+            Node *childNode =  nullptr;
+            char childChar = '\0';
+
+            for(int i = 0; i < 26;i++)
+            {
+                if(current->children[i] != nullptr)
+                {
+                    childCount++;
+                    childNode = current->children[i];
+                    childChar = 'a' + i;
+                }
+            }
+
+            if(childCount != 1)
+              break;
+            
+            prefix += childChar;
+            current = childNode;
+
+            if (current->isEndOfWord) {
+                break;
+            }
+        }
+        return prefix;
+    }
     public:
     vector<string> findWords(string prefix)
     {   
@@ -264,6 +297,15 @@ class TrieArray
     int countRecursively()
     {
         return countRecursively(root);
+    }
+
+    string longestCommonPrefix(vector<string> words)
+    {
+          for(const auto& word: words)
+          {
+            insert(word);
+          }
+        return longestCommonPrefixHelper();
     }
 
 };
@@ -349,6 +391,10 @@ int main()
     cout<<"Count of words in trie Iterative:"<< trie->countWords();
     cout<<endl;
     cout<<"Count of words in trie Recursively:"<< trie->countRecursively();
+    cout<<endl;
+     TrieArray *trie2 = new TrieArray();
+    vector<string> word = {"car","care","carefull"};
 
+    cout<<trie2->longestCommonPrefix(word);
     return 0;
 }
