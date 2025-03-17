@@ -135,6 +135,23 @@ class TrieArray
               findWords(child,prefix + child->charecter, words);
         }
     }
+
+    bool containsRecursively(string word,Node* root,int index)
+   {
+     if(root == nullptr)
+       return false;
+     
+     if(index == word.length())
+       return root->isEndOfWord;
+     
+     char ch = word[index];
+
+     if(!root->hasChild(ch))
+       return false;
+     
+     return containsRecursively(word,root->getChild(ch),index+1);
+   }
+   
     public:
     vector<string> findWords(string prefix)
     {   
@@ -188,8 +205,10 @@ class TrieArray
         remove(root,word,0);
     }
 
-
- 
+    bool containsRecursively(string word)
+    {
+        return containsRecursively(word,root,0);
+    }
 
 };
 
@@ -268,6 +287,7 @@ int main()
         cout<<word<<endl;
     }
 
+    cout<<"find carlos recursively : "<<(trie->containsRecursively("carlos") ? "YES" : "NO");
 
     return 0;
 }
