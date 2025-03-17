@@ -1,9 +1,9 @@
-//class node -> value=string  childrent=int[26] index = aski(char) - 97
 
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <stack>
 using namespace std;
 
 class TrieArray
@@ -151,7 +151,53 @@ class TrieArray
      
      return containsRecursively(word,root->getChild(ch),index+1);
    }
-   
+    int countWords(Node* root)
+    {
+        if(root == nullptr)
+         return 0;
+        int count = 0;
+        stack<Node*> stack;
+        stack.push(root);
+
+        while(!stack.empty())
+        {
+            Node* current = stack.top();
+            stack.pop();
+
+            if(current->isEndOfWord){
+              count++;
+            }
+            
+            for(int i = 0; i < 26;i++)
+            {
+                if(current->children[i] != nullptr) 
+            {
+                stack.push(current->children[i]);
+            }
+            }
+        }
+        return count;
+     }
+
+
+    int countRecursively(Node* root)
+    {
+        if(root == nullptr)
+         return 0;
+        
+        int count = 0;
+
+        if(root->isEndOfWord)
+          count++;
+        
+        for(int i = 0; i < 26;i++)
+        {
+            if(root->children[i] != nullptr)
+              count += countRecursively(root->children[i]);
+        }
+    
+        return count;
+    }
     public:
     vector<string> findWords(string prefix)
     {   
@@ -208,6 +254,16 @@ class TrieArray
     bool containsRecursively(string word)
     {
         return containsRecursively(word,root,0);
+    }
+
+    int countWords()
+    {
+        return countWords(root); 
+    }
+
+    int countRecursively()
+    {
+        return countRecursively(root);
     }
 
 };
@@ -288,6 +344,11 @@ int main()
     }
 
     cout<<"find carlos recursively : "<<(trie->containsRecursively("carlos") ? "YES" : "NO");
+    cout<<endl;
+
+    cout<<"Count of words in trie Iterative:"<< trie->countWords();
+    cout<<endl;
+    cout<<"Count of words in trie Recursively:"<< trie->countRecursively();
 
     return 0;
 }
