@@ -20,15 +20,17 @@ class Graph{
           string label;
           Node(string label): label(label){}
      };
+
     unordered_map<string,Node*> nodes;
     unordered_map<Node*, list<Node*>> adjacencyList;
+
      public:
 
      ~Graph() {
         for (auto& pair : nodes) {
-            delete pair.second; // Delete each Node
+            delete pair.second; 
         }
-    }
+      }
 
        void AddNode(string label)
        {
@@ -56,10 +58,13 @@ class Graph{
         Node* FromNode = it1->second;
         Node* ToNode = it2->second;
 
-        // Add the edge to the adjacency list
+        
         adjacencyList[FromNode].push_back(ToNode);
         cout << "Edge added from '" << from << "' to '" << to << "'." << endl;
        }
+
+
+
        void PrintAdjacencyList() const {
         cout << "Adjacency List:" << endl;
         for (const auto& pair : adjacencyList) {
@@ -69,6 +74,17 @@ class Graph{
             }
         }
     }
+
+    void remove(string lable)
+    {
+        
+    }
+
+
+
+
+
+
 };
 
 
@@ -80,67 +96,14 @@ int main()
     graph.AddNode("B");
     graph.AddNode("C");
 
-    // Add edges
+   
     graph.AddEdge("A", "B");
     graph.AddEdge("A", "C");
     graph.AddEdge("B", "C");
 
-    // Print the adjacency list
+    
     graph.PrintAdjacencyList();
 
     return 0;
 }
 
-
-
-// class Graph{
-//     private:
-//     class Node{
-//       public:
-
-//       string label;
-//       vector<Node*> neighbours;
-
-//       Node(string lable): label(lable),neighbours{nullptr}{}
-//     };
-
-//     vector<Node*> Nodes;
-    
-
-//     bool hasLabel(const vector<Node*> Nodes, const string& targetLabel) {
-//         for (Node* head : Nodes) {
-//             if (head != nullptr && head->label == targetLabel) {
-//                 return true; 
-//             }
-//         }
-//         return false;
-//     }
-//     public:
-   
-
-//     void AddNode(string label)
-//     {
-//         if(!hasLabel(Nodes,label))
-//         {
-//             Node* newNode = new Node(label);
-//             Nodes.push_back(newNode);
-//         }
-//     }
-//   };
-
-
-
-
-//   int main()
-//   {
-     
-//     Graph *graph = new Graph();
-
-//     graph->AddNode("A");
-//     graph->AddNode("B");
-//     graph->AddNode("C");
-
-
-
-//     return 0;
-//   }
