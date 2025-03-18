@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <list>
 using namespace std;
 
 class Graph{
@@ -20,7 +21,7 @@ class Graph{
           Node(string label): label(label){}
      };
     unordered_map<string,Node*> nodes;
- 
+    unordered_map<Node*, list<Node*>> adjacencyList;
      public:
 
      ~Graph() {
@@ -31,30 +32,61 @@ class Graph{
 
        void AddNode(string label)
        {
-          if(nodes.find(label) == nodes.end())
-             nodes[label] = new Node(label);
+          if(nodes.find(label) == nodes.end()){
+             Node* node = new Node(label);
+             nodes[label] = node;
+             adjacencyList[node] = list<Node*>();
+          }
        }
 
        void AddEdge(string from,string to)
        {
-           auto it1 = nodes.find(from);
-           if (it1 != nodes.end())Node *FromNode = it1->second;
-           else cerr << "Key '" << from << "' not found in the hash map!" <<endl;
+        auto it1 = nodes.find(from);
+        auto it2 = nodes.find(to);
 
-           auto it2 = nodes.find(to);
-           if (it2 != nodes.end())Node *ToNode = it2->second;
-           else cerr << "Key '" << from << "' not found in the hash map!" <<endl;
+        if (it1 == nodes.end()) {
+            cerr << "Key '" << from << "' not found in the hash map!" << endl;
+            return;
+        }
+        if (it2 == nodes.end()) {
+            cerr << "Key '" << to << "' not found in the hash map!" << endl;
+            return;
+        }
 
+        Node* FromNode = it1->second;
+        Node* ToNode = it2->second;
+
+        // Add the edge to the adjacency list
+        adjacencyList[FromNode].push_back(ToNode);
+        cout << "Edge added from '" << from << "' to '" << to << "'." << endl;
        }
-
+       void PrintAdjacencyList() const {
+        cout << "Adjacency List:" << endl;
+        for (const auto& pair : adjacencyList) {
+            Node* fromNode = pair.first;
+            for (const auto& toNode : pair.second) {
+                cout << "Node " << fromNode->label << " is connected to Node " << toNode->label << endl;
+            }
+        }
+    }
 };
 
 
 
 int main()
 {
+    Graph graph;
+    graph.AddNode("A");
+    graph.AddNode("B");
+    graph.AddNode("C");
 
+    // Add edges
+    graph.AddEdge("A", "B");
+    graph.AddEdge("A", "C");
+    graph.AddEdge("B", "C");
 
+    // Print the adjacency list
+    graph.PrintAdjacencyList();
 
     return 0;
 }
