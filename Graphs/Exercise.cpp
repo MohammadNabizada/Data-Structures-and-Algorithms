@@ -94,7 +94,33 @@ class Graph{
         cout << "Node '" << label << "' removed successfully." << endl;
     }
 
-   
+    void removeEdge(const string& from, const string& to) {
+      
+        auto itFrom = nodes.find(from);
+        if (itFrom == nodes.end()) {
+            cerr << "Node '" << from << "' not found in the graph." << endl;
+            return;
+        }
+    
+       
+        auto itTo = nodes.find(to);
+        if (itTo == nodes.end()) {
+            cerr << "Node '" << to << "' not found in the graph." << endl;
+            return;
+        }
+    
+        Node* fromNode = itFrom->second;
+        Node* toNode = itTo->second;
+    
+        auto& neighbors = adjacencyList[fromNode];
+        auto it = find(neighbors.begin(), neighbors.end(), toNode);
+        if (it != neighbors.end()) {
+            neighbors.erase(it); 
+            cout << "Edge from '" << from << "' to '" << to << "' removed successfully." << endl;
+        } else {
+            cerr << "Edge from '" << from << "' to '" << to << "' does not exist." << endl;
+        }
+    }
 
 
 
