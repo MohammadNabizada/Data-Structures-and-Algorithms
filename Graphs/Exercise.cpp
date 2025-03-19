@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <algorithm>
 using namespace std;
 
 class Graph{
@@ -75,13 +76,25 @@ class Graph{
         }
     }
 
-    void remove(string lable)
+    void removeNode(string label)
     {
-        
+        Node* node = nodes[label];
+        if(node == nullptr)
+          return;
+        for(auto& pair : adjacencyList)
+        {
+            auto& neighbors = pair.second;
+            neighbors.remove(node);
+        }
+
+        adjacencyList.erase(node);
+        nodes.erase(label);
+
+        delete node;
+        cout << "Node '" << label << "' removed successfully." << endl;
     }
 
-
-
+   
 
 
 
