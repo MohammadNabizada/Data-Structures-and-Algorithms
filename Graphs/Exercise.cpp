@@ -140,7 +140,8 @@ int main()
     graph.AddEdge("A", "C");
     graph.AddEdge("B", "C");
 
-    
+    graph.removeEdge("A","C");
+    graph.removeNode("B");
     graph.PrintAdjacencyList();
 
     return 0;
