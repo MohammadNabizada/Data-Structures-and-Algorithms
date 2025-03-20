@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <list>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 class Graph{
@@ -24,7 +25,20 @@ class Graph{
 
     unordered_map<string,Node*> nodes;
     unordered_map<Node*, list<Node*>> adjacencyList;
+    void DfsRecursively(Node* current_node, set<Node*> visited)
+    {
+        if(current_node == nullptr || visited.find(current_node) != visited.end())
+          return;
+        
+        visited.insert(current_node);
+        cout<<current_node->label<< ' ';
 
+        for(Node* neighbor : adjacencyList[current_node])
+        {
+            if(visited.find(neighbor) == visited.end())
+              DfsRecursively(neighbor,visited);
+        }
+    }
      public:
 
      ~Graph() {
@@ -122,7 +136,18 @@ class Graph{
         }
     }
 
-
+   void Dfs(string startlabel)
+   {
+    auto it = nodes.find(startlabel);
+    if(it == nodes.end())
+      return;
+    
+    Node* startNode = it->second;
+    set<Node*> visited;
+    cout << "Depth-First Traversal (DFS) starting from '" << startlabel << "': ";
+    DfsRecursively(startNode, visited);
+    cout<<endl;
+   }
 
 };
 
@@ -134,16 +159,18 @@ int main()
     graph.AddNode("A");
     graph.AddNode("B");
     graph.AddNode("C");
+    graph.AddNode("D");
+    graph.AddNode("E");
 
-   
     graph.AddEdge("A", "B");
     graph.AddEdge("A", "C");
-    graph.AddEdge("B", "C");
-
-    graph.removeEdge("A","C");
-    graph.removeNode("B");
+    graph.AddEdge("B", "D");
+    graph.AddEdge("C", "E");
+    graph.AddEdge("D", "E");
+    // graph.removeEdge("A","C");
+    // graph.removeNode("B");
     graph.PrintAdjacencyList();
-
+    graph.Dfs("A");
     return 0;
 }
 
