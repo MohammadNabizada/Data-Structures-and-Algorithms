@@ -149,6 +149,42 @@ class Graph{
     cout<<endl;
    }
 
+
+   void DFS(const string& startLabel) {
+    auto it = nodes.find(startLabel);
+    if (it == nodes.end()) {
+        cerr << "Node '" << startLabel << "' not found in the graph." << endl;
+        return;
+    }
+
+    set<Node*> visited; // Set to keep track of visited nodes
+    set<Node*> toProcess; // Set to simulate the stack
+
+    // Add the starting node to the toProcess set
+    toProcess.insert(it->second);
+
+    cout << "Depth-First Traversal (DFS) starting from '" << startLabel << "': ";
+    while (!toProcess.empty()) {
+        // Get the first node in the set
+        Node* current = *toProcess.begin();
+        toProcess.erase(toProcess.begin()); // Remove it from the set
+
+        // If the node hasn't been visited, process it
+        if (visited.find(current) == visited.end()) {
+            visited.insert(current); // Mark the node as visited
+            cout << current->label << " "; // Process the current node
+
+            // Add all unvisited neighbors to the toProcess set
+            for (Node* neighbor : adjacencyList[current]) {
+                if (visited.find(neighbor) == visited.end()) {
+                    toProcess.insert(neighbor);
+                }
+            }
+        }
+    }
+    cout << endl;
+}
+
 };
 
 
