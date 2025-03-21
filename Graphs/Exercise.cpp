@@ -320,6 +320,29 @@ int main()
     }
     cout << endl;
 
+
+
+
+    Graph graph3;
+
+    // Add nodes
+    graph3.AddNode("A");
+    graph3.AddNode("B");
+    graph3.AddNode("C");
+    graph3.AddNode("D");
+
+    // Add directed edges (create a cycle)
+    graph3.AddEdge("A", "B");
+    graph3.AddEdge("B", "C");
+    graph3.AddEdge("C", "A"); // Cycle: A -> B -> C -> A
+
+    // Check if the graph has a cycle
+    if (graph3.hasCycle()) {
+        cout << "The graph contains a cycle." << endl;
+    } else {
+        cout << "The graph does not contain a cycle." << endl;
+    }
+
     return 0;
 }
 
