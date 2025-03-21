@@ -1,11 +1,4 @@
-//Graphs class
-  //Node class
-    //lable:string
-  //Add Node(lable)
-  //Remove Node(lable)
-  //addEdge(from, to)
-  //RemoveEdge(from, to)
-  //print() A is connected with [B,C]
+
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -13,6 +6,7 @@
 #include <algorithm>
 #include <set>
 #include <stack>
+#include <queue>
 using namespace std;
 
 class Graph{
@@ -182,7 +176,39 @@ class Graph{
     }
     cout << endl;
 }
-
+     void traverseBredthFirstFirst(string root)
+     {
+        auto it = nodes.find(root);
+        if (it == nodes.end()) {
+            cerr << "Node '" << root << "' not found in the graph." << endl;
+            return;
+        }
+    
+        set<Node*> visited; 
+        queue<Node*> queue;
+    
+       
+        queue.push(it->second);
+        visited.insert(it->second); 
+    
+        cout << "Breadth-First Traversal (BFS) starting from '" << root << "': ";
+        while (!queue.empty()) {
+            Node* current = queue.front();
+            queue.pop();
+    
+           
+            cout << current->label << " ";
+    
+            
+            for (Node* neighbor : adjacencyList[current]) {
+                if (visited.find(neighbor) == visited.end()) {
+                    visited.insert(neighbor);
+                    queue.push(neighbor); 
+                }
+            }
+        }
+        cout << endl; 
+     }
 };
 
 
@@ -205,6 +231,7 @@ int main()
     // graph.removeNode("B");
     graph.PrintAdjacencyList();
     graph.Dfs("A");
+    graph.traverseBredthFirstFirst("A");
     return 0;
 }
 
