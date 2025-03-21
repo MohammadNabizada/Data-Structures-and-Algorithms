@@ -12,6 +12,7 @@
 #include <list>
 #include <algorithm>
 #include <set>
+#include <stack>
 using namespace std;
 
 class Graph{
@@ -148,8 +149,6 @@ class Graph{
     DfsRecursively(startNode, visited);
     cout<<endl;
    }
-
-
    void DFS(const string& startLabel) {
     auto it = nodes.find(startLabel);
     if (it == nodes.end()) {
@@ -158,25 +157,25 @@ class Graph{
     }
 
     set<Node*> visited; 
-    set<Node*> toProcess; 
+    stack<Node*> stack; 
 
-    
-    toProcess.insert(it->second);
+   
+    stack.push(it->second);
 
     cout << "Depth-First Traversal (DFS) starting from '" << startLabel << "': ";
-    while (!toProcess.empty()) {
-        Node* current = *toProcess.begin();
-        toProcess.erase(toProcess.begin()); 
+    while (!stack.empty()) {
+        Node* current = stack.top();
+        stack.pop(); 
 
-       
+      
         if (visited.find(current) == visited.end()) {
-            visited.insert(current); 
-            cout << current->label << " "; 
+            visited.insert(current);
+            cout << current->label << " ";
 
-          
+            
             for (Node* neighbor : adjacencyList[current]) {
                 if (visited.find(neighbor) == visited.end()) {
-                    toProcess.insert(neighbor);
+                    stack.push(neighbor);
                 }
             }
         }
