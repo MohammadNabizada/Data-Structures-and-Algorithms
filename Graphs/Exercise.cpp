@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <set>
 #include <stack>
+#include <vector>
 using namespace std;
 
 class Graph{
@@ -40,6 +41,37 @@ class Graph{
               DfsRecursively(neighbor,visited);
         }
     }
+
+
+
+    bool hasCycleUtil(Node* node, set<Node*>& visited, set<Node*>& recursionStack) {
+        if (recursionStack.find(node) != recursionStack.end()) {
+            return true; 
+        }
+
+        if (visited.find(node) != visited.end()) {
+            return false; 
+        }
+
+       
+        visited.insert(node);
+        recursionStack.insert(node);
+
+      
+        for (Node* neighbor : adjacencyList[node]) {
+            if (hasCycleUtil(neighbor, visited, recursionStack)) {
+                return true; 
+            }
+        }
+
+      
+        recursionStack.erase(node);
+
+        return false; 
+    }
+
+
+
      public:
 
      ~Graph() {
@@ -183,6 +215,65 @@ class Graph{
     cout << endl;
 }
 
+
+void topologicalSortUtil(Node* node, set<Node*>& visited, stack<Node*>& stack) {
+    visited.insert(node); 
+
+   
+    for (Node* neighbor : adjacencyList[node]) {
+        if (visited.find(neighbor) == visited.end()) {
+            topologicalSortUtil(neighbor, visited, stack);
+        }
+    }
+
+    
+    stack.push(node);
+}
+
+
+vector<string> topologicalSort() {
+    set<Node*> visited; 
+    stack<Node*> stack; 
+
+    for (auto& pair : nodes) {
+        Node* node = pair.second;
+        if (visited.find(node) == visited.end()) {
+            topologicalSortUtil(node, visited, stack);
+        }
+    }
+
+    vector<string> result;
+    while (!stack.empty()) {
+        result.push_back(stack.top()->label);
+        stack.pop();
+    }
+
+    return result;
+}
+
+
+
+
+bool hasCycle() {
+    set<Node*> visited; 
+    set<Node*> recursionStack; 
+
+    
+    for (auto& pair : nodes) {
+        Node* node = pair.second;
+        if (visited.find(node) == visited.end()) {
+            if (hasCycleUtil(node, visited, recursionStack)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+
+
 };
 
 
@@ -201,10 +292,34 @@ int main()
     graph.AddEdge("B", "D");
     graph.AddEdge("C", "E");
     graph.AddEdge("D", "E");
-    // graph.removeEdge("A","C");
-    // graph.removeNode("B");
     graph.PrintAdjacencyList();
     graph.Dfs("A");
+
+
+
+
+    Graph graph2;
+
+    graph2.AddNode("X");
+    graph2.AddNode("A");
+    graph2.AddNode("B");
+    graph2.AddNode("P");
+    
+
+    graph2.AddEdge("X", "A");
+    graph2.AddEdge("X", "B");
+    graph2.AddEdge("A", "P");
+    graph2.AddEdge("B", "P");
+  
+
+    vector<string> sortedOrder = graph2.topologicalSort();
+
+    cout << "Topological Sort Order: ";
+    for (const string& node : sortedOrder) {
+        cout << node << " ";
+    }
+    cout << endl;
+
     return 0;
 }
 
