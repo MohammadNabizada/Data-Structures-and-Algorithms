@@ -42,7 +42,7 @@ private:
     {
       if (Balancefactor(root->leftchild) < 0)
       {
-        root->leftchild = (root->leftchild);
+        root->leftchild =  rotate(root->leftchild);
       }
       return rotateRight(root);
     }
