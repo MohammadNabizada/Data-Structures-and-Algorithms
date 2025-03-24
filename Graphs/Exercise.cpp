@@ -99,9 +99,7 @@ class Graph{
             return;
         }
         Node* FromNode = fromKey->second;
-        Node* ToNode = toKey->second;
-
-        
+        Node* ToNode = toKey->second;  
         adjacencyList[FromNode].push_back(ToNode);
         cout << "Edge added from '" << from << "' to '" << to << "'." << endl;
        }
@@ -138,15 +136,15 @@ class Graph{
 
     void removeEdge(const string& from, const string& to) {
       
-        auto itFrom = nodes.find(from);
-        if (itFrom == nodes.end()) {
+        auto fromKey = nodes.find(from);
+        if (fromKey == nodes.end()) {
             cerr << "Node '" << from << "' not found in the graph." << endl;
             return;
         }
     
        
-        auto itTo = nodes.find(to);
-        if (itTo == nodes.end()) {
+        auto toKey = nodes.find(to);
+        if (toKey == nodes.end()) {
             cerr << "Node '" << to << "' not found in the graph." << endl;
             return;
         }
