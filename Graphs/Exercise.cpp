@@ -91,20 +91,15 @@ class Graph{
 
        void AddEdge(string from,string to)
        {
-        auto it1 = nodes.find(from);
-        auto it2 = nodes.find(to);
+        auto fromKey = nodes.find(from);
+        auto toKey = nodes.find(to);
 
-        if (it1 == nodes.end()) {
-            cerr << "Key '" << from << "' not found in the hash map!" << endl;
+        if (fromKey == nodes.end() || toKey == nodes.end()) {
+            cerr << "Key '" << from <<"and"<<to<< "' not found in the hash map!" << endl;
             return;
         }
-        if (it2 == nodes.end()) {
-            cerr << "Key '" << to << "' not found in the hash map!" << endl;
-            return;
-        }
-
-        Node* FromNode = it1->second;
-        Node* ToNode = it2->second;
+        Node* FromNode = fromKey->second;
+        Node* ToNode = toKey->second;
 
         
         adjacencyList[FromNode].push_back(ToNode);
