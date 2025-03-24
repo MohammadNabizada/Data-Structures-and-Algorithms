@@ -85,22 +85,15 @@ class Graph{
 
        void AddEdge(string from,string to)
        {
-        auto it1 = nodes.find(from);
-        auto it2 = nodes.find(to);
+        auto fromKey = nodes.find(from);
+        auto toKey = nodes.find(to);
 
-        if (it1 == nodes.end()) {
-            cerr << "Key '" << from << "' not found in the hash map!" << endl;
+        if (fromKey == nodes.end() || toKey == nodes.end()) {
+            cerr << "Key '" << from <<"and"<<to<< "' not found in the hash map!" << endl;
             return;
         }
-        if (it2 == nodes.end()) {
-            cerr << "Key '" << to << "' not found in the hash map!" << endl;
-            return;
-        }
-
-        Node* FromNode = it1->second;
-        Node* ToNode = it2->second;
-
-        
+        Node* FromNode = fromKey->second;
+        Node* ToNode = toKey->second;  
         adjacencyList[FromNode].push_back(ToNode);
         cout << "Edge added from '" << from << "' to '" << to << "'." << endl;
        }
@@ -137,15 +130,15 @@ class Graph{
 
     void removeEdge(const string& from, const string& to) {
       
-        auto itFrom = nodes.find(from);
-        if (itFrom == nodes.end()) {
+        auto fromKey = nodes.find(from);
+        if (fromKey == nodes.end()) {
             cerr << "Node '" << from << "' not found in the graph." << endl;
             return;
         }
     
        
-        auto itTo = nodes.find(to);
-        if (itTo == nodes.end()) {
+        auto toKey = nodes.find(to);
+        if (toKey == nodes.end()) {
             cerr << "Node '" << to << "' not found in the graph." << endl;
             return;
         }
