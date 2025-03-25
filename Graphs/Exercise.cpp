@@ -242,20 +242,23 @@ vector<string> topologicalSort() {
 
 
 bool hasCycle() {
-    set<Node*> visited; 
-    set<Node*> recursionStack; 
+	set<Node*> all;
+	set<Node*> visiting;
+	set<Node*> visited;
 
-    
-    for (auto& pair : nodes) {
-        Node* node = pair.second;
-        if (visited.find(node) == visited.end()) {
-            if (hasCycleUtil(node, visited, recursionStack)) {
-                return true;
-            }
-        }
-    }
 
-    return false;
+	for (auto& pair : nodes) {
+		all.insert(pair.second);
+	}
+
+	
+	while (!all.empty()) {
+		Node* current = *all.begin();
+		if (hasCycle(current, all, visiting, visited)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 
