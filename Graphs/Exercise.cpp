@@ -38,32 +38,28 @@ class Graph{
 
 
 
-    bool hasCycleUtil(Node* node, set<Node*>& visited, set<Node*>& recursionStack) {
-        if (recursionStack.find(node) != recursionStack.end()) {
-            return true; 
-        }
+	bool hasCycle(Node* node,set<Node*>& all,set<Node*>& visiting,set<Node*>& visited) {		
+		all.erase(node);
+		visiting.insert(node);
 
-        if (visited.find(node) != visited.end()) {
-            return false; 
-        }
+		
+		for (Node* neighbor : adjacansyList[node]) {
+			if (visited.find(neighbor) != visited.end()) {
+				continue;
+			}
+			if (visiting.find(neighbor) != visiting.end()) {
+				return true; 
+			}
+			if (hasCycle(neighbor, all, visiting, visited)) {
+				return true;
+			}
+		}
 
-       
-        visited.insert(node);
-        recursionStack.insert(node);
-
-      
-        for (Node* neighbor : adjacencyList[node]) {
-            if (hasCycleUtil(neighbor, visited, recursionStack)) {
-                return true; 
-            }
-        }
-
-      
-        recursionStack.erase(node);
-
-        return false; 
-    }
-
+		
+		visiting.erase(node);
+		visited.insert(node);
+		return false;
+	}
 
 
      public:
