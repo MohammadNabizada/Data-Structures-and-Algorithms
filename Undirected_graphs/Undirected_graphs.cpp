@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <list>
+#include <algorithm>
 using namespace std;
 
 class wightedGraph{
@@ -25,7 +26,16 @@ class wightedGraph{
    unordered_map<Node*,list<Node*>> adjacancyList;
 
    public:
+   void addNode(string label)
+   {
+    if(nodes.find(label) == node.end()){
+    Node* newNode = new Node(label);
+    nodes[label] = newNode;
+    adjacancyList[newNode] = list<Node*>();
+    }
+   }
 
+   
 
 };
 
