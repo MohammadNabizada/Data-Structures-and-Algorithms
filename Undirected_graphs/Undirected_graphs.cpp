@@ -7,10 +7,22 @@ using namespace std;
 
 class wightedGraph{
    private:
+
+   class Edge;  
     class Node{
         public:
         string label;
+        list<Edge*> *edges = new list<Edge*>();
         Node(string label): label(label){}
+
+        void addEdge(Node* to,int weight)
+        {
+          edges->push_back(new Edge(weight,this, to));
+        }
+        list<Edge*> getEdges()
+        {
+         return *edges;
+        }
     };
 
     class Edge{
@@ -25,18 +37,30 @@ class wightedGraph{
         this->to = to;
 
       }
+     
 
     };
    unordered_map<string,Node*> nodes;
-   unordered_map<Node*,list<Edge*>> adjacancyList;
+
 
    public:
+   ~wightedGraph() {
+    for (auto& pair : nodes) {
+        for (auto edge : *pair.second->edges) {
+            delete edge;
+        }
+        delete pair.second->edges;
+        delete pair.second;
+    }
+}
+
+  
+
    void addNode(string label)
    {
     if(nodes.find(label) == nodes.end()){
     Node* newNode = new Node(label);
     nodes[label] = newNode;
-    adjacancyList[newNode] = list<Edge*>();
     }
    }
 
@@ -50,25 +74,25 @@ class wightedGraph{
     Node* fromNode = fromKey->second;
     Node* toNode = toKey->second;
 
-
-    Edge *edge = new Edge(weight,fromNode,toNode);
-    adjacancyList[fromNode].push_back(edge);
-    adjacancyList[toNode].push_back(edge);
+    fromNode->addEdge(toNode, weight);
+    toNode->addEdge(fromNode, weight);
 
    }
 
 
-   void printAdjacancyList()
+   void printConnections()
    {
-    cout << "Adjacancy List"<<endl;
-    for(auto& pair : adjacancyList)
-    {
-      Node* node = pair.first;
-
-      for(auto &edge : adjacancyList[node])
-        cout<<"["<<edge->from->label << "]" << "is Connected to" <<"["<< edge->to->label << "]"<< "with weight" << edge->weight<<endl;
+    cout << "Adjacancy List" << endl;
+    for (auto& pair : nodes) {
+        Node* node = pair.second;
+        cout << "[" << node->label << "] is connected to: ";
+        for (auto edge : node->getEdges()) {
+            cout << "[" << edge->to->label << "](weight:" << edge->weight << ") ";
+        }
+        cout << endl;
     }
-   }
+    }
+   
 
 };
 
@@ -81,7 +105,7 @@ int main()
   graph->addNode("C");
   graph->addEdge("A","B",3);
   graph->addEdge("A","C",2);
-  graph->printAdjacancyList();
+  graph->printConnections();
 
     return 0;
 
