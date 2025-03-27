@@ -19,7 +19,12 @@ class wightedGraph{
       Node* to;
       int weight;
 
-      Edge(weight): weight(weight), from{nullptr}, to{nullptr}{}
+      Edge(int weight,Node* from,Node* to){
+        this->weight = weight;
+        this->from = from;
+        this->to = to;
+
+      }
 
     };
    unordered_map<string,Node*> nodes;
@@ -28,7 +33,7 @@ class wightedGraph{
    public:
    void addNode(string label)
    {
-    if(nodes.find(label) == node.end()){
+    if(nodes.find(label) == nodes.end()){
     Node* newNode = new Node(label);
     nodes[label] = newNode;
     adjacancyList[newNode] = list<Edge*>();
@@ -38,15 +43,15 @@ class wightedGraph{
    void addEdge(string from,string to, int weight)
    {
     auto fromKey = nodes.find(from);
-    auto tokey = nodes.find(to);
+    auto toKey = nodes.find(to);
     if(fromKey == nodes.end() || toKey == nodes.end())
        return;
        
     Node* fromNode = fromKey->second;
-    Node* toNode = tokey->second;
+    Node* toNode = toKey->second;
 
 
-    Edge *edge = new Edge(fromNode,toNode,weight);
+    Edge *edge = new Edge(weight,fromNode,toNode);
     adjacancyList[fromNode].push_back(edge);
     adjacancyList[toNode].push_back(edge);
 
@@ -55,13 +60,13 @@ class wightedGraph{
 
    void printAdjacancyList()
    {
-    cout << "Adjacancy List";
+    cout << "Adjacancy List"<<endl;
     for(auto& pair : adjacancyList)
     {
       Node* node = pair.first;
 
       for(auto &edge : adjacancyList[node])
-        cout<<"["<<edge->from->label << "]" << "is Connected to" <<"[" edge->to << "]"<< "with weight" << edge->weight;
+        cout<<"["<<edge->from->label << "]" << "is Connected to" <<"["<< edge->to->label << "]"<< "with weight" << edge->weight<<endl;
     }
    }
 
@@ -70,7 +75,13 @@ class wightedGraph{
 int main()
 {
 
-
+  wightedGraph *graph = new wightedGraph();
+  graph->addNode("A");
+  graph->addNode("B");
+  graph->addNode("C");
+  graph->addEdge("A","B",3);
+  graph->addEdge("A","C",2);
+  graph->printAdjacancyList();
 
     return 0;
 
