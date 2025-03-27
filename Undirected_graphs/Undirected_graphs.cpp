@@ -4,6 +4,7 @@
 #include <list>
 #include <algorithm>
 #include <queue>
+#include <stack>
 using namespace std;
 
 class Path {
@@ -14,6 +15,9 @@ class Path {
       void add(string node) {
           nodes.push_back(node);
       }
+      const list<string>& getNodes() const {
+        return nodes;
+    }
   };
 
 class wightedGraph{
@@ -206,7 +210,14 @@ int main()
   graph2->addEdge("C","D",1);
   graph2->addEdge("D","E",5);
 
-  graph2->printConnections();
+  Path path = graph2->getShortestPath("A", "D");
+    
+  // 5. Print the path (you'll need to add this to your Path class)
+  cout << "Shortest path from A to D: ";
+  for (const string& node : path.getNodes()) {  // Assuming you add getNodes()
+      cout << node << " ";
+  }
+  cout << endl;
     return 0;
 
 
