@@ -7,10 +7,22 @@ using namespace std;
 
 class wightedGraph{
    private:
+
+   class Edge;  
     class Node{
         public:
         string label;
+        list<Edge*> *edges = new list<Edge*>();
         Node(string label): label(label){}
+
+        void addEdge(Node* to,int weight)
+        {
+          edges->push_back(new Edge(weight,this, to));
+        }
+        list<Edge*> getEdges()
+        {
+         return *edges;
+        }
     };
 
     class Edge{
@@ -19,58 +31,81 @@ class wightedGraph{
       Node* to;
       int weight;
 
-      Edge(weight): weight(weight), from{nullptr}, to{nullptr}{}
+      Edge(int weight,Node* from,Node* to){
+        this->weight = weight;
+        this->from = from;
+        this->to = to;
+
+      }
+     
 
     };
    unordered_map<string,Node*> nodes;
-   unordered_map<Node*,list<Edge*>> adjacancyList;
+
 
    public:
+   ~wightedGraph() {
+    for (auto& pair : nodes) {
+        for (auto edge : *pair.second->edges) {
+            delete edge;
+        }
+        delete pair.second->edges;
+        delete pair.second;
+    }
+}
+
+  
+
    void addNode(string label)
    {
-    if(nodes.find(label) == node.end()){
+    if(nodes.find(label) == nodes.end()){
     Node* newNode = new Node(label);
     nodes[label] = newNode;
-    adjacancyList[newNode] = list<Edge*>();
     }
    }
 
    void addEdge(string from,string to, int weight)
    {
     auto fromKey = nodes.find(from);
-    auto tokey = nodes.find(to);
+    auto toKey = nodes.find(to);
     if(fromKey == nodes.end() || toKey == nodes.end())
        return;
        
     Node* fromNode = fromKey->second;
-    Node* toNode = tokey->second;
+    Node* toNode = toKey->second;
 
-
-    Edge *edge = new Edge(fromNode,toNode,weight);
-    adjacancyList[fromNode].push_back(edge);
-    adjacancyList[toNode].push_back(edge);
+    fromNode->addEdge(toNode, weight);
+    toNode->addEdge(fromNode, weight);
 
    }
 
 
-   void printAdjacancyList()
+   void printConnections()
    {
-    cout << "Adjacancy List";
-    for(auto& pair : adjacancyList)
-    {
-      Node* node = pair.first;
-
-      for(auto &edge : adjacancyList[node])
-        cout<<"["<<edge->from->label << "]" << "is Connected to" <<"[" edge->to << "]"<< "with weight" << edge->weight;
+    cout << "Adjacancy List" << endl;
+    for (auto& pair : nodes) {
+        Node* node = pair.second;
+        cout << "[" << node->label << "] is connected to: ";
+        for (auto edge : node->getEdges()) {
+            cout << "[" << edge->to->label << "](weight:" << edge->weight << ") ";
+        }
+        cout << endl;
     }
-   }
+    }
+   
 
 };
 
 int main()
 {
 
-
+  wightedGraph *graph = new wightedGraph();
+  graph->addNode("A");
+  graph->addNode("B");
+  graph->addNode("C");
+  graph->addEdge("A","B",3);
+  graph->addEdge("A","C",2);
+  graph->printConnections();
 
     return 0;
 
