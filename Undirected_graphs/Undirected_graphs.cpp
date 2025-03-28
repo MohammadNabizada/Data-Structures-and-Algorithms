@@ -213,10 +213,7 @@ class wightedGraph{
     return false;
    }
 
- 
-};
-
-wightedGraph getMinimumSpanningTree() {
+   wightedGraph getMinimumSpanningTree() {
     wightedGraph mst;
     if (nodes.empty()) return mst;
 
@@ -258,6 +255,10 @@ wightedGraph getMinimumSpanningTree() {
 
     return mst;
 }
+ 
+};
+
+
 
 
 int main()
@@ -310,6 +311,39 @@ int main()
 
 
     cout<<"graph has cycle: "<<(graph3->hasCycle() ? "Yes" : "NO");
+
+  cout<<endl;
+
+  cout<<"minimum spaning tree: "<<endl;
+
+    wightedGraph graph4;
+    
+
+    graph4.addNode("A");
+    graph4.addNode("B");
+    graph4.addNode("C");
+    graph4.addNode("D");
+    graph4.addNode("E");
+    
+   
+    graph4.addEdge("A", "B", 4);
+    graph4.addEdge("A", "C", 1);
+    graph4.addEdge("B", "C", 2);
+    graph4.addEdge("B", "D", 5);
+    graph4.addEdge("C", "D", 8);
+    graph4.addEdge("C", "E", 10);
+    graph4.addEdge("D", "E", 2);
+    
+    cout << "Original Graph:" << endl;
+    graph4.printConnections();
+    
+  
+    wightedGraph mst = graph4.getMinimumSpanningTree();
+    
+    cout << "\nMinimum Spanning Tree:" << endl;
+    mst.printConnections();
+
+
     return 0;
 
 
