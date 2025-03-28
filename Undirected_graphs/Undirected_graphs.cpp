@@ -213,9 +213,52 @@ class wightedGraph{
     return false;
    }
 
-
-
+ 
 };
+
+wightedGraph getMinimumSpanningTree() {
+    wightedGraph mst;
+    if (nodes.empty()) return mst;
+
+    for (auto& pair : nodes) {
+        mst.addNode(pair.first);
+    }
+
+    priority_queue<NodeEntry, vector<NodeEntry>, CompareNodeEntry> queue;
+    set<Node*> visited;
+
+    Node* startNode = nodes.begin()->second;
+    queue.push(NodeEntry(startNode, 0));
+
+    unordered_map<Node*, Edge*> minEdgeTo;
+
+    while (!queue.empty()) {
+        NodeEntry current = queue.top();
+        queue.pop();
+
+        if (visited.find(current.node) != visited.end()) continue;
+        visited.insert(current.node);
+
+        if (minEdgeTo[current.node] != nullptr) {
+            Edge* edge = minEdgeTo[current.node];
+            mst.addEdge(edge->from->label, edge->to->label, edge->weight);
+        }
+
+        for (auto edge : *(current.node->edges)) {
+            Node* neighbor = edge->to;
+            if (visited.find(neighbor) == visited.end()) {
+                if (minEdgeTo.find(neighbor) == minEdgeTo.end() || 
+                    edge->weight < minEdgeTo[neighbor]->weight) {
+                    minEdgeTo[neighbor] = edge;
+                    queue.push(NodeEntry(neighbor, edge->weight));
+                }
+            }
+        }
+    }
+
+    return mst;
+}
+
 
 int main()
 {
