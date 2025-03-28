@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <queue>
 #include <stack>
+#include <set>
 using namespace std;
 
 class Path {
@@ -91,6 +92,25 @@ class wightedGraph{
     return path;
 }
 
+
+   bool hasCycle(Node *node,Node *parent,set<Node*> visited)
+   {
+    visited.insert(node);
+    for(auto edge : node->getEdges())
+    {
+        if(edge->to == parent)
+          continue;
+
+        if(visited.find(edge->to) != visited.end() || hasCycle(edge->to,node, visited))
+          return true;
+        
+    
+         
+    }
+
+    return false;
+
+   }
    public:
    ~wightedGraph() {
     for (auto& pair : nodes) {
@@ -178,7 +198,68 @@ class wightedGraph{
   
       return Path();  // Return empty path if no path exists
   }
+
+   bool hasCycle()
+   {
+    
+    set<Node*> visited;
+    for(auto pair : nodes)
+    {
+       Node* node = pair.second;
+      if(visited.find(node) == visited.end() && hasCycle(node,nullptr,visited))
+           return true;
+    }
+
+    return false;
+   }
+
+   wightedGraph getMinimumSpanningTree() {
+    wightedGraph mst;
+    if (nodes.empty()) return mst;
+
+    for (auto& pair : nodes) {
+        mst.addNode(pair.first);
+    }
+
+    priority_queue<NodeEntry, vector<NodeEntry>, CompareNodeEntry> queue;
+    set<Node*> visited;
+
+    Node* startNode = nodes.begin()->second;
+    queue.push(NodeEntry(startNode, 0));
+
+    unordered_map<Node*, Edge*> minEdgeTo;
+
+    while (!queue.empty()) {
+        NodeEntry current = queue.top();
+        queue.pop();
+
+        if (visited.find(current.node) != visited.end()) continue;
+        visited.insert(current.node);
+
+        if (minEdgeTo[current.node] != nullptr) {
+            Edge* edge = minEdgeTo[current.node];
+            mst.addEdge(edge->from->label, edge->to->label, edge->weight);
+        }
+
+        for (auto edge : *(current.node->edges)) {
+            Node* neighbor = edge->to;
+            if (visited.find(neighbor) == visited.end()) {
+                if (minEdgeTo.find(neighbor) == minEdgeTo.end() || 
+                    edge->weight < minEdgeTo[neighbor]->weight) {
+                    minEdgeTo[neighbor] = edge;
+                    queue.push(NodeEntry(neighbor, edge->weight));
+                }
+            }
+        }
+    }
+
+    return mst;
+}
+ 
 };
+
+
+
 
 int main()
 {
@@ -218,6 +299,51 @@ int main()
       cout << node << " ";
   }
   cout << endl;
+
+
+    wightedGraph *graph3 = new wightedGraph();
+
+    graph3->addNode("A");
+    graph3->addNode("B");
+    graph3->addNode("C");
+    graph3->addEdge("A","B",0);
+    graph3->addEdge("B","C",0);
+
+
+    cout<<"graph has cycle: "<<(graph3->hasCycle() ? "Yes" : "NO");
+
+  cout<<endl;
+
+  cout<<"minimum spaning tree: "<<endl;
+
+    wightedGraph graph4;
+    
+
+    graph4.addNode("A");
+    graph4.addNode("B");
+    graph4.addNode("C");
+    graph4.addNode("D");
+    graph4.addNode("E");
+    
+   
+    graph4.addEdge("A", "B", 4);
+    graph4.addEdge("A", "C", 1);
+    graph4.addEdge("B", "C", 2);
+    graph4.addEdge("B", "D", 5);
+    graph4.addEdge("C", "D", 8);
+    graph4.addEdge("C", "E", 10);
+    graph4.addEdge("D", "E", 2);
+    
+    cout << "Original Graph:" << endl;
+    graph4.printConnections();
+    
+  
+    wightedGraph mst = graph4.getMinimumSpanningTree();
+    
+    cout << "\nMinimum Spanning Tree:" << endl;
+    mst.printConnections();
+
+
     return 0;
 
 
