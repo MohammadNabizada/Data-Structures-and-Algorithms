@@ -91,6 +91,25 @@ class wightedGraph{
     return path;
 }
 
+
+   bool hasCycle(Node *node,Node *parent,set<Node*> visited)
+   {
+    visited.push_back(node);
+    for(auto edge : node->getEdges())
+    {
+        if(edge.to == parent)
+          continue;
+
+        if(visited.find(edge.to) != visited.find() || hasCycle(edge.to,node, visited))
+          return true;
+        
+    
+         
+    }
+
+    return false;
+
+   }
    public:
    ~wightedGraph() {
     for (auto& pair : nodes) {
@@ -178,6 +197,23 @@ class wightedGraph{
   
       return Path();  // Return empty path if no path exists
   }
+
+   bool hasCycle()
+   {
+    
+    set<Node*> visited;
+    for(auto pair : nodes)
+    {
+       Node* node = pair.second;
+      if(visited.find(node) == visited.end() && hasCycle(node,nullptr,visited))
+           return true;
+    }
+
+    return false;
+   }
+
+
+
 };
 
 int main()
