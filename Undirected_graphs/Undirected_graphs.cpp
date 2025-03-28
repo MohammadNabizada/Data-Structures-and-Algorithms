@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <queue>
 #include <stack>
+#include <set>
 using namespace std;
 
 class Path {
@@ -94,13 +95,13 @@ class wightedGraph{
 
    bool hasCycle(Node *node,Node *parent,set<Node*> visited)
    {
-    visited.push_back(node);
+    visited.insert(node);
     for(auto edge : node->getEdges())
     {
-        if(edge.to == parent)
+        if(edge->to == parent)
           continue;
 
-        if(visited.find(edge.to) != visited.find() || hasCycle(edge.to,node, visited))
+        if(visited.find(edge->to) != visited.end() || hasCycle(edge->to,node, visited))
           return true;
         
     
@@ -254,6 +255,18 @@ int main()
       cout << node << " ";
   }
   cout << endl;
+
+
+    wightedGraph *graph3 = new wightedGraph();
+
+    graph3->addNode("A");
+    graph3->addNode("B");
+    graph3->addNode("C");
+    graph3->addEdge("A","B",0);
+    graph3->addEdge("B","C",0);
+
+
+    cout<<"graph has cycle: "<<(graph3->hasCycle() ? "Yes" : "NO");
     return 0;
 
 
