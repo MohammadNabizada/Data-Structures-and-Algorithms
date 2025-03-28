@@ -196,7 +196,7 @@ class wightedGraph{
           }
       }
   
-      return Path();  // Return empty path if no path exists
+      return Path(); 
   }
 
    bool hasCycle()
@@ -293,9 +293,8 @@ int main()
 
   Path path = graph2->getShortestPath("A", "D");
     
-  // 5. Print the path (you'll need to add this to your Path class)
   cout << "Shortest path from A to D: ";
-  for (const string& node : path.getNodes()) {  // Assuming you add getNodes()
+  for (const string& node : path.getNodes()) { 
       cout << node << " ";
   }
   cout << endl;
