@@ -50,18 +50,25 @@ class SelectionSort{
     array[index2] = temp;
   }
 
+  int findMinIndex(int array[],int minIndex)
+  {
+    for(int j = minIndex;j< length;j++)
+    {
+     if(array[j] < array[minIndex])
+       minIndex = j;
+    }
+    return minIndex;
+  }
+
   public:
 
   SelectionSort(int length): length(length){}
   void sort(int array[])
   {
+    
    for(int i = 0;i < length;i++)
    {
-   for(int j = i+1;j< length;j++)
-   {
-    if(array[j] < array[i])
-      swap(array,i,j);
-   }
+   swap(array,findMinIndex(array,i),i);
    }
 
   }
