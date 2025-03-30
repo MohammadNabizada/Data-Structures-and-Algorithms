@@ -19,21 +19,20 @@ class Bublesort
 
   void sort(int array[])
   {
+    bool isSorted;
    for(int i = 0; i < length;i++)
    {
-    for(int j = 1;j < length;j++)
+    isSorted = true;
+    for(int j = 1;j < length - i;j++)
     {
         if(array[j] < array[j-1])
           {
             swap(array,j,j-1);
+            isSorted = false;
           }
     }
-   }
-
-
-   for(int i =0; i < length;i++)
-   {
-    cout<< array[i];
+    if(isSorted == true)
+      return;
    }
   }
 
@@ -51,8 +50,9 @@ int main()
 
     Bublesort bublesort(5);
     bublesort.sort(array);
-
-
-
+    for(int i =0; i < 5;i++)
+    {
+     cout<< array[i];
+    }
     return 0;
 }
