@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <iterator>
 using namespace std;
 
 class Bubblesort
@@ -82,7 +82,7 @@ class InsertionSort
 {
     private:
     int length;
-
+  
     public:
     InsertionSort(int length):length(length){}
 
@@ -107,32 +107,56 @@ class InsertionSort
 class MergeSort
 {
   private:
-  int length;
 
-
-  void merge(int array[] left,int array[] right,int array[] result)
+  void merge(int left[] ,int leftsize,int right[],int rightsize ,int result[])
   {
      int i = 0, j = 0, k = 0;
-     
+     while(i < leftsize && j < rightsize)
+     {
+       if(left[i] <= right[j])
+         result[k++] = left[i++];
+       else
+         result[k++] = right[j++];
+     }
+
+     while(i < leftsize)
+      result[k++] = left[i++];
+
+     while(j < rightsize)
+      result[k++] = right[j++];
+      
+      
   }
   public:
 
-  MergeSort(int length): length(length){}
-  void sort(int array[])
+
+  void sort(int array[],int length)
   {
-   int middle = length / 2;
-   int *left = new int[middle];
 
-   for(int i = 0; i < middle;i++)
-      left[i] = array[i];
+   if(length < 2)
+     return;
+     int middle = length / 2;
+  
+     int* left = new int[middle];
+     int* right = new int[length - middle]; 
+     
+   
+     for(int i = 0; i < middle; i++) {
+         left[i] = array[i]; 
+     }
+     
+     for(int i = middle; i < length; i++) {
+         right[i - middle] = array[i]; 
+     }
+     
+    
+       sort(left,middle);
+       sort(right,length - middle);
 
-      int *right = new int[length - middle];
-      for(int i = middle; i < length; i++)
-        right[i - middle] = array[i];
+       merge(left,middle,right,length - middle,array);
 
-       sort(left);
-       sort(right);
-
+       delete[] left;
+       delete[] right;
   }
 
 
@@ -167,6 +191,17 @@ int main()
     for(int i =0; i < 5;i++)
     {
      cout<< array3[i];
+    }
+
+    cout<<endl;
+
+    int array4[5] = {1,4,2,7,3};
+    MergeSort mergesort;
+    mergesort.sort(array4,5);
+
+    for(int i =0; i < 5;i++)
+    {
+     cout<< array4[i];
     }
     return 0;
 }
