@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iterator>
+#include <list>
 using namespace std;
 
 class Bubblesort
@@ -243,6 +244,38 @@ class CountSort{
   delete[] count;
   delete[] output;
 }
+};
+
+
+class BucketSort{
+
+  public:
+
+  void sort(int array[],int length,int numberofBuckets)
+  {
+     list<int> x;
+     list<list<int>> buckets;
+
+     for(int i =0 ; i < numberofBuckets; i++)
+     {
+      buckets.push_back(list<int>());
+     }
+     for(int i = 0; i < length;i++)
+     {
+       buckets[array[i] / numberofBuckets].push_back(array[i]);
+     }
+     int i = 0;
+     for(auto bucket: buckets)
+     {
+      QuickSort(bucket);
+      for(auto item:bucket)
+      {
+         array[i++] = item;
+      }
+     }
+  }
+
+
 };
 
 int main()
