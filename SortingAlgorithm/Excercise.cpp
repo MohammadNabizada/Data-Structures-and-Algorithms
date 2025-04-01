@@ -207,21 +207,42 @@ class QuickSort{
 
 
 class CountSort{
+
+
  public:
+ void sort(int arr[], int size) {
+  if (size <= 1) return;
 
- void sort(int array[],int length,int max)
- {
-   int counts[max+1];
-   int count =0;
-   for(int item : array)
-    counts[item]++;
-    count++;
-  int k = 0;
-   for(int i = 0;i < count;i++)
-     for(int j = 0;j < counts[i];j++)
-        array[k++] = i;
- }
+  int max_val = arr[0];
+  for (int i = 1; i < size; i++) {
+      if (arr[i] > max_val) {
+          max_val = arr[i];
+      }
+  }
 
+  int* count = new int[max_val + 1](); 
+
+  for (int i = 0; i < size; i++) {
+      count[arr[i]]++;
+  }
+
+  for (int i = 1; i <= max_val; i++) {
+      count[i] += count[i - 1];
+  }
+
+  int* output = new int[size];
+  for (int i = size - 1; i >= 0; i--) {
+      output[count[arr[i]] - 1] = arr[i];
+      count[arr[i]]--;
+  }
+
+  for (int i = 0; i < size; i++) {
+      arr[i] = output[i];
+  }
+
+  delete[] count;
+  delete[] output;
+}
 };
 
 int main()
@@ -274,28 +295,13 @@ int main()
     }
 
    cout<<endl;
-
-
+   int arr[] = {4, 2, 2, 8, 3, 3, 1};
+   CountSort countsort;
+   countsort.sort(arr, 7);
    
-    int array5[5] = {1,4,2,7,3};
-    QuickSort quicksort;
-    quicksort.sort(array5,5);
-
-    for(int i =0; i < 5;i++)
-    {
-     cout<< array5[i];
-    }
-    cout << endl;
-
-    
-    int array5[6] = {1,4,2,7,3};
-    CountSort countsort;
-    countsort.sort(array6,5);
-
-    for(int i =0; i < 5;i++)
-    {
-     cout<< array6[i];
-    }
+   for (int i = 0; i < 7; i++) {
+       std::cout << arr[i] << " ";
+   }
 
 
     return 0;
