@@ -285,5 +285,18 @@ int main()
     {
      cout<< array5[i];
     }
+    cout << endl;
+
+    
+    int array5[6] = {1,4,2,7,3};
+    CountSort countsort;
+    countsort.sort(array6,5);
+
+    for(int i =0; i < 5;i++)
+    {
+     cout<< array6[i];
+    }
+
+
     return 0;
 }
