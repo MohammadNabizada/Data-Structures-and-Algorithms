@@ -164,6 +164,66 @@ class MergeSort
 };
 
 
+class QuickSort{
+  private:
+  void swap(int array[],int index1,int index2)
+  {
+    int temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
+  }
+
+
+  int partition(int array[],int length,int start,int end)
+  {
+   int pivot = array[end];
+   int boundary = start-1;
+
+   for(int i =start ; i <= end;i++)
+   {
+    if(array[i] <= pivot)
+      swap(array,i,++boundary);
+   }
+   return boundary;
+  }
+  void sort(int array[],int length,int start,int end)
+  {
+   if(start >= end)
+    return;
+   int boundary = partition(array,length,start,end);
+
+   sort(array,length,start,boundary-1);
+   sort(array,length,boundary+1,end);
+  }
+
+  public:
+  void sort(int array[],int length)
+  {
+    sort(array,length,0,length-1);
+  }
+
+
+};
+
+
+class CountSort{
+ public:
+
+ void sort(int array[],int length,int max)
+ {
+   int counts[max+1];
+   int count =0;
+   for(int item : array)
+    counts[item]++;
+    count++;
+  int k = 0;
+   for(int i = 0;i < count;i++)
+     for(int j = 0;j < counts[i];j++)
+        array[k++] = i;
+ }
+
+};
+
 int main()
 {
 
@@ -202,6 +262,28 @@ int main()
     for(int i =0; i < 5;i++)
     {
      cout<< array4[i];
+    }
+
+    int array5[5] = {1,4,2,7,3};
+    QuickSort quicksort;
+    quicksort.sort(array5,5);
+
+    for(int i =0; i < 5;i++)
+    {
+     cout<< array5[i];
+    }
+
+   cout<<endl;
+
+
+   
+    int array5[5] = {1,4,2,7,3};
+    QuickSort quicksort;
+    quicksort.sort(array5,5);
+
+    for(int i =0; i < 5;i++)
+    {
+     cout<< array5[i];
     }
     return 0;
 }
