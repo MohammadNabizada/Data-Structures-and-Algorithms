@@ -1,6 +1,8 @@
 #include <iostream>
 #include <iterator>
 #include <list>
+#include <vector>
+#include <algorithm> 
 using namespace std;
 
 class Bubblesort
@@ -246,37 +248,41 @@ class CountSort{
 }
 };
 
-
-class BucketSort{
-
+class BucketSort {
   public:
-
-  void sort(int array[],int length,int numberofBuckets)
-  {
-     list<int> x;
-     list<list<int>> buckets;
-
-     for(int i =0 ; i < numberofBuckets; i++)
-     {
-      buckets.push_back(list<int>());
-     }
-     for(int i = 0; i < length;i++)
-     {
-       buckets[array[i] / numberofBuckets].push_back(array[i]);
-     }
-     int i = 0;
-     for(auto bucket: buckets)
-     {
-      QuickSort(bucket);
-      for(auto item:bucket)
-      {
-         array[i++] = item;
+      void sort(int array[], int length, int numberofBuckets) {
+          if (length <= 0 || numberofBuckets <= 0) return;
+  
+          
+          int min_val = array[0];
+          int max_val = array[0];
+          for (int i = 1; i < length; i++) {
+              if (array[i] < min_val) min_val = array[i];
+              if (array[i] > max_val) max_val = array[i];
+          }
+          if (min_val == max_val) return; 
+  
+        
+          vector<vector<int>> buckets(numberofBuckets);
+  
+          
+          float range = (max_val - min_val + 1) / (float)numberofBuckets;
+          for (int i = 0; i < length; i++) {
+              int bucket_idx = (array[i] - min_val) / range;
+              buckets[bucket_idx].push_back(array[i]);
+          }
+  
+       
+          int index = 0;
+          for (auto& bucket : buckets) {
+              std::sort(bucket.begin(), bucket.end()); 
+              for (int num : bucket) {
+                  array[index++] = num; 
+              }
+          }
       }
-     }
-  }
+  };
 
-
-};
 
 int main()
 {
@@ -335,7 +341,18 @@ int main()
    for (int i = 0; i < 7; i++) {
        std::cout << arr[i] << " ";
    }
+   BucketSort sorter;
+   int arr2[8] = {29, 25, 3, 49, 9, 37, 21, 43};
+   int buckets = 5;
 
+   cout << "Original array: ";
+   for (int i = 0; i < 8; i++) cout << arr2[i] << " ";
+   cout << endl;
 
+   sorter.sort(arr2, 8, buckets);
+
+   cout << "Sorted array: ";
+   for (int i = 0; i < 8; i++) cout << arr2[i] << " ";
+   cout << endl;
     return 0;
 }
