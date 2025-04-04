@@ -1,17 +1,17 @@
 #include <iostream>
 using namespace std;
-class LinearSearch
+class Search
 {
 
 public:
 
    
-    void find(int item,int size,int arr[])
+    void linearSearch(int item,int size,int arr[])
     {
         for(int i = 0; i < size;i++)
         {
             if(arr[i] == item){
-              cout<<item<<"is in this array and the index is :"<<i;
+              cout<<item<<" is in this array and the index is :"<<i;
               return;
             }
         }
@@ -25,10 +25,10 @@ public:
 
 int main()
 {
-    int array[5] = {1,2,3,5,7,8}
+    int array[5] = {1,2,3,5,7};
 
-    LinearSearch linearsearch;
-    linearsearch.find(1,5,array);
+    Search search;
+    search.linearSearch(1,5,array);
 
     return 0;
 }
