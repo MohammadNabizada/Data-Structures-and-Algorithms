@@ -61,6 +61,26 @@ class Graph{
 		return false;
 	}
 
+	void BFSrecursive(queue<Node*> queue, set<Node*> visited)
+	{
+		if (queue.empty())
+			return;
+		Node* currentNode = queue.front();
+		queue.push(currentNode);
+		queue.pop();
+		cout << currentNode->label << " ";
+
+		for (Node* neighbour : adjacancyList[currentNode]) {
+			if (visited.find(neighbour) == visited.end()) {
+				visited.insert(neighbour);
+				queue.push(neighbour);
+			}
+		}
+
+		BFSrecursive(queue, visited);
+		
+	}
+
 
      public:
 
