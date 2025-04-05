@@ -70,6 +70,25 @@ class Graph{
         return false; 
     }
 
+	void BFSrecursive(queue<Node*> queue, set<Node*> visited)
+	{
+		if (queue.empty())
+			return;
+		Node* currentNode = queue.front();
+		queue.push(currentNode);
+		queue.pop();
+		cout << currentNode->label << " ";
+
+		for (Node* neighbour : adjacancyList[currentNode]) {
+			if (visited.find(neighbour) == visited.end()) {
+				visited.insert(neighbour);
+				queue.push(neighbour);
+			}
+		}
+
+		BFSrecursive(queue, visited);
+		
+	}
 
 
      public:
@@ -264,6 +283,24 @@ bool hasCycle() {
     return false;
 }
 
+void BFSrecursive(string start)
+{
+    Node* startNode = nodes.find(start)->second;
+
+    if (startNode == nullptr)
+        return;
+
+    set<Node*>visited;
+    queue<Node*> queue;
+
+
+    visited.insert(startNode);
+    queue.push(startNode);
+
+    cout << "Recursive BFS starting from " << startNode->label << ": ";
+
+    BFSrecursive(queue, visited);
+}
 
 
 
