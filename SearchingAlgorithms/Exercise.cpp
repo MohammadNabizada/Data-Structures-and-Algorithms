@@ -43,7 +43,26 @@ public:
     {
          return binarySearchRec(arr,size,target,0,size - 1);
     }
-   
+    
+
+    int binarySearch(int arr[],int size,int target)
+    {
+      int left = 0;
+      int right = size -1 ;
+      int middle = (left + right) / 2;
+
+        while(left > right)
+        {
+        
+            if(target == arr[middle])
+                return middle;
+            if(target < arr[middle])
+                right = middle - 1;
+            left = middle + 1;
+            middle = (left + right) / 2;
+        }
+      return -1;
+    }
 
     
 };
@@ -64,5 +83,8 @@ int main()
      
     cout << "seraching for index of 3"<<endl;
     cout<< search.binarySearchRec(array2,5,3);
+    cout << endl;
+    cout << "seraching for index of 3"<<endl;
+    cout<< search.binarySearch(array2,5,3);
     return 0;
 }
