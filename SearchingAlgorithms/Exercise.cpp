@@ -58,7 +58,9 @@ public:
                 return middle;
             if(target < arr[middle])
                 right = middle - 1;
-            left = middle + 1;
+            else {
+              left = middle + 1;
+            }
             middle = (left + right) / 2;
         }
       return -1;
