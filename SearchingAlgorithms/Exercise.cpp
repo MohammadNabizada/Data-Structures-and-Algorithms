@@ -51,7 +51,7 @@ public:
       int right = size -1 ;
       int middle = (left + right) / 2;
 
-        while(left > right)
+        while(left <= right)
         {
         
             if(target == arr[middle])
