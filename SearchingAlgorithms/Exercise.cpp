@@ -22,7 +22,28 @@ int binarySearchRec(int arr[],int size,int target,int left,int right)
    return binarySearchRec(arr,size,target,middle+1,right);
 }
 
+int ternarySearch(int arr[],int size,int target,int left,int right)
+{
 
+  if(left > right)
+    return -1;
+  int partitionSize = (right - left) / 3;
+
+  int mid1 = left + partitionSize;
+  int mid2 = right - partitionSize;
+
+  if(arr[mid1] == target)
+     return mid1;
+
+  if(arr[mid2] == target)
+    return mid2;
+  if(target < arr[mid1])
+    return ternarySearch(arr,size,target,left,mid1 - 1);
+  if(target > arr[mid2])
+    return ternarySearch(arr,size,target,mid2 + 1,right);
+
+  return ternarySearch(arr,size,target,mid1 + 1,mid2 - 1);
+}
 public:
 
    
@@ -66,7 +87,10 @@ public:
       return -1;
     }
 
-    
+    int ternarySearch(int arr[],int size,int target)
+    {
+      return ternarySearch(arr,size,target,0,size-1);
+    }
 };
 
 
@@ -83,10 +107,13 @@ int main()
     cout<<endl;
     int array2[5] = {1,2,3,5,7};
      
-    cout << "seraching for index of 3"<<endl;
+    cout << "seraching for 3"<<endl;
     cout<< search.binarySearchRec(array2,5,3);
     cout << endl;
-    cout << "seraching for index of 3"<<endl;
+    cout << "seraching for 3"<<endl;
     cout<< search.binarySearch(array2,5,3);
+    cout << endl;
+    cout << "seraching for 3"<<endl;
+    cout<< search.ternarySearch(array2,5,3);
     return 0;
 }
