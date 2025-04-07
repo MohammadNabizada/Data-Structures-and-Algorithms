@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 using namespace std;
 class Search
 {
@@ -91,6 +92,29 @@ public:
     {
       return ternarySearch(arr,size,target,0,size-1);
     }
+
+
+    int jumpSearch(int arr[],int size,int target)
+    {
+      int blockSize = int(sqrt(size));
+      int start = 0;
+      int next = blockSize;
+
+
+      while(start < size && arr[next -1] < target)
+      {
+        start = next;
+        next += blockSize;
+        if(next > size)
+          next = size;
+      }
+
+      for(int i= start; i < next;i++)
+        if(arr[i] == target)
+          return i;
+
+      return -1;
+    }
 };
 
 
@@ -115,5 +139,9 @@ int main()
     cout << endl;
     cout << "seraching for 3"<<endl;
     cout<< search.ternarySearch(array2,5,3);
+
+    cout << endl;
+    cout << "seraching for 7"<<endl;
+    cout<< search.ternarySearch(array2,5,7);
     return 0;
 }
