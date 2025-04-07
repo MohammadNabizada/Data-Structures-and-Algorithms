@@ -115,6 +115,15 @@ public:
 
       return -1;
     }
+
+    int exponentialSearch(int arr[],int size,int target)
+    {
+      int bound =1;
+      while(bound < size && arr[bound] < target)
+        bound *= 2;
+
+      return binarySearch(arr,bound,target);
+    }
 };
 
 
@@ -143,5 +152,9 @@ int main()
     cout << endl;
     cout << "seraching for 7"<<endl;
     cout<< search.ternarySearch(array2,5,7);
+
+    cout << endl;
+    cout << "seraching for 5"<<endl;
+    cout<< search.exponentialSearch(array2,5,5);
     return 0;
 }
