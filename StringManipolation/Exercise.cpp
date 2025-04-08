@@ -40,6 +40,21 @@ class StringManipolate
     }
   }
 
+
+  void reversePharase(string str)
+  {
+    stack<string> stack;
+    vector<string> pharse;
+    for(char ch : str)
+    {
+        if(ch == ' ')
+          stack.push(pharse);
+        pharse.push_back(ch);
+    }
+
+
+  }
+
 };
 
 
