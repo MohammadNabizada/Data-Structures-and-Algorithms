@@ -43,13 +43,20 @@ class StringManipolate
 
   void reversePharase(string str)
   {
-    stack<string> stack;
-    vector<string> pharse;
-    for(char ch : str)
+    int end = str.length() - 1;
+    
+    int last;
+    for(int i = str.length()-1;i >= 0;i--)
     {
-        if(ch == ' ')
-          stack.push(pharse);
-        pharse.push_back(ch);
+        last = i;
+        if(str[last - 1] == ' ' || last-1 < 0)
+        {
+          for(int i=last;i<=end;i++)
+            cout<<str[i];
+          end = last -1;
+        }
+        
+       
     }
 
 
@@ -62,7 +69,7 @@ class StringManipolate
 int main()
 {
    string str = "hello";
-
+   string str2 = "trees are beautiful.";
    StringManipolate stringManipolate;
 
    cout<<"number of vowels in"<<str<<endl;
@@ -70,6 +77,7 @@ int main()
    
    cout<<"Reverse of"<<str<<endl;
    stringManipolate.reverseString(str);
-
+   cout<<endl;
+   stringManipolate.reversePharase(str2);
     return 0;
 }
