@@ -67,16 +67,15 @@ class StringManipolate
 
   bool isRotate(string a,string b)
   {
-    char last = a.end();
-    string resutl;
-    for(int i=0;i<a.length-1;i++)
-    {
-      if(i=0)
-        result.push_back(last);
-      result.push_back(a[i-1]);
-    }
+    char last = a[a.length()-1];
 
-    return result == b;
+    for(int i = a.length() - 2;i>=0;i--)
+    {
+      a[i+1] = a[i];
+    }
+    a[0] = last;
+
+    return a == b;
   }
 
 };
@@ -102,6 +101,6 @@ int main()
 
    cout<<endl;
 
-   cout<<"is rotated"<<(stringManipolate.isRotate("ABCD","DABC")) ? "YES" : "NO";
+   cout<<"is rotated :"<<(stringManipolate.isRotate("ABCD","DABC")? "YES" : "NO") ;
     return 0;
 }
