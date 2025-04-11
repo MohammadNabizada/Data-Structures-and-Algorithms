@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 using namespace std;
 
 class StringManipolate
@@ -78,6 +79,28 @@ class StringManipolate
     return a == b;
   }
 
+
+  void removeDuplicate(string str)
+  {
+     stack<char> stack;
+     stack<char> stack2;
+     for(char ch : str)
+     {
+      if(stack.top() != ch)
+        stack.push(ch);
+     }
+
+     while(!stack.empty())
+     {
+       stack2.push(stack.top());
+       stack.pop();
+     }
+     while(!stack2.empty())
+     {
+       cout<<stck2.top();
+       stack2.pop();
+     }
+  }
 };
 
 
@@ -102,5 +125,10 @@ int main()
    cout<<endl;
 
    cout<<"is rotated :"<<(stringManipolate.isRotate("ABCD","DABC")? "YES" : "NO") ;
+
+   cout<<endl;
+   stringManipolate.removeDuplicate("Helloo!!");
+
+   
     return 0;
 }
