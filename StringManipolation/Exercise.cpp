@@ -2,6 +2,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <unordered_map>
 using namespace std;
 
 class StringManipolate
@@ -82,24 +83,47 @@ class StringManipolate
 
   void removeDuplicate(string str)
   {
-     stack<char> stack;
+     stack<char> stack1;
      stack<char> stack2;
      for(char ch : str)
      {
-      if(stack.top() != ch)
-        stack.push(ch);
+      if(stack1.empty() || stack1.top() != ch)
+        stack1.push(ch);
      }
 
-     while(!stack.empty())
+     while(!stack1.empty())
      {
-       stack2.push(stack.top());
-       stack.pop();
+       stack2.push(stack1.top());
+       stack1.pop();
      }
      while(!stack2.empty())
      {
-       cout<<stck2.top();
+       cout<<stack2.top();
        stack2.pop();
      }
+  }
+
+
+  void findTheMostRepeated(string str)
+  {
+    unordered_map<int,char> map;
+
+    for(char ch : str)
+      map[ch]++;
+    
+    int maxKey = INT_MIN;
+    char result;
+    for(auto pair : map)
+    {
+      if(pair.first > maxKey)
+      {
+        maxKey = pair.first;
+        result = pair.second;
+      }
+    }
+
+
+    cout<<result;
   }
 };
 
@@ -128,7 +152,8 @@ int main()
 
    cout<<endl;
    stringManipolate.removeDuplicate("Helloo!!");
-
+   cout<<endl;
+   stringManipolate.findTheMostRepeated("Hellooo!!");
    
     return 0;
 }
