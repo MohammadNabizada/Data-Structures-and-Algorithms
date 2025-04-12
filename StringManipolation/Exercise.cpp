@@ -10,22 +10,15 @@ using namespace std;
 
 class StringManipolate
 {
-
-  private:
-  bool isVowel(char ch)
-  {
-    return (ch == 'o' || ch == 'O') || (ch == 'a' || ch == 'A') || (ch == 'e' || ch == 'E') || (ch == 'u' || ch == 'U') || (ch == 'i' || ch == 'I');
-  }
-
-
   public:
   
   int countingVowels(string str)
   {
     int count = 0;
+    string vowels = "aouie";
     for(char let : str)
     {
-        if(isVowel(let))
+        if(vowels.find(let) != string::npos)
           count++;
     }
 
@@ -199,7 +192,7 @@ int main()
    StringManipolate stringManipolate;
 
    cout<<"number of vowels in"<<str<<endl;
-   cout<< stringManipolate.countingVowels(str);
+   cout<< stringManipolate.countingVowels(str)<<endl;
    
    cout<<"Reverse of"<<str<<endl;
    stringManipolate.reverseString(str);
