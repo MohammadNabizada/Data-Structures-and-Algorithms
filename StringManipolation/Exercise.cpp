@@ -3,6 +3,8 @@
 #include <stack>
 #include <queue>
 #include <unordered_map>
+#include <vector>
+#include <cctype>
 using namespace std;
 
 class StringManipolate
@@ -106,7 +108,7 @@ class StringManipolate
 
   void findTheMostRepeated(string str)
   {
-    unordered_map<int,char> map;
+    unordered_map<char,int> map;
 
     for(char ch : str)
       map[ch]++;
@@ -115,16 +117,49 @@ class StringManipolate
     char result;
     for(auto pair : map)
     {
-      if(pair.first > maxKey)
+      if(pair.second > maxKey)
       {
-        maxKey = pair.first;
-        result = pair.second;
+        maxKey = pair.second;
+        result = pair.first;
       }
     }
 
 
     cout<<result;
   }
+
+  
+  
+string capitalizeWords(const string& str) {
+  string result;
+  bool newWord = true;
+  for (char ch : str) {
+      if (isspace(ch)) {
+        
+          if (!newWord) { 
+              result += ' ';
+              newWord = true;
+          }
+         
+      } else {
+          if (newWord) {
+              result += toupper(ch);  
+              newWord = false;
+          } else {
+              result += ch; 
+          }
+      }
+  }
+  
+  if (!result.empty() && result.back() == ' ') {
+      result.pop_back();
+  }
+  
+  return result;
+}
+
+
+
 };
 
 
@@ -154,6 +189,9 @@ int main()
    stringManipolate.removeDuplicate("Helloo!!");
    cout<<endl;
    stringManipolate.findTheMostRepeated("Hellooo!!");
-   
+   cout<<endl;
+ 
+   cout << stringManipolate.capitalizeWords(" trees are beautiful ") << endl;   
+   cout << stringManipolate.capitalizeWords("   This    is    a  TEST   ") << endl;
     return 0;
 }
