@@ -169,6 +169,24 @@ bool isAnagram(string a,string b)
   return a == b;
 }
 
+bool isPalindrom(string str)
+{
+  stack<char> stack;
+  int count = 0;
+  for(char ch : str)
+   stack.push(ch);
+  
+  while(!stack.empty())
+  {
+    if(stack.top() != str[count])
+      return false;
+    stack.pop();
+    count++;
+  }
+
+  return true;
+}
+
 };
 
 
@@ -205,5 +223,9 @@ int main()
 
 
    cout << (stringManipolate.isAnagram("abcd","dcab") ? "YES" : "NO");
+
+   cout<<endl;
+
+   cout<<(stringManipolate.isPalindrom("abbac") ? "YES" : "NO");
     return 0;
 }
