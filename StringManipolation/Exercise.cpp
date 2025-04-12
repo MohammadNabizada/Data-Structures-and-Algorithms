@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <cctype>
+#include <algorithm>
 using namespace std;
 
 class StringManipolate
@@ -158,7 +159,15 @@ string capitalizeWords(const string& str) {
   return result;
 }
 
-
+bool isAnagram(string a,string b)
+{
+  if(a.length() != b.length())
+    return false;
+  sort(a.begin(),a.end());
+  sort(b.begin(),b.end());
+  
+  return a == b;
+}
 
 };
 
@@ -193,5 +202,8 @@ int main()
  
    cout << stringManipolate.capitalizeWords(" trees are beautiful ") << endl;   
    cout << stringManipolate.capitalizeWords("   This    is    a  TEST   ") << endl;
+
+
+   cout << (stringManipolate.isAnagram("abcd","dcab") ? "YES" : "NO");
     return 0;
 }
