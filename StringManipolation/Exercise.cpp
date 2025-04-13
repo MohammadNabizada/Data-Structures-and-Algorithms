@@ -27,15 +27,11 @@ class StringManipolate
 
   void reverseString(string str)
   {
-    stack<char> stack;
+    string reversed  = "";
+    for(int i = str.length(); i >= 0 ; i--)
+       reversed += str[i];
 
-    for(char ch : str)
-      stack.push(ch);
-    while(!stack.empty())
-    {
-        cout<<stack.top();
-        stack.pop();
-    }
+    return reversed;
   }
 
 
