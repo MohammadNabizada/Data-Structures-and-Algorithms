@@ -6,65 +6,59 @@
 #include <vector>
 #include <cctype>
 #include <algorithm>
+#include <iterator>
+#include <sstream>
 using namespace std;
 
 class StringManipolate
 {
 
   private:
-  bool isVowel(char ch)
+  vector<string> split(string sentence)
   {
-    return (ch == 'o' || ch == 'O') || (ch == 'a' || ch == 'A') || (ch == 'e' || ch == 'E') || (ch == 'u' || ch == 'U') || (ch == 'i' || ch == 'I');
+    istringstream iss(sentence);
+    return{
+      istream_iterator<string>(iss),
+      istream_iterator<string>()
+    };
   }
-
 
   public:
   
   int countingVowels(string str)
   {
     int count = 0;
+    string vowels = "aouie";
     for(char let : str)
     {
-        if(isVowel(let))
+        if(vowels.find(let) != string::npos)
           count++;
     }
 
     return count;
   }
 
-  void reverseString(string str)
+  string reverseString(string str)
   {
-    stack<char> stack;
+    string reversed  = "";
+    for(int i = str.length()-1; i >= 0 ; i--)
+       reversed.push_back(str[i]);
 
-    for(char ch : str)
-      stack.push(ch);
-    while(!stack.empty())
-    {
-        cout<<stack.top();
-        stack.pop();
-    }
+    return reversed;
   }
 
 
   void reversePharase(string str)
   {
-    int end = str.length();
-    
-    int last;
-    for(int i = str.length()-1;i >= 0;i--)
+    vector<string> words = split(str);
+    string reversed = "";
+    for(int i = words.size() - 1;i >= 0 ;i--)
     {
-        last = i;
-        if(str[last - 1] == ' ' || last-1 < 0)
-        {
-          for(int j=last;j<end;j++){
-            cout<<str[j];
-          }
-          end = last -1;
-          if(last > 0)
-            cout<<' ';
-        }
+      reversed += words[i];
+      if (i != 0) {  // Don't add space after last word
+          reversed += " ";
+      }
         
-       
     }
 
 
@@ -199,10 +193,10 @@ int main()
    StringManipolate stringManipolate;
 
    cout<<"number of vowels in"<<str<<endl;
-   cout<< stringManipolate.countingVowels(str);
+   cout<< stringManipolate.countingVowels(str)<<endl;
    
-   cout<<"Reverse of"<<str<<endl;
-   stringManipolate.reverseString(str);
+   cout<<"Reverse of "<<str<<endl;
+   cout<<stringManipolate.reverseString(str);
    cout<<endl;
    stringManipolate.reversePharase(str2);
    cout<<endl;
