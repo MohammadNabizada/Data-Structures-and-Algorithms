@@ -129,8 +129,6 @@ string capitalizeWords(const string& str) {
     return result;
   }
 
-
-
 bool isAnagram(string a,string b)
 {
   if(a.length() != b.length())
@@ -139,6 +137,30 @@ bool isAnagram(string a,string b)
   sort(b.begin(),b.end());
   
   return a == b;
+}
+
+bool isAnagram2(string a,string b)
+{
+  
+  int frequencies[26] = {0};
+  
+  for(int i =  0 ; i < a.length();i++){
+    char c = a[i];
+    c = tolower(c);
+     frequencies[c - 'a']++;
+
+  }
+  
+  for(int i = 0; i < b.length();i++){
+  char c = b[i];
+  c = tolower(c);
+  if(frequencies[c - 'a'] == 0)
+    return false;
+   frequencies[c - 'a']--;
+  }
+
+
+  return true;
 }
 
 bool isPalindrom(string str)
