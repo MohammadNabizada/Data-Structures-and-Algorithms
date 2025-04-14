@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iterator>
 #include <sstream>
+#include <set>
 using namespace std;
 
 class StringManipolate
@@ -66,32 +67,25 @@ class StringManipolate
 
   bool isRotate(string a,string b)
   {
-     if(a.length() != b.length() || (a + b).find(b) == string::npos)
-       return false;  
-    return true;
+    return a.length() != b.length() && (a + b).find(b) == string::npos;
+
   }
 
 
-  void removeDuplicate(string str)
+  string removeDuplicate(string str)
   {
-     stack<char> stack1;
-     stack<char> stack2;
-     for(char ch : str)
-     {
-      if(stack1.empty() || stack1.top() != ch)
-        stack1.push(ch);
-     }
+    string output;
+    set<char> seen;
+    for(char ch : str)
+    {
+      if(seen.find(ch) == seen.end())
+      {
+           seen.insert(ch);
+           output.push_back(ch);
+      }
+    }
 
-     while(!stack1.empty())
-     {
-       stack2.push(stack1.top());
-       stack1.pop();
-     }
-     while(!stack2.empty())
-     {
-       cout<<stack2.top();
-       stack2.pop();
-     }
+    return output;
   }
 
 
@@ -201,7 +195,7 @@ int main()
    cout<<"is rotated :"<<(stringManipolate.isRotate("ABCD","DABC")? "YES" : "NO") ;
 
    cout<<endl;
-   stringManipolate.removeDuplicate("Helloo!!");
+   cout<<stringManipolate.removeDuplicate("Helloo!!");
    cout<<endl;
    stringManipolate.findTheMostRepeated("Hellooo!!");
    cout<<endl;
