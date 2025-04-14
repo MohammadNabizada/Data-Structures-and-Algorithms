@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <stack>
-#include <queue>
 #include <unordered_map>
 #include <vector>
 #include <cctype>
 #include <algorithm>
 #include <iterator>
 #include <sstream>
+#include <set>
 using namespace std;
 
 class StringManipolate
@@ -55,7 +55,7 @@ class StringManipolate
     for(int i = words.size() - 1;i >= 0 ;i--)
     {
       reversed += words[i];
-      if (i != 0) {  // Don't add space after last word
+      if (i != 0) {  
           reversed += " ";
       }
         
@@ -66,38 +66,25 @@ class StringManipolate
 
   bool isRotate(string a,string b)
   {
-    char last = a[a.length()-1];
+    return a.length() != b.length() && (a + b).find(b) == string::npos;
 
-    for(int i = a.length() - 2;i>=0;i--)
-    {
-      a[i+1] = a[i];
-    }
-    a[0] = last;
-
-    return a == b;
   }
 
 
-  void removeDuplicate(string str)
+  string removeDuplicate(string str)
   {
-     stack<char> stack1;
-     stack<char> stack2;
-     for(char ch : str)
-     {
-      if(stack1.empty() || stack1.top() != ch)
-        stack1.push(ch);
-     }
+    string output;
+    set<char> seen;
+    for(char ch : str)
+    {
+      if(seen.find(ch) == seen.end())
+      {
+           seen.insert(ch);
+           output.push_back(ch);
+      }
+    }
 
-     while(!stack1.empty())
-     {
-       stack2.push(stack1.top());
-       stack1.pop();
-     }
-     while(!stack2.empty())
-     {
-       cout<<stack2.top();
-       stack2.pop();
-     }
+    return output;
   }
 
 
@@ -126,32 +113,20 @@ class StringManipolate
   
   
 string capitalizeWords(const string& str) {
-  string result;
-  bool newWord = true;
-  for (char ch : str) {
-      if (isspace(ch)) {
-        
-          if (!newWord) { 
-              result += ' ';
-              newWord = true;
-          }
-         
-      } else {
-          if (newWord) {
-              result += toupper(ch);  
-              newWord = false;
-          } else {
-              result += ch; 
-          }
-      }
+   
+  vector<string> words = split(str);
+    string result = "";
+    
+    for(int i = 0; i < words.size(); i++) 
+    {
+        if (!words[i].empty())
+            words[i][0] = toupper(words[i][0]);
+        result += words[i];
+        if (i != words.size() - 1)
+            result += " ";
+    }
+    return result;
   }
-  
-  if (!result.empty() && result.back() == ' ') {
-      result.pop_back();
-  }
-  
-  return result;
-}
 
 bool isAnagram(string a,string b)
 {
@@ -161,6 +136,30 @@ bool isAnagram(string a,string b)
   sort(b.begin(),b.end());
   
   return a == b;
+}
+
+bool isAnagram2(string a,string b)
+{
+  
+  int frequencies[26] = {0};
+  
+  for(int i =  0 ; i < a.length();i++){
+    char c = a[i];
+    c = tolower(c);
+     frequencies[c - 'a']++;
+
+  }
+  
+  for(int i = 0; i < b.length();i++){
+  char c = b[i];
+  c = tolower(c);
+  if(frequencies[c - 'a'] == 0)
+    return false;
+   frequencies[c - 'a']--;
+  }
+
+
+  return true;
 }
 
 bool isPalindrom(string str)
@@ -180,6 +179,24 @@ bool isPalindrom(string str)
 
   return true;
 }
+
+bool isPalindrom2(string str)
+{
+  int left = 0;
+  int right = str.length() - 1;
+
+  while(left < right)
+  {
+     if(str[left] != str[right]){
+       return false;
+     }
+     left++;
+     right--;
+  }
+  return true;
+
+}
+
 
 };
 
@@ -207,7 +224,7 @@ int main()
    cout<<"is rotated :"<<(stringManipolate.isRotate("ABCD","DABC")? "YES" : "NO") ;
 
    cout<<endl;
-   stringManipolate.removeDuplicate("Helloo!!");
+   cout<<stringManipolate.removeDuplicate("Helloo!!");
    cout<<endl;
    stringManipolate.findTheMostRepeated("Hellooo!!");
    cout<<endl;
@@ -221,5 +238,8 @@ int main()
    cout<<endl;
 
    cout<<(stringManipolate.isPalindrom("abbac") ? "YES" : "NO");
+   cout<<"palindrom faster implementation"<<endl;
+   cout<<(stringManipolate.isPalindrom2("abbac") ? "YES" : "NO");
+
     return 0;
 }
