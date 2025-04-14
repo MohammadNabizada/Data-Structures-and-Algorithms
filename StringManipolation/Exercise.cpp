@@ -56,7 +56,7 @@ class StringManipolate
     for(int i = words.size() - 1;i >= 0 ;i--)
     {
       reversed += words[i];
-      if (i != 0) {  // Don't add space after last word
+      if (i != 0) {  
           reversed += " ";
       }
         
@@ -114,32 +114,22 @@ class StringManipolate
   
   
 string capitalizeWords(const string& str) {
-  string result;
-  bool newWord = true;
-  for (char ch : str) {
-      if (isspace(ch)) {
-        
-          if (!newWord) { 
-              result += ' ';
-              newWord = true;
-          }
-         
-      } else {
-          if (newWord) {
-              result += toupper(ch);  
-              newWord = false;
-          } else {
-              result += ch; 
-          }
-      }
+   
+  vector<string> words = split(str);
+    string result = "";
+    
+    for(int i = 0; i < words.size(); i++) 
+    {
+        if (!words[i].empty())
+            words[i][0] = toupper(words[i][0]);
+        result += words[i];
+        if (i != words.size() - 1)
+            result += " ";
+    }
+    return result;
   }
-  
-  if (!result.empty() && result.back() == ' ') {
-      result.pop_back();
-  }
-  
-  return result;
-}
+
+
 
 bool isAnagram(string a,string b)
 {
