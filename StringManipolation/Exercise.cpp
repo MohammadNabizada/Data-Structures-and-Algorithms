@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <stack>
-#include <queue>
 #include <unordered_map>
 #include <vector>
 #include <cctype>
@@ -181,6 +180,24 @@ bool isPalindrom(string str)
   return true;
 }
 
+bool isPalindrom2(string str)
+{
+  int left = 0;
+  int right = str.length() - 1;
+
+  while(left < right)
+  {
+     if(str[left] != str[right]){
+       return false;
+     }
+     left++;
+     right--;
+  }
+  return true;
+
+}
+
+
 };
 
 
@@ -221,5 +238,8 @@ int main()
    cout<<endl;
 
    cout<<(stringManipolate.isPalindrom("abbac") ? "YES" : "NO");
+   cout<<"palindrom faster implementation"<<endl;
+   cout<<(stringManipolate.isPalindrom2("abbac") ? "YES" : "NO");
+
     return 0;
 }
