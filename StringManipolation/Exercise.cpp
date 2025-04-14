@@ -66,15 +66,9 @@ class StringManipolate
 
   bool isRotate(string a,string b)
   {
-    char last = a[a.length()-1];
-
-    for(int i = a.length() - 2;i>=0;i--)
-    {
-      a[i+1] = a[i];
-    }
-    a[0] = last;
-
-    return a == b;
+     if(a.length() != b.length() || (a + b).find(b) == string::npos)
+       return false;  
+    return true;
   }
 
 
